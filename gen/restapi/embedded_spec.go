@@ -7,8 +7,6 @@ package restapi
 
 import (
 	"encoding/json"
-
-	"github.com/bullblock-io/tezTracker/gen/restapi/operations/operations"
 )
 
 var (
@@ -34,14 +32,7 @@ func init() {
         "tags": [
           "App Info"
         ],
-        "parameters": [
-          {
-            "type": "string",
-            "name": "apiKey",
-            "in": "header",
-            "required": true
-          }
-        ],
+        "operationId": "getInfo",
         "responses": {
           "200": {
             "description": "Application info endpoint",
@@ -60,6 +51,7 @@ func init() {
         "tags": [
           "Accounts"
         ],
+        "operationId": "getAccountsList",
         "parameters": [
           {
             "type": "string",
@@ -195,12 +187,6 @@ func init() {
             "type": "string",
             "name": "order",
             "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "apiKey",
-            "in": "header",
-            "required": true
           }
         ],
         "responses": {
@@ -227,6 +213,7 @@ func init() {
         "tags": [
           "Accounts"
         ],
+        "operationId": "getAccount",
         "parameters": [
           {
             "type": "string",
@@ -244,12 +231,6 @@ func init() {
             "type": "string",
             "name": "accountId",
             "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "name": "apiKey",
-            "in": "header",
             "required": true
           }
         ],
@@ -274,6 +255,7 @@ func init() {
         "tags": [
           "Blocks"
         ],
+        "operationId": "getBlocksList",
         "parameters": [
           {
             "type": "string",
@@ -409,12 +391,6 @@ func init() {
             "type": "string",
             "name": "order",
             "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "apiKey",
-            "in": "header",
-            "required": true
           }
         ],
         "responses": {
@@ -441,6 +417,7 @@ func init() {
         "tags": [
           "Blocks"
         ],
+        "operationId": "getBlocksHead",
         "parameters": [
           {
             "type": "string",
@@ -452,12 +429,6 @@ func init() {
             "type": "string",
             "name": "network",
             "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "name": "apiKey",
-            "in": "header",
             "required": true
           }
         ],
@@ -482,6 +453,7 @@ func init() {
         "tags": [
           "Blocks"
         ],
+        "operationId": "getBlock",
         "parameters": [
           {
             "type": "string",
@@ -499,12 +471,6 @@ func init() {
             "type": "string",
             "name": "hash",
             "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "name": "apiKey",
-            "in": "header",
             "required": true
           }
         ],
@@ -529,6 +495,7 @@ func init() {
         "tags": [
           "Operation groups"
         ],
+        "operationId": "getOperationGroups",
         "parameters": [
           {
             "type": "string",
@@ -664,12 +631,6 @@ func init() {
             "type": "string",
             "name": "order",
             "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "apiKey",
-            "in": "header",
-            "required": true
           }
         ],
         "responses": {
@@ -696,6 +657,7 @@ func init() {
         "tags": [
           "Operation groups"
         ],
+        "operationId": "getOperationGroup",
         "parameters": [
           {
             "type": "string",
@@ -713,12 +675,6 @@ func init() {
             "type": "string",
             "name": "operationGroupId",
             "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "name": "apiKey",
-            "in": "header",
             "required": true
           }
         ],
@@ -741,8 +697,9 @@ func init() {
           "application/json"
         ],
         "tags": [
-          "Operations"
+          "OperationsList"
         ],
+        "operationId": "getOperationsList",
         "parameters": [
           {
             "type": "string",
@@ -878,12 +835,6 @@ func init() {
             "type": "string",
             "name": "order",
             "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "apiKey",
-            "in": "header",
-            "required": true
           }
         ],
         "responses": {
@@ -910,6 +861,7 @@ func init() {
         "tags": [
           "Fees"
         ],
+        "operationId": "getAvgFees",
         "parameters": [
           {
             "type": "string",
@@ -1045,12 +997,6 @@ func init() {
             "type": "string",
             "name": "order",
             "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "apiKey",
-            "in": "header",
-            "required": true
           }
         ],
         "responses": {
@@ -1099,12 +1045,6 @@ func init() {
             "required": true
           },
           {
-            "type": "string",
-            "name": "apiKey",
-            "in": "header",
-            "required": true
-          },
-          {
             "name": "body",
             "in": "body",
             "schema": {
@@ -1139,14 +1079,6 @@ func init() {
         "tags": [
           "Metadata"
         ],
-        "parameters": [
-          {
-            "type": "string",
-            "name": "apiKey",
-            "in": "header",
-            "required": true
-          }
-        ],
         "responses": {
           "200": {
             "description": "Metadata endpoint for listing available platforms",
@@ -1173,12 +1105,6 @@ func init() {
             "type": "string",
             "name": "platform",
             "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "name": "apiKey",
-            "in": "header",
             "required": true
           }
         ],
@@ -1217,12 +1143,6 @@ func init() {
             "type": "string",
             "name": "network",
             "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "name": "apiKey",
-            "in": "header",
             "required": true
           }
         ],
@@ -1267,12 +1187,6 @@ func init() {
             "type": "string",
             "name": "entity",
             "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "name": "apiKey",
-            "in": "header",
             "required": true
           }
         ],
@@ -1323,12 +1237,6 @@ func init() {
             "type": "string",
             "name": "attribute",
             "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "name": "apiKey",
-            "in": "header",
             "required": true
           }
         ],
@@ -1394,12 +1302,6 @@ func init() {
             "type": "string",
             "name": "filter",
             "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "name": "apiKey",
-            "in": "header",
             "required": true
           }
         ],
@@ -2130,14 +2032,7 @@ func init() {
         "tags": [
           "App Info"
         ],
-        "parameters": [
-          {
-            "type": "string",
-            "name": "apiKey",
-            "in": "header",
-            "required": true
-          }
-        ],
+        "operationId": "getInfo",
         "responses": {
           "200": {
             "description": "Application info endpoint",
@@ -2156,6 +2051,7 @@ func init() {
         "tags": [
           "Accounts"
         ],
+        "operationId": "getAccountsList",
         "parameters": [
           {
             "type": "string",
@@ -2291,12 +2187,6 @@ func init() {
             "type": "string",
             "name": "order",
             "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "apiKey",
-            "in": "header",
-            "required": true
           }
         ],
         "responses": {
@@ -2323,6 +2213,7 @@ func init() {
         "tags": [
           "Accounts"
         ],
+        "operationId": "getAccount",
         "parameters": [
           {
             "type": "string",
@@ -2340,12 +2231,6 @@ func init() {
             "type": "string",
             "name": "accountId",
             "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "name": "apiKey",
-            "in": "header",
             "required": true
           }
         ],
@@ -2370,6 +2255,7 @@ func init() {
         "tags": [
           "Blocks"
         ],
+        "operationId": "getBlocksList",
         "parameters": [
           {
             "type": "string",
@@ -2505,12 +2391,6 @@ func init() {
             "type": "string",
             "name": "order",
             "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "apiKey",
-            "in": "header",
-            "required": true
           }
         ],
         "responses": {
@@ -2537,6 +2417,7 @@ func init() {
         "tags": [
           "Blocks"
         ],
+        "operationId": "getBlocksHead",
         "parameters": [
           {
             "type": "string",
@@ -2548,12 +2429,6 @@ func init() {
             "type": "string",
             "name": "network",
             "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "name": "apiKey",
-            "in": "header",
             "required": true
           }
         ],
@@ -2578,6 +2453,7 @@ func init() {
         "tags": [
           "Blocks"
         ],
+        "operationId": "getBlock",
         "parameters": [
           {
             "type": "string",
@@ -2595,12 +2471,6 @@ func init() {
             "type": "string",
             "name": "hash",
             "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "name": "apiKey",
-            "in": "header",
             "required": true
           }
         ],
@@ -2625,6 +2495,7 @@ func init() {
         "tags": [
           "Operation groups"
         ],
+        "operationId": "getOperationGroups",
         "parameters": [
           {
             "type": "string",
@@ -2760,12 +2631,6 @@ func init() {
             "type": "string",
             "name": "order",
             "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "apiKey",
-            "in": "header",
-            "required": true
           }
         ],
         "responses": {
@@ -2792,6 +2657,7 @@ func init() {
         "tags": [
           "Operation groups"
         ],
+        "operationId": "getOperationGroup",
         "parameters": [
           {
             "type": "string",
@@ -2809,12 +2675,6 @@ func init() {
             "type": "string",
             "name": "operationGroupId",
             "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "name": "apiKey",
-            "in": "header",
             "required": true
           }
         ],
@@ -2837,8 +2697,9 @@ func init() {
           "application/json"
         ],
         "tags": [
-          "Operations"
+          "OperationsList"
         ],
+        "operationId": "getOperationsList",
         "parameters": [
           {
             "type": "string",
@@ -2974,12 +2835,6 @@ func init() {
             "type": "string",
             "name": "order",
             "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "apiKey",
-            "in": "header",
-            "required": true
           }
         ],
         "responses": {
@@ -3006,6 +2861,7 @@ func init() {
         "tags": [
           "Fees"
         ],
+        "operationId": "getAvgFees",
         "parameters": [
           {
             "type": "string",
@@ -3141,12 +2997,6 @@ func init() {
             "type": "string",
             "name": "order",
             "in": "query"
-          },
-          {
-            "type": "string",
-            "name": "apiKey",
-            "in": "header",
-            "required": true
           }
         ],
         "responses": {
@@ -3195,12 +3045,6 @@ func init() {
             "required": true
           },
           {
-            "type": "string",
-            "name": "apiKey",
-            "in": "header",
-            "required": true
-          },
-          {
             "name": "body",
             "in": "body",
             "schema": {
@@ -3235,14 +3079,6 @@ func init() {
         "tags": [
           "Metadata"
         ],
-        "parameters": [
-          {
-            "type": "string",
-            "name": "apiKey",
-            "in": "header",
-            "required": true
-          }
-        ],
         "responses": {
           "200": {
             "description": "Metadata endpoint for listing available platforms",
@@ -3269,12 +3105,6 @@ func init() {
             "type": "string",
             "name": "platform",
             "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "name": "apiKey",
-            "in": "header",
             "required": true
           }
         ],
@@ -3313,12 +3143,6 @@ func init() {
             "type": "string",
             "name": "network",
             "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "name": "apiKey",
-            "in": "header",
             "required": true
           }
         ],
@@ -3363,12 +3187,6 @@ func init() {
             "type": "string",
             "name": "entity",
             "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "name": "apiKey",
-            "in": "header",
             "required": true
           }
         ],
@@ -3419,12 +3237,6 @@ func init() {
             "type": "string",
             "name": "attribute",
             "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "name": "apiKey",
-            "in": "header",
             "required": true
           }
         ],
@@ -3490,12 +3302,6 @@ func init() {
             "type": "string",
             "name": "filter",
             "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "name": "apiKey",
-            "in": "header",
             "required": true
           }
         ],

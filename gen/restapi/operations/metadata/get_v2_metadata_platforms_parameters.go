@@ -10,9 +10,6 @@ import (
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/go-openapi/validate"
-
-	strfmt "github.com/go-openapi/strfmt"
 )
 
 // NewGetV2MetadataPlatformsParams creates a new GetV2MetadataPlatformsParams object
@@ -30,12 +27,6 @@ type GetV2MetadataPlatformsParams struct {
 
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
-
-	/*
-	  Required: true
-	  In: header
-	*/
-	APIKey string
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
@@ -47,33 +38,8 @@ func (o *GetV2MetadataPlatformsParams) BindRequest(r *http.Request, route *middl
 
 	o.HTTPRequest = r
 
-	if err := o.bindAPIKey(r.Header[http.CanonicalHeaderKey("apiKey")], true, route.Formats); err != nil {
-		res = append(res, err)
-	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-// bindAPIKey binds and validates parameter APIKey from header.
-func (o *GetV2MetadataPlatformsParams) bindAPIKey(rawData []string, hasKey bool, formats strfmt.Registry) error {
-	if !hasKey {
-		return errors.Required("apiKey", "header")
-	}
-	var raw string
-	if len(rawData) > 0 {
-		raw = rawData[len(rawData)-1]
-	}
-
-	// Required: true
-
-	if err := validate.RequiredString("apiKey", "header", raw); err != nil {
-		return err
-	}
-
-	o.APIKey = raw
-
 	return nil
 }

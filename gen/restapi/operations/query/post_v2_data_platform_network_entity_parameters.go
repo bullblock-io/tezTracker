@@ -11,7 +11,6 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/go-openapi/validate"
 
 	strfmt "github.com/go-openapi/strfmt"
 
@@ -34,11 +33,6 @@ type PostV2DataPlatformNetworkEntityParams struct {
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
 
-	/*
-	  Required: true
-	  In: header
-	*/
-	APIKey string
 	/*
 	  In: body
 	*/
@@ -68,10 +62,6 @@ func (o *PostV2DataPlatformNetworkEntityParams) BindRequest(r *http.Request, rou
 	var res []error
 
 	o.HTTPRequest = r
-
-	if err := o.bindAPIKey(r.Header[http.CanonicalHeaderKey("apiKey")], true, route.Formats); err != nil {
-		res = append(res, err)
-	}
 
 	if runtime.HasBody(r) {
 		defer r.Body.Close()
@@ -107,27 +97,6 @@ func (o *PostV2DataPlatformNetworkEntityParams) BindRequest(r *http.Request, rou
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-// bindAPIKey binds and validates parameter APIKey from header.
-func (o *PostV2DataPlatformNetworkEntityParams) bindAPIKey(rawData []string, hasKey bool, formats strfmt.Registry) error {
-	if !hasKey {
-		return errors.Required("apiKey", "header")
-	}
-	var raw string
-	if len(rawData) > 0 {
-		raw = rawData[len(rawData)-1]
-	}
-
-	// Required: true
-
-	if err := validate.RequiredString("apiKey", "header", raw); err != nil {
-		return err
-	}
-
-	o.APIKey = raw
-
 	return nil
 }
 

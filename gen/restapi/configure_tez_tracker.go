@@ -18,11 +18,11 @@ import (
 	"github.com/bullblock-io/tezTracker/gen/restapi/operations/fees"
 	"github.com/bullblock-io/tezTracker/gen/restapi/operations/metadata"
 	"github.com/bullblock-io/tezTracker/gen/restapi/operations/operation_groups"
-	"github.com/bullblock-io/tezTracker/gen/restapi/operations/operations"
+	"github.com/bullblock-io/tezTracker/gen/restapi/operations/operations_list"
 	"github.com/bullblock-io/tezTracker/gen/restapi/operations/query"
 )
 
-//go:generate swagger generate server --target ../../gen --name TezTracker --spec ../../swagger/swager.yml --exclude-main
+//go:generate swagger generate server --target ../../gen --name TezTracker --spec ../../swagger/swagger.yml --exclude-main
 
 func configureFlags(api *operations.TezTrackerAPI) {
 	// api.CommandLineOptionsGroups = []swag.CommandLineOptionsGroup{ ... }
@@ -47,56 +47,6 @@ func configureAPI(api *operations.TezTrackerAPI) http.Handler {
 	})
 	api.TxtProducer = runtime.TextProducer()
 
-	if api.AppInfoGetInfoHandler == nil {
-		api.AppInfoGetInfoHandler = app_info.GetInfoHandlerFunc(func(params app_info.GetInfoParams) middleware.Responder {
-			return middleware.NotImplemented("operation app_info.GetInfo has not yet been implemented")
-		})
-	}
-	if api.AccountsGetV2DataPlatformNetworkAccountsHandler == nil {
-		api.AccountsGetV2DataPlatformNetworkAccountsHandler = accounts.GetV2DataPlatformNetworkAccountsHandlerFunc(func(params accounts.GetV2DataPlatformNetworkAccountsParams) middleware.Responder {
-			return middleware.NotImplemented("operation accounts.GetV2DataPlatformNetworkAccounts has not yet been implemented")
-		})
-	}
-	if api.AccountsGetV2DataPlatformNetworkAccountsAccountIDHandler == nil {
-		api.AccountsGetV2DataPlatformNetworkAccountsAccountIDHandler = accounts.GetV2DataPlatformNetworkAccountsAccountIDHandlerFunc(func(params accounts.GetV2DataPlatformNetworkAccountsAccountIDParams) middleware.Responder {
-			return middleware.NotImplemented("operation accounts.GetV2DataPlatformNetworkAccountsAccountID has not yet been implemented")
-		})
-	}
-	if api.BlocksGetV2DataPlatformNetworkBlocksHandler == nil {
-		api.BlocksGetV2DataPlatformNetworkBlocksHandler = blocks.GetV2DataPlatformNetworkBlocksHandlerFunc(func(params blocks.GetV2DataPlatformNetworkBlocksParams) middleware.Responder {
-			return middleware.NotImplemented("operation blocks.GetV2DataPlatformNetworkBlocks has not yet been implemented")
-		})
-	}
-	if api.BlocksGetV2DataPlatformNetworkBlocksHashHandler == nil {
-		api.BlocksGetV2DataPlatformNetworkBlocksHashHandler = blocks.GetV2DataPlatformNetworkBlocksHashHandlerFunc(func(params blocks.GetV2DataPlatformNetworkBlocksHashParams) middleware.Responder {
-			return middleware.NotImplemented("operation blocks.GetV2DataPlatformNetworkBlocksHash has not yet been implemented")
-		})
-	}
-	if api.BlocksGetV2DataPlatformNetworkBlocksHeadHandler == nil {
-		api.BlocksGetV2DataPlatformNetworkBlocksHeadHandler = blocks.GetV2DataPlatformNetworkBlocksHeadHandlerFunc(func(params blocks.GetV2DataPlatformNetworkBlocksHeadParams) middleware.Responder {
-			return middleware.NotImplemented("operation blocks.GetV2DataPlatformNetworkBlocksHead has not yet been implemented")
-		})
-	}
-	if api.OperationGroupsGetV2DataPlatformNetworkOperationGroupsHandler == nil {
-		api.OperationGroupsGetV2DataPlatformNetworkOperationGroupsHandler = operation_groups.GetV2DataPlatformNetworkOperationGroupsHandlerFunc(func(params operation_groups.GetV2DataPlatformNetworkOperationGroupsParams) middleware.Responder {
-			return middleware.NotImplemented("operation operation_groups.GetV2DataPlatformNetworkOperationGroups has not yet been implemented")
-		})
-	}
-	if api.OperationGroupsGetV2DataPlatformNetworkOperationGroupsOperationGroupIDHandler == nil {
-		api.OperationGroupsGetV2DataPlatformNetworkOperationGroupsOperationGroupIDHandler = operation_groups.GetV2DataPlatformNetworkOperationGroupsOperationGroupIDHandlerFunc(func(params operation_groups.GetV2DataPlatformNetworkOperationGroupsOperationGroupIDParams) middleware.Responder {
-			return middleware.NotImplemented("operation operation_groups.GetV2DataPlatformNetworkOperationGroupsOperationGroupID has not yet been implemented")
-		})
-	}
-	if api.GetV2DataPlatformNetworkOperationsHandler == nil {
-		api.GetV2DataPlatformNetworkOperationsHandler = operations.GetV2DataPlatformNetworkOperationsHandlerFunc(func(params operations.GetV2DataPlatformNetworkOperationsParams) middleware.Responder {
-			return middleware.NotImplemented("operation .GetV2DataPlatformNetworkOperations has not yet been implemented")
-		})
-	}
-	if api.FeesGetV2DataPlatformNetworkOperationsAvgFeesHandler == nil {
-		api.FeesGetV2DataPlatformNetworkOperationsAvgFeesHandler = fees.GetV2DataPlatformNetworkOperationsAvgFeesHandlerFunc(func(params fees.GetV2DataPlatformNetworkOperationsAvgFeesParams) middleware.Responder {
-			return middleware.NotImplemented("operation fees.GetV2DataPlatformNetworkOperationsAvgFees has not yet been implemented")
-		})
-	}
 	if api.MetadataGetV2MetadataPlatformNetworkEntitiesHandler == nil {
 		api.MetadataGetV2MetadataPlatformNetworkEntitiesHandler = metadata.GetV2MetadataPlatformNetworkEntitiesHandlerFunc(func(params metadata.GetV2MetadataPlatformNetworkEntitiesParams) middleware.Responder {
 			return middleware.NotImplemented("operation metadata.GetV2MetadataPlatformNetworkEntities has not yet been implemented")
@@ -130,6 +80,56 @@ func configureAPI(api *operations.TezTrackerAPI) http.Handler {
 	if api.QueryPostV2DataPlatformNetworkEntityHandler == nil {
 		api.QueryPostV2DataPlatformNetworkEntityHandler = query.PostV2DataPlatformNetworkEntityHandlerFunc(func(params query.PostV2DataPlatformNetworkEntityParams) middleware.Responder {
 			return middleware.NotImplemented("operation query.PostV2DataPlatformNetworkEntity has not yet been implemented")
+		})
+	}
+	if api.AccountsGetAccountHandler == nil {
+		api.AccountsGetAccountHandler = accounts.GetAccountHandlerFunc(func(params accounts.GetAccountParams) middleware.Responder {
+			return middleware.NotImplemented("operation accounts.GetAccount has not yet been implemented")
+		})
+	}
+	if api.AccountsGetAccountsListHandler == nil {
+		api.AccountsGetAccountsListHandler = accounts.GetAccountsListHandlerFunc(func(params accounts.GetAccountsListParams) middleware.Responder {
+			return middleware.NotImplemented("operation accounts.GetAccountsList has not yet been implemented")
+		})
+	}
+	if api.FeesGetAvgFeesHandler == nil {
+		api.FeesGetAvgFeesHandler = fees.GetAvgFeesHandlerFunc(func(params fees.GetAvgFeesParams) middleware.Responder {
+			return middleware.NotImplemented("operation fees.GetAvgFees has not yet been implemented")
+		})
+	}
+	if api.BlocksGetBlockHandler == nil {
+		api.BlocksGetBlockHandler = blocks.GetBlockHandlerFunc(func(params blocks.GetBlockParams) middleware.Responder {
+			return middleware.NotImplemented("operation blocks.GetBlock has not yet been implemented")
+		})
+	}
+	if api.BlocksGetBlocksHeadHandler == nil {
+		api.BlocksGetBlocksHeadHandler = blocks.GetBlocksHeadHandlerFunc(func(params blocks.GetBlocksHeadParams) middleware.Responder {
+			return middleware.NotImplemented("operation blocks.GetBlocksHead has not yet been implemented")
+		})
+	}
+	if api.BlocksGetBlocksListHandler == nil {
+		api.BlocksGetBlocksListHandler = blocks.GetBlocksListHandlerFunc(func(params blocks.GetBlocksListParams) middleware.Responder {
+			return middleware.NotImplemented("operation blocks.GetBlocksList has not yet been implemented")
+		})
+	}
+	if api.AppInfoGetInfoHandler == nil {
+		api.AppInfoGetInfoHandler = app_info.GetInfoHandlerFunc(func(params app_info.GetInfoParams) middleware.Responder {
+			return middleware.NotImplemented("operation app_info.GetInfo has not yet been implemented")
+		})
+	}
+	if api.OperationGroupsGetOperationGroupHandler == nil {
+		api.OperationGroupsGetOperationGroupHandler = operation_groups.GetOperationGroupHandlerFunc(func(params operation_groups.GetOperationGroupParams) middleware.Responder {
+			return middleware.NotImplemented("operation operation_groups.GetOperationGroup has not yet been implemented")
+		})
+	}
+	if api.OperationGroupsGetOperationGroupsHandler == nil {
+		api.OperationGroupsGetOperationGroupsHandler = operation_groups.GetOperationGroupsHandlerFunc(func(params operation_groups.GetOperationGroupsParams) middleware.Responder {
+			return middleware.NotImplemented("operation operation_groups.GetOperationGroups has not yet been implemented")
+		})
+	}
+	if api.OperationsListGetOperationsListHandler == nil {
+		api.OperationsListGetOperationsListHandler = operations_list.GetOperationsListHandlerFunc(func(params operations_list.GetOperationsListParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations_list.GetOperationsList has not yet been implemented")
 		})
 	}
 

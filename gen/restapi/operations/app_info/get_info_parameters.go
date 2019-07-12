@@ -10,9 +10,6 @@ import (
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/go-openapi/validate"
-
-	strfmt "github.com/go-openapi/strfmt"
 )
 
 // NewGetInfoParams creates a new GetInfoParams object
@@ -25,17 +22,11 @@ func NewGetInfoParams() GetInfoParams {
 // GetInfoParams contains all the bound params for the get info operation
 // typically these are obtained from a http.Request
 //
-// swagger:parameters GetInfo
+// swagger:parameters getInfo
 type GetInfoParams struct {
 
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
-
-	/*
-	  Required: true
-	  In: header
-	*/
-	APIKey string
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
@@ -47,33 +38,8 @@ func (o *GetInfoParams) BindRequest(r *http.Request, route *middleware.MatchedRo
 
 	o.HTTPRequest = r
 
-	if err := o.bindAPIKey(r.Header[http.CanonicalHeaderKey("apiKey")], true, route.Formats); err != nil {
-		res = append(res, err)
-	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-// bindAPIKey binds and validates parameter APIKey from header.
-func (o *GetInfoParams) bindAPIKey(rawData []string, hasKey bool, formats strfmt.Registry) error {
-	if !hasKey {
-		return errors.Required("apiKey", "header")
-	}
-	var raw string
-	if len(rawData) > 0 {
-		raw = rawData[len(rawData)-1]
-	}
-
-	// Required: true
-
-	if err := validate.RequiredString("apiKey", "header", raw); err != nil {
-		return err
-	}
-
-	o.APIKey = raw
-
 	return nil
 }

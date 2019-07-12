@@ -26,7 +26,6 @@ import (
 	"golang.org/x/net/netutil"
 
 	"github.com/bullblock-io/tezTracker/gen/restapi/operations"
-	"github.com/bullblock-io/tezTracker/gen/restapi/operations/operations"
 )
 
 const (

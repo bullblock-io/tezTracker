@@ -10,7 +10,6 @@ import (
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/go-openapi/validate"
 
 	strfmt "github.com/go-openapi/strfmt"
 )
@@ -31,11 +30,6 @@ type GetV2MetadataPlatformNetworkEntityAttributeParams struct {
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
 
-	/*
-	  Required: true
-	  In: header
-	*/
-	APIKey string
 	/*
 	  Required: true
 	  In: path
@@ -67,10 +61,6 @@ func (o *GetV2MetadataPlatformNetworkEntityAttributeParams) BindRequest(r *http.
 
 	o.HTTPRequest = r
 
-	if err := o.bindAPIKey(r.Header[http.CanonicalHeaderKey("apiKey")], true, route.Formats); err != nil {
-		res = append(res, err)
-	}
-
 	rAttribute, rhkAttribute, _ := route.Params.GetOK("attribute")
 	if err := o.bindAttribute(rAttribute, rhkAttribute, route.Formats); err != nil {
 		res = append(res, err)
@@ -94,27 +84,6 @@ func (o *GetV2MetadataPlatformNetworkEntityAttributeParams) BindRequest(r *http.
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-// bindAPIKey binds and validates parameter APIKey from header.
-func (o *GetV2MetadataPlatformNetworkEntityAttributeParams) bindAPIKey(rawData []string, hasKey bool, formats strfmt.Registry) error {
-	if !hasKey {
-		return errors.Required("apiKey", "header")
-	}
-	var raw string
-	if len(rawData) > 0 {
-		raw = rawData[len(rawData)-1]
-	}
-
-	// Required: true
-
-	if err := validate.RequiredString("apiKey", "header", raw); err != nil {
-		return err
-	}
-
-	o.APIKey = raw
-
 	return nil
 }
 

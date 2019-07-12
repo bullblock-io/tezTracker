@@ -5,13 +5,9 @@ info:
 paths:
   /info:
     get:
+      operationId: getInfo
       produces:
         - application/json
-      parameters:
-        - in: header
-          name: apiKey
-          required: true
-          type: string
       responses:
         '200':
           description: Application info endpoint
@@ -21,6 +17,7 @@ paths:
         - App Info
   '/v2/data/{platform}/{network}/accounts':
     get:
+      operationId: getAccountsList
       produces:
         - application/json
       parameters:
@@ -113,10 +110,6 @@ paths:
         - in: query
           name: order
           type: string
-        - in: header
-          name: apiKey
-          required: true
-          type: string
       responses:
         '200':
           description: Query compatibility endpoint for accounts
@@ -130,6 +123,7 @@ paths:
         - Accounts
   '/v2/data/{platform}/{network}/accounts/{accountId}':
     get:
+      operationId: getAccount
       produces:
         - application/json
       parameters:
@@ -145,10 +139,6 @@ paths:
           name: accountId
           required: true
           type: string
-        - in: header
-          name: apiKey
-          required: true
-          type: string
       responses:
         '200':
           description: Query compatibility endpoint for account
@@ -161,6 +151,7 @@ paths:
         - Accounts
   '/v2/data/{platform}/{network}/blocks':
     get:
+      operationId: getBlocksList
       produces:
         - application/json
       parameters:
@@ -253,10 +244,6 @@ paths:
         - in: query
           name: order
           type: string
-        - in: header
-          name: apiKey
-          required: true
-          type: string
       responses:
         '200':
           description: Query compatibility endpoint for blocks
@@ -270,6 +257,7 @@ paths:
         - Blocks
   '/v2/data/{platform}/{network}/blocks/head':
     get:
+      operationId: getBlocksHead
       produces:
         - application/json
       parameters:
@@ -279,10 +267,6 @@ paths:
           type: string
         - in: path
           name: network
-          required: true
-          type: string
-        - in: header
-          name: apiKey
           required: true
           type: string
       responses:
@@ -296,6 +280,7 @@ paths:
         - Blocks
   '/v2/data/{platform}/{network}/blocks/{hash}':
     get:
+      operationId: getBlock
       produces:
         - application/json
       parameters:
@@ -311,10 +296,6 @@ paths:
           name: hash
           required: true
           type: string
-        - in: header
-          name: apiKey
-          required: true
-          type: string
       responses:
         '200':
           description: Query compatibility endpoint for block by hash
@@ -327,6 +308,7 @@ paths:
         - Blocks
   '/v2/data/{platform}/{network}/operation_groups':
     get:
+      operationId: getOperationGroups
       produces:
         - application/json
       parameters:
@@ -419,10 +401,6 @@ paths:
         - in: query
           name: order
           type: string
-        - in: header
-          name: apiKey
-          required: true
-          type: string
       responses:
         '200':
           description: Query compatibility endpoint for operation groups
@@ -436,6 +414,7 @@ paths:
         - Operation groups
   '/v2/data/{platform}/{network}/operation_groups/{operationGroupId}':
     get:
+      operationId: getOperationGroup
       produces:
         - application/json
       parameters:
@@ -451,10 +430,6 @@ paths:
           name: operationGroupId
           required: true
           type: string
-        - in: header
-          name: apiKey
-          required: true
-          type: string
       responses:
         '200':
           description: Query compatibility endpoint for operation group
@@ -467,6 +442,7 @@ paths:
         - Operation groups
   '/v2/data/{platform}/{network}/operations':
     get:
+      operationId: getOperationsList
       produces:
         - application/json
       parameters:
@@ -558,10 +534,6 @@ paths:
           type: string
         - in: query
           name: order
-          type: string
-        - in: header
-          name: apiKey
-          required: true
           type: string
       responses:
         '200':
@@ -573,9 +545,10 @@ paths:
         '404':
           description: Not Found
       tags:
-        - Operations
+        - OperationsList
   '/v2/data/{platform}/{network}/operations/avgFees':
     get:
+      operationId: getAvgFees
       produces:
         - application/json
       parameters:
@@ -667,10 +640,6 @@ paths:
           type: string
         - in: query
           name: order
-          type: string
-        - in: header
-          name: apiKey
-          required: true
           type: string
       responses:
         '200':
@@ -702,10 +671,6 @@ paths:
           name: entity
           required: true
           type: string
-        - in: header
-          name: apiKey
-          required: true
-          type: string
         - in: body
           name: body
           schema:
@@ -728,11 +693,6 @@ paths:
     get:
       produces:
         - application/json
-      parameters:
-        - in: header
-          name: apiKey
-          required: true
-          type: string
       responses:
         '200':
           description: Metadata endpoint for listing available platforms
@@ -750,10 +710,6 @@ paths:
       parameters:
         - in: path
           name: platform
-          required: true
-          type: string
-        - in: header
-          name: apiKey
           required: true
           type: string
       responses:
@@ -779,10 +735,6 @@ paths:
           type: string
         - in: path
           name: network
-          required: true
-          type: string
-        - in: header
-          name: apiKey
           required: true
           type: string
       responses:
@@ -812,10 +764,6 @@ paths:
           type: string
         - in: path
           name: entity
-          required: true
-          type: string
-        - in: header
-          name: apiKey
           required: true
           type: string
       responses:
@@ -849,10 +797,6 @@ paths:
           type: string
         - in: path
           name: attribute
-          required: true
-          type: string
-        - in: header
-          name: apiKey
           required: true
           type: string
       responses:
@@ -897,10 +841,6 @@ paths:
           type: string
         - in: path
           name: filter
-          required: true
-          type: string
-        - in: header
-          name: apiKey
           required: true
           type: string
       responses:
