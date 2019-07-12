@@ -32,7 +32,7 @@ type DataTypesAPIPredicate struct {
 	Operation *string `json:"operation"`
 
 	// precision
-	Precision int32 `json:"precision,omitempty"`
+	Precision int64 `json:"precision,omitempty"`
 
 	// set
 	Set []string `json:"set"`

@@ -29,7 +29,7 @@ type OperationsRow struct {
 
 	// block level
 	// Required: true
-	BlockLevel *int32 `json:"blockLevel"`
+	BlockLevel *int64 `json:"blockLevel"`
 
 	// consumed gas
 	ConsumedGas float64 `json:"consumedGas,omitempty"`
@@ -57,7 +57,7 @@ type OperationsRow struct {
 	Kind *string `json:"kind"`
 
 	// level
-	Level int32 `json:"level,omitempty"`
+	Level int64 `json:"level,omitempty"`
 
 	// manager pubkey
 	ManagerPubkey string `json:"managerPubkey,omitempty"`
@@ -71,7 +71,7 @@ type OperationsRow struct {
 
 	// operation Id
 	// Required: true
-	OperationID *int32 `json:"operationId"`
+	OperationID *int64 `json:"operationId"`
 
 	// originated contracts
 	OriginatedContracts string `json:"originatedContracts,omitempty"`

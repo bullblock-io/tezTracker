@@ -1,32 +1,36 @@
 package models
 
-import "time"
+import (
+	"time"
+
+	"github.com/guregu/null"
+)
 
 type Block struct {
-	Level                    uint                   `json:"level"`
-	Proto                    uint                   `json:"proto"`
-	Predecessor              string                 `json:"predecessor"`
+	Level                    null.Int               `json:"level"`
+	Proto                    null.Int               `json:"proto"`
+	Predecessor              null.String            `json:"predecessor"`
 	Timestamp                time.Time              `json:"timestamp"`
-	ValidationPass           uint                   `json:"validation_pass"`
-	Fitness                  string                 `json:"fitness"`
+	ValidationPass           null.Int               `json:"validation_pass"`
+	Fitness                  null.String            `json:"fitness"`
 	Context                  string                 `json:"context"`
 	Signature                string                 `json:"signature"`
-	Protocol                 string                 `json:"protocol"`
+	Protocol                 null.String            `json:"protocol"`
 	ChainID                  string                 `json:"chain_id"`
-	Hash                     string                 `json:"hash"`
+	Hash                     null.String            `json:"hash"`
 	OperationsHash           string                 `json:"operations_hash"`
 	PeriodKind               string                 `json:"period_kind"`
-	CurrentExpectedQuorum    uint                   `json:"current_expected_quorum"`
+	CurrentExpectedQuorum    int64                  `json:"current_expected_quorum"`
 	ActiveProposal           string                 `json:"active_proposal"`
 	Baker                    string                 `json:"baker"`
 	NonceHash                string                 `json:"nonce_hash"`
 	ConsumedGas              float64                `json:"consumed_gas"`
-	MetaLevel                uint                   `json:"meta_level"`
-	MetaLevelPosition        uint                   `json:"meta_level_position"`
-	MetaCycle                uint                   `json:"meta_cycle"`
-	MetaCyclePosition        uint                   `json:"meta_cycle_position"`
-	MetaVotingPeriod         uint                   `json:"meta_voting_period"`
-	MetaVotingPeriodPosition uint                   `json:"meta_voting_period_position"`
+	MetaLevel                int64                  `json:"meta_level"`
+	MetaLevelPosition        int64                  `json:"meta_level_position"`
+	MetaCycle                int64                  `json:"meta_cycle"`
+	MetaCyclePosition        int64                  `json:"meta_cycle_position"`
+	MetaVotingPeriod         int64                  `json:"meta_voting_period"`
+	MetaVotingPeriodPosition int64                  `json:"meta_voting_period_position"`
 	ExpectedCommitment       bool                   `json:"expected_commitment"`
 	Delegates                []*Delegate            `json:"delegates"`            // This line is infered from other tables.
 	Proposals                []*Proposal            `json:"proposals"`            // This line is infered from other tables.

@@ -1370,7 +1370,7 @@ func init() {
         },
         "counter": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "delegateSetable": {
           "type": "boolean"
@@ -1440,7 +1440,7 @@ func init() {
         },
         "currentExpectedQuorum": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "expectedCommitment": {
           "type": "boolean"
@@ -1453,31 +1453,31 @@ func init() {
         },
         "level": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "metaCycle": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "metaCyclePosition": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "metaLevel": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "metaLevelPosition": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "metaVotingPeriod": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "metaVotingPeriodPosition": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "nonceHash": {
           "type": "string"
@@ -1493,7 +1493,7 @@ func init() {
         },
         "proto": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "protocol": {
           "type": "string"
@@ -1507,7 +1507,7 @@ func init() {
         },
         "validationPass": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         }
       }
     },
@@ -1563,7 +1563,7 @@ func init() {
         },
         "precision": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "set": {
           "type": "array",
@@ -1604,7 +1604,7 @@ func init() {
         },
         "precision": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "set": {
           "type": "array",
@@ -1631,7 +1631,7 @@ func init() {
         },
         "limit": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "orderBy": {
           "type": "array",
@@ -1758,7 +1758,7 @@ func init() {
         },
         "blockLevel": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "consumedGas": {
           "type": "number"
@@ -1786,7 +1786,7 @@ func init() {
         },
         "level": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "managerPubkey": {
           "type": "string"
@@ -1799,7 +1799,7 @@ func init() {
         },
         "operationId": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "originatedContracts": {
           "type": "string"
@@ -1861,14 +1861,14 @@ func init() {
       "properties": {
         "cardinality": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "currencySymbol": {
           "type": "string"
         },
         "currencySymbolCode": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "dataFormat": {
           "type": "string"
@@ -1899,11 +1899,11 @@ func init() {
         },
         "displayOrder": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "displayPriority": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "entity": {
           "type": "string"
@@ -1929,7 +1929,7 @@ func init() {
         },
         "scale": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "sufficientForQuery": {
           "type": "boolean"
@@ -1952,7 +1952,7 @@ func init() {
       "properties": {
         "count": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "description": {
           "type": "string"
@@ -3370,7 +3370,7 @@ func init() {
         },
         "counter": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "delegateSetable": {
           "type": "boolean"
@@ -3440,7 +3440,7 @@ func init() {
         },
         "currentExpectedQuorum": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "expectedCommitment": {
           "type": "boolean"
@@ -3453,31 +3453,31 @@ func init() {
         },
         "level": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "metaCycle": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "metaCyclePosition": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "metaLevel": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "metaLevelPosition": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "metaVotingPeriod": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "metaVotingPeriodPosition": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "nonceHash": {
           "type": "string"
@@ -3493,7 +3493,7 @@ func init() {
         },
         "proto": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "protocol": {
           "type": "string"
@@ -3507,7 +3507,7 @@ func init() {
         },
         "validationPass": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         }
       }
     },
@@ -3563,7 +3563,7 @@ func init() {
         },
         "precision": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "set": {
           "type": "array",
@@ -3604,7 +3604,7 @@ func init() {
         },
         "precision": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "set": {
           "type": "array",
@@ -3631,7 +3631,7 @@ func init() {
         },
         "limit": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "orderBy": {
           "type": "array",
@@ -3758,7 +3758,7 @@ func init() {
         },
         "blockLevel": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "consumedGas": {
           "type": "number"
@@ -3786,7 +3786,7 @@ func init() {
         },
         "level": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "managerPubkey": {
           "type": "string"
@@ -3799,7 +3799,7 @@ func init() {
         },
         "operationId": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "originatedContracts": {
           "type": "string"
@@ -3861,14 +3861,14 @@ func init() {
       "properties": {
         "cardinality": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "currencySymbol": {
           "type": "string"
         },
         "currencySymbolCode": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "dataFormat": {
           "type": "string"
@@ -3899,11 +3899,11 @@ func init() {
         },
         "displayOrder": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "displayPriority": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "entity": {
           "type": "string"
@@ -3929,7 +3929,7 @@ func init() {
         },
         "scale": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "sufficientForQuery": {
           "type": "boolean"
@@ -3952,7 +3952,7 @@ func init() {
       "properties": {
         "count": {
           "type": "integer",
-          "format": "int32"
+          "format": "int64"
         },
         "description": {
           "type": "string"

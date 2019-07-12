@@ -35,7 +35,7 @@ type AccountsRow struct {
 
 	// counter
 	// Required: true
-	Counter *int32 `json:"counter"`
+	Counter *int64 `json:"counter"`
 
 	// delegate setable
 	// Required: true

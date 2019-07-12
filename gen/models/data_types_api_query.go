@@ -27,7 +27,7 @@ type DataTypesAPIQuery struct {
 	Fields []string `json:"fields"`
 
 	// limit
-	Limit int32 `json:"limit,omitempty"`
+	Limit int64 `json:"limit,omitempty"`
 
 	// order by
 	OrderBy []*DataTypesQueryOrdering `json:"orderBy"`

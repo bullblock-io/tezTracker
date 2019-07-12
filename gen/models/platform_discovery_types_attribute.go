@@ -20,13 +20,13 @@ import (
 type PlatformDiscoveryTypesAttribute struct {
 
 	// cardinality
-	Cardinality int32 `json:"cardinality,omitempty"`
+	Cardinality int64 `json:"cardinality,omitempty"`
 
 	// currency symbol
 	CurrencySymbol string `json:"currencySymbol,omitempty"`
 
 	// currency symbol code
-	CurrencySymbolCode int32 `json:"currencySymbolCode,omitempty"`
+	CurrencySymbolCode int64 `json:"currencySymbolCode,omitempty"`
 
 	// data format
 	DataFormat string `json:"dataFormat,omitempty"`
@@ -44,10 +44,10 @@ type PlatformDiscoveryTypesAttribute struct {
 	DisplayName *string `json:"displayName"`
 
 	// display order
-	DisplayOrder int32 `json:"displayOrder,omitempty"`
+	DisplayOrder int64 `json:"displayOrder,omitempty"`
 
 	// display priority
-	DisplayPriority int32 `json:"displayPriority,omitempty"`
+	DisplayPriority int64 `json:"displayPriority,omitempty"`
 
 	// entity
 	// Required: true
@@ -69,7 +69,7 @@ type PlatformDiscoveryTypesAttribute struct {
 	Reference map[string]string `json:"reference,omitempty"`
 
 	// scale
-	Scale int32 `json:"scale,omitempty"`
+	Scale int64 `json:"scale,omitempty"`
 
 	// sufficient for query
 	SufficientForQuery bool `json:"sufficientForQuery,omitempty"`

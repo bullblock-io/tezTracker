@@ -19,7 +19,7 @@ type PlatformDiscoveryTypesEntity struct {
 
 	// count
 	// Required: true
-	Count *int32 `json:"count"`
+	Count *int64 `json:"count"`
 
 	// description
 	Description string `json:"description,omitempty"`

@@ -901,7 +901,7 @@ definitions:
           - isnull
         type: string
       precision:
-        format: int32
+        format: int64
         type: integer
       set:
         items:
@@ -931,7 +931,7 @@ definitions:
           - isnull
         type: string
       precision:
-        format: int32
+        format: int64
         type: integer
       set:
         items:
@@ -953,7 +953,7 @@ definitions:
           type: string
         type: array
       limit:
-        format: int32
+        format: int64
         type: integer
       orderBy:
         items:
@@ -988,12 +988,12 @@ definitions:
   PlatformDiscoveryTypes.Attribute:
     properties:
       cardinality:
-        format: int32
+        format: int64
         type: integer
       currencySymbol:
         type: string
       currencySymbolCode:
-        format: int32
+        format: int64
         type: integer
       dataFormat:
         type: string
@@ -1018,10 +1018,10 @@ definitions:
       displayName:
         type: string
       displayOrder:
-        format: int32
+        format: int64
         type: integer
       displayPriority:
-        format: int32
+        format: int64
         type: integer
       entity:
         type: string
@@ -1040,7 +1040,7 @@ definitions:
         properties: {}
         type: object
       scale:
-        format: int32
+        format: int64
         type: integer
       sufficientForQuery:
         type: boolean
@@ -1059,7 +1059,7 @@ definitions:
   PlatformDiscoveryTypes.Entity:
     properties:
       count:
-        format: int32
+        format: int64
         type: integer
       description:
         type: string
@@ -1159,7 +1159,7 @@ definitions:
       blockLevel:
         type: number
       counter:
-        format: int32
+        format: int64
         type: integer
       delegateSetable:
         type: boolean
@@ -1196,7 +1196,7 @@ definitions:
       context:
         type: string
       currentExpectedQuorum:
-        format: int32
+        format: int64
         type: integer
       expectedCommitment:
         type: boolean
@@ -1205,25 +1205,25 @@ definitions:
       hash:
         type: string
       level:
-        format: int32
+        format: int64
         type: integer
       metaCycle:
-        format: int32
+        format: int64
         type: integer
       metaCyclePosition:
-        format: int32
+        format: int64
         type: integer
       metaLevel:
-        format: int32
+        format: int64
         type: integer
       metaLevelPosition:
-        format: int32
+        format: int64
         type: integer
       metaVotingPeriod:
-        format: int32
+        format: int64
         type: integer
       metaVotingPeriodPosition:
-        format: int32
+        format: int64
         type: integer
       nonceHash:
         type: string
@@ -1234,7 +1234,7 @@ definitions:
       predecessor:
         type: string
       proto:
-        format: int32
+        format: int64
         type: integer
       protocol:
         type: string
@@ -1244,7 +1244,7 @@ definitions:
         format: int64
         type: integer
       validationPass:
-        format: int32
+        format: int64
         type: integer
     required:
       - timestamp
@@ -1287,7 +1287,7 @@ definitions:
       blockHash:
         type: string
       blockLevel:
-        format: int32
+        format: int64
         type: integer
       consumedGas:
         type: number
@@ -1306,7 +1306,7 @@ definitions:
       kind:
         type: string
       level:
-        format: int32
+        format: int64
         type: integer
       managerPubkey:
         type: string
@@ -1315,7 +1315,7 @@ definitions:
       operationGroupHash:
         type: string
       operationId:
-        format: int32
+        format: int64
         type: integer
       originatedContracts:
         type: string

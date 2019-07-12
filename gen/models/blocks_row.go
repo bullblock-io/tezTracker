@@ -33,7 +33,7 @@ type BlocksRow struct {
 	Context string `json:"context,omitempty"`
 
 	// current expected quorum
-	CurrentExpectedQuorum int32 `json:"currentExpectedQuorum,omitempty"`
+	CurrentExpectedQuorum int64 `json:"currentExpectedQuorum,omitempty"`
 
 	// expected commitment
 	ExpectedCommitment bool `json:"expectedCommitment,omitempty"`
@@ -48,25 +48,25 @@ type BlocksRow struct {
 
 	// level
 	// Required: true
-	Level *int32 `json:"level"`
+	Level *int64 `json:"level"`
 
 	// meta cycle
-	MetaCycle int32 `json:"metaCycle,omitempty"`
+	MetaCycle int64 `json:"metaCycle,omitempty"`
 
 	// meta cycle position
-	MetaCyclePosition int32 `json:"metaCyclePosition,omitempty"`
+	MetaCyclePosition int64 `json:"metaCyclePosition,omitempty"`
 
 	// meta level
-	MetaLevel int32 `json:"metaLevel,omitempty"`
+	MetaLevel int64 `json:"metaLevel,omitempty"`
 
 	// meta level position
-	MetaLevelPosition int32 `json:"metaLevelPosition,omitempty"`
+	MetaLevelPosition int64 `json:"metaLevelPosition,omitempty"`
 
 	// meta voting period
-	MetaVotingPeriod int32 `json:"metaVotingPeriod,omitempty"`
+	MetaVotingPeriod int64 `json:"metaVotingPeriod,omitempty"`
 
 	// meta voting period position
-	MetaVotingPeriodPosition int32 `json:"metaVotingPeriodPosition,omitempty"`
+	MetaVotingPeriodPosition int64 `json:"metaVotingPeriodPosition,omitempty"`
 
 	// nonce hash
 	NonceHash string `json:"nonceHash,omitempty"`
@@ -83,7 +83,7 @@ type BlocksRow struct {
 
 	// proto
 	// Required: true
-	Proto *int32 `json:"proto"`
+	Proto *int64 `json:"proto"`
 
 	// protocol
 	// Required: true
@@ -98,7 +98,7 @@ type BlocksRow struct {
 
 	// validation pass
 	// Required: true
-	ValidationPass *int32 `json:"validationPass"`
+	ValidationPass *int64 `json:"validationPass"`
 }
 
 // Validate validates this blocks row
