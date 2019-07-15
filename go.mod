@@ -10,6 +10,11 @@ require (
 	github.com/go-openapi/strfmt v0.19.2
 	github.com/go-openapi/swag v0.19.4
 	github.com/go-openapi/validate v0.19.2
+	github.com/guregu/null v3.4.0+incompatible
 	github.com/jessevdk/go-flags v1.4.0
+	github.com/jinzhu/gorm v1.9.10
+	github.com/joho/godotenv v1.3.0
+	github.com/kelseyhightower/envconfig v1.4.0
+	github.com/sirupsen/logrus v1.2.0
 	golang.org/x/net v0.0.0-20190628185345-da137c7871d7
 )
