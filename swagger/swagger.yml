@@ -178,6 +178,9 @@ paths:
             type: integer
           name: block_level
           type: array
+        - in: query
+          name: before_level
+          type: integer
         - collectionFormat: multi
           in: query
           items:
@@ -249,7 +252,7 @@ paths:
           description: Query compatibility endpoint for blocks
           schema:
             items:
-              type: string # Any - not yet supported
+              $ref: '#/definitions/BlocksRow'
             type: array
         '404':
           description: Not Found

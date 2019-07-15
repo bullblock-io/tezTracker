@@ -50,6 +50,10 @@ type GetBlocksListParams struct {
 	AccountManager []string
 	/*
 	  In: query
+	*/
+	BeforeLevel *int64
+	/*
+	  In: query
 	  Collection Format: multi
 	*/
 	BlockID []string
@@ -140,6 +144,11 @@ func (o *GetBlocksListParams) BindRequest(r *http.Request, route *middleware.Mat
 
 	qAccountManager, qhkAccountManager, _ := qs.GetOK("account_manager")
 	if err := o.bindAccountManager(qAccountManager, qhkAccountManager, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
+	qBeforeLevel, qhkBeforeLevel, _ := qs.GetOK("before_level")
+	if err := o.bindBeforeLevel(qBeforeLevel, qhkBeforeLevel, route.Formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -287,6 +296,28 @@ func (o *GetBlocksListParams) bindAccountManager(rawData []string, hasKey bool, 
 	}
 
 	o.AccountManager = accountManagerIR
+
+	return nil
+}
+
+// bindBeforeLevel binds and validates parameter BeforeLevel from query.
+func (o *GetBlocksListParams) bindBeforeLevel(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+	if raw == "" { // empty values pass all other validations
+		return nil
+	}
+
+	value, err := swag.ConvertInt64(raw)
+	if err != nil {
+		return errors.InvalidType("before_level", "query", "int64", raw)
+	}
+	o.BeforeLevel = &value
 
 	return nil
 }

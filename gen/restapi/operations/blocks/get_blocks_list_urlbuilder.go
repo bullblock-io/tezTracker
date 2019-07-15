@@ -22,6 +22,7 @@ type GetBlocksListURL struct {
 	AccountDelegate      []string
 	AccountID            []string
 	AccountManager       []string
+	BeforeLevel          *int64
 	BlockID              []string
 	BlockLevel           []int64
 	BlockNetid           []string
@@ -120,6 +121,14 @@ func (o *GetBlocksListURL) Build() (*url.URL, error) {
 
 	for _, qsv := range accountManager {
 		qs.Add("account_manager", qsv)
+	}
+
+	var beforeLevel string
+	if o.BeforeLevel != nil {
+		beforeLevel = swag.FormatInt64(*o.BeforeLevel)
+	}
+	if beforeLevel != "" {
+		qs.Set("before_level", beforeLevel)
 	}
 
 	var blockIDIR []string

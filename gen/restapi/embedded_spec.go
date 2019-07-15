@@ -293,6 +293,11 @@ func init() {
             "in": "query"
           },
           {
+            "type": "integer",
+            "name": "before_level",
+            "in": "query"
+          },
+          {
             "type": "array",
             "items": {
               "type": "string"
@@ -399,7 +404,7 @@ func init() {
             "schema": {
               "type": "array",
               "items": {
-                "type": "string"
+                "$ref": "#/definitions/BlocksRow"
               }
             }
           },
@@ -2293,6 +2298,11 @@ func init() {
             "in": "query"
           },
           {
+            "type": "integer",
+            "name": "before_level",
+            "in": "query"
+          },
+          {
             "type": "array",
             "items": {
               "type": "string"
@@ -2399,7 +2409,7 @@ func init() {
             "schema": {
               "type": "array",
               "items": {
-                "type": "string"
+                "$ref": "#/definitions/BlocksRow"
               }
             }
           },

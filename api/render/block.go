@@ -4,6 +4,7 @@ import (
 	genModels "github.com/bullblock-io/tezTracker/gen/models"
 	"github.com/bullblock-io/tezTracker/models"
 )
+
 // Block renders an app level model to a gennerated OpenAPI model.
 func Block(b models.Block) *genModels.BlocksRow {
 	ts := b.Timestamp.Unix()
@@ -34,4 +35,13 @@ func Block(b models.Block) *genModels.BlocksRow {
 		MetaVotingPeriodPosition: b.MetaVotingPeriodPosition,
 		ExpectedCommitment:       b.ExpectedCommitment,
 	}
+}
+
+// Blocks renders a slice of app level Blocks into a slice of OpenAPI models.
+func Blocks(bs []models.Block) []*genModels.BlocksRow {
+	blocks := make([]*genModels.BlocksRow, len(bs))
+	for i := range bs {
+		blocks[i] = Block(bs[i])
+	}
+	return blocks
 }
