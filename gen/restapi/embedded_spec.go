@@ -439,8 +439,8 @@ func init() {
               "$ref": "#/definitions/BlocksRow"
             }
           },
-          "404": {
-            "description": "Not Found"
+          "500": {
+            "description": "Not initialized"
           }
         }
       }
@@ -2439,8 +2439,8 @@ func init() {
               "$ref": "#/definitions/BlocksRow"
             }
           },
-          "404": {
-            "description": "Not Found"
+          "500": {
+            "description": "Not initialized"
           }
         }
       }

@@ -57,26 +57,26 @@ func (o *GetBlocksHeadOK) WriteResponse(rw http.ResponseWriter, producer runtime
 	}
 }
 
-// GetBlocksHeadNotFoundCode is the HTTP code returned for type GetBlocksHeadNotFound
-const GetBlocksHeadNotFoundCode int = 404
+// GetBlocksHeadInternalServerErrorCode is the HTTP code returned for type GetBlocksHeadInternalServerError
+const GetBlocksHeadInternalServerErrorCode int = 500
 
-/*GetBlocksHeadNotFound Not Found
+/*GetBlocksHeadInternalServerError Not initialized
 
-swagger:response getBlocksHeadNotFound
+swagger:response getBlocksHeadInternalServerError
 */
-type GetBlocksHeadNotFound struct {
+type GetBlocksHeadInternalServerError struct {
 }
 
-// NewGetBlocksHeadNotFound creates GetBlocksHeadNotFound with default headers values
-func NewGetBlocksHeadNotFound() *GetBlocksHeadNotFound {
+// NewGetBlocksHeadInternalServerError creates GetBlocksHeadInternalServerError with default headers values
+func NewGetBlocksHeadInternalServerError() *GetBlocksHeadInternalServerError {
 
-	return &GetBlocksHeadNotFound{}
+	return &GetBlocksHeadInternalServerError{}
 }
 
 // WriteResponse to the client
-func (o *GetBlocksHeadNotFound) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+func (o *GetBlocksHeadInternalServerError) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
 	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
 
-	rw.WriteHeader(404)
+	rw.WriteHeader(500)
 }

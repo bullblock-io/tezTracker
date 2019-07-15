@@ -274,8 +274,8 @@ paths:
           description: Query compatibility endpoint for blocks head
           schema:
             $ref: '#/definitions/BlocksRow'
-        '404':
-          description: Not Found
+        '500':
+          description: Not initialized
       tags:
         - Blocks
   '/v2/data/{platform}/{network}/blocks/{hash}':
