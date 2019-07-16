@@ -307,6 +307,8 @@ paths:
               #/definitions/BlockResult
         '404':
           description: Not Found
+        '500':
+          description: Internal error
       tags:
         - Blocks
   '/v2/data/{platform}/{network}/operation_groups':

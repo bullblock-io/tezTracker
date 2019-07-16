@@ -80,3 +80,27 @@ func (o *GetBlockNotFound) WriteResponse(rw http.ResponseWriter, producer runtim
 
 	rw.WriteHeader(404)
 }
+
+// GetBlockInternalServerErrorCode is the HTTP code returned for type GetBlockInternalServerError
+const GetBlockInternalServerErrorCode int = 500
+
+/*GetBlockInternalServerError Internal error
+
+swagger:response getBlockInternalServerError
+*/
+type GetBlockInternalServerError struct {
+}
+
+// NewGetBlockInternalServerError creates GetBlockInternalServerError with default headers values
+func NewGetBlockInternalServerError() *GetBlockInternalServerError {
+
+	return &GetBlockInternalServerError{}
+}
+
+// WriteResponse to the client
+func (o *GetBlockInternalServerError) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
+
+	rw.WriteHeader(500)
+}

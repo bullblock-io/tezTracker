@@ -2,6 +2,7 @@ package services
 
 import (
 	"github.com/bullblock-io/tezTracker/repos/block"
+	"github.com/bullblock-io/tezTracker/repos/operation_groups"
 )
 
 type (
@@ -9,10 +10,11 @@ type (
 	TezTracker struct {
 		repoProvider Provider
 	}
-	
+
 	// Provider is the abstract interface to get any repository.
 	Provider interface {
 		GetBlock() block.Repo
+		GetOperationGroup() operation_groups.Repo
 	}
 )
 

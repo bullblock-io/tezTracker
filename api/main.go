@@ -11,4 +11,5 @@ func SetHandlers(serv *operations.TezTrackerAPI, db *gorm.DB) {
 	serv.Logger = logrus.Infof
 	serv.BlocksGetBlocksHeadHandler = &getHeadBlockHandler{db}
 	serv.BlocksGetBlocksListHandler = &getBlockListHandler{db}
+	serv.BlocksGetBlockHandler = &getBlockHandler{db}
 }

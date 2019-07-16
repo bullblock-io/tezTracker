@@ -45,3 +45,17 @@ func Blocks(bs []models.Block) []*genModels.BlocksRow {
 	}
 	return blocks
 }
+
+// BlockResult renders an app level block model into a OpenAPI model with operation groups.
+func BlockResult(b models.Block) *genModels.BlockResult {
+	groups := make([]*genModels.OperationGroupsRow, len(b.OperationGroups))
+	for i, og := range b.OperationGroups {
+		if og == nil {
+			continue
+		}
+		groups[i] = OperationGroup(*og)
+	}
+
+	br := genModels.BlockResult{Block: Block(b), OperationGroups: groups}
+	return &br
+}

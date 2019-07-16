@@ -488,6 +488,9 @@ func init() {
           },
           "404": {
             "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal error"
           }
         }
       }
@@ -2493,6 +2496,9 @@ func init() {
           },
           "404": {
             "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal error"
           }
         }
       }

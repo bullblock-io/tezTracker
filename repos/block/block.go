@@ -14,6 +14,7 @@ type (
 	Repo interface {
 		Last() (block models.Block, err error)
 		List(limit, since uint64) (blocks []models.Block, err error)
+		Find(filter models.Block) (found bool, block models.Block, err error)
 	}
 )
 
@@ -42,4 +43,15 @@ func (r *Repository) List(limit, since uint64) (blocks []models.Block, err error
 		Limit(limit).
 		Find(&blocks).Error
 	return blocks, err
+}
+
+// Find looks up for blocks with filter.
+func (r *Repository) Find(filter models.Block) (found bool, block models.Block, err error) {
+	if res := r.db.Model(&filter).Where(&filter).Find(&block); res.Error != nil {
+		if res.RecordNotFound() {
+			return false, block, nil
+		}
+		return false, block, err
+	}
+	return true, block, nil
 }
