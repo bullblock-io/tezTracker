@@ -24,8 +24,8 @@ services:
       - ${TEZTRACKER_PORT}:${TEZTRACKER_PORT}
     environment:
       TEZTRACKER_PORT: ${TEZTRACKER_PORT}
-      TEZTRACKER_SQL_CONNECTION_STRING: "${TEZTRACKER_SQL_CONNECTION_STRING}"
-      TEZTRACKER_LOG_LEVEL: "${TEZTRACKER_LOG_LEVEL}"
+      TEZTRACKER_SQL_CONNECTION_STRING: ${TEZTRACKER_SQL_CONNECTION_STRING}
+      TEZTRACKER_LOG_LEVEL: ${TEZTRACKER_LOG_LEVEL}
     # If using localhost db you may want to use the host network
     network_mode: "host"
     deploy:
