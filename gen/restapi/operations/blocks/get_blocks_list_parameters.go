@@ -18,10 +18,18 @@ import (
 )
 
 // NewGetBlocksListParams creates a new GetBlocksListParams object
-// no default values defined in spec.
+// with the default values initialized.
 func NewGetBlocksListParams() GetBlocksListParams {
 
-	return GetBlocksListParams{}
+	var (
+		// initialize parameters with default values
+
+		limitDefault = int64(20)
+	)
+
+	return GetBlocksListParams{
+		Limit: &limitDefault,
+	}
 }
 
 // GetBlocksListParams contains all the bound params for the get blocks list operation
@@ -74,6 +82,7 @@ type GetBlocksListParams struct {
 	BlockProtocol []string
 	/*
 	  In: query
+	  Default: 20
 	*/
 	Limit *int64
 	/*
@@ -431,6 +440,7 @@ func (o *GetBlocksListParams) bindLimit(rawData []string, hasKey bool, formats s
 	// Required: false
 	// AllowEmptyValue: false
 	if raw == "" { // empty values pass all other validations
+		// Default values have been previously initialized by NewGetBlocksListParams()
 		return nil
 	}
 

@@ -18,10 +18,18 @@ import (
 )
 
 // NewGetOperationGroupsParams creates a new GetOperationGroupsParams object
-// no default values defined in spec.
+// with the default values initialized.
 func NewGetOperationGroupsParams() GetOperationGroupsParams {
 
-	return GetOperationGroupsParams{}
+	var (
+		// initialize parameters with default values
+
+		limitDefault = int64(20)
+	)
+
+	return GetOperationGroupsParams{
+		Limit: &limitDefault,
+	}
 }
 
 // GetOperationGroupsParams contains all the bound params for the get operation groups operation
@@ -70,6 +78,7 @@ type GetOperationGroupsParams struct {
 	BlockProtocol []string
 	/*
 	  In: query
+	  Default: 20
 	*/
 	Limit *int64
 	/*
@@ -400,6 +409,7 @@ func (o *GetOperationGroupsParams) bindLimit(rawData []string, hasKey bool, form
 	// Required: false
 	// AllowEmptyValue: false
 	if raw == "" { // empty values pass all other validations
+		// Default values have been previously initialized by NewGetOperationGroupsParams()
 		return nil
 	}
 

@@ -67,6 +67,7 @@ func init() {
           },
           {
             "type": "integer",
+            "default": 20,
             "name": "limit",
             "in": "query"
           },
@@ -271,6 +272,7 @@ func init() {
           },
           {
             "type": "integer",
+            "default": 20,
             "name": "limit",
             "in": "query"
           },
@@ -519,6 +521,7 @@ func init() {
           },
           {
             "type": "integer",
+            "default": 20,
             "name": "limit",
             "in": "query"
           },
@@ -723,6 +726,7 @@ func init() {
           },
           {
             "type": "integer",
+            "default": 20,
             "name": "limit",
             "in": "query"
           },
@@ -885,6 +889,7 @@ func init() {
           },
           {
             "type": "integer",
+            "default": 20,
             "name": "limit",
             "in": "query"
           },
@@ -1639,7 +1644,8 @@ func init() {
         },
         "limit": {
           "type": "integer",
-          "format": "int64"
+          "format": "int64",
+          "default": 20
         },
         "orderBy": {
           "type": "array",
@@ -2075,6 +2081,7 @@ func init() {
           },
           {
             "type": "integer",
+            "default": 20,
             "name": "limit",
             "in": "query"
           },
@@ -2279,6 +2286,7 @@ func init() {
           },
           {
             "type": "integer",
+            "default": 20,
             "name": "limit",
             "in": "query"
           },
@@ -2527,6 +2535,7 @@ func init() {
           },
           {
             "type": "integer",
+            "default": 20,
             "name": "limit",
             "in": "query"
           },
@@ -2731,6 +2740,7 @@ func init() {
           },
           {
             "type": "integer",
+            "default": 20,
             "name": "limit",
             "in": "query"
           },
@@ -2893,6 +2903,7 @@ func init() {
           },
           {
             "type": "integer",
+            "default": 20,
             "name": "limit",
             "in": "query"
           },
@@ -3647,7 +3658,8 @@ func init() {
         },
         "limit": {
           "type": "integer",
-          "format": "int64"
+          "format": "int64",
+          "default": 20
         },
         "orderBy": {
           "type": "array",

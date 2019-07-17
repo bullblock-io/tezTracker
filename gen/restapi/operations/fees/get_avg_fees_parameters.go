@@ -18,10 +18,18 @@ import (
 )
 
 // NewGetAvgFeesParams creates a new GetAvgFeesParams object
-// no default values defined in spec.
+// with the default values initialized.
 func NewGetAvgFeesParams() GetAvgFeesParams {
 
-	return GetAvgFeesParams{}
+	var (
+		// initialize parameters with default values
+
+		limitDefault = int64(20)
+	)
+
+	return GetAvgFeesParams{
+		Limit: &limitDefault,
+	}
 }
 
 // GetAvgFeesParams contains all the bound params for the get avg fees operation
@@ -70,6 +78,7 @@ type GetAvgFeesParams struct {
 	BlockProtocol []string
 	/*
 	  In: query
+	  Default: 20
 	*/
 	Limit *int64
 	/*
@@ -400,6 +409,7 @@ func (o *GetAvgFeesParams) bindLimit(rawData []string, hasKey bool, formats strf
 	// Required: false
 	// AllowEmptyValue: false
 	if raw == "" { // empty values pass all other validations
+		// Default values have been previously initialized by NewGetAvgFeesParams()
 		return nil
 	}
 

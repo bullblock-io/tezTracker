@@ -32,6 +32,7 @@ paths:
         - in: query
           name: limit
           type: integer
+          default: 20
         - collectionFormat: multi
           in: query
           items:
@@ -166,6 +167,7 @@ paths:
         - in: query
           name: limit
           type: integer
+          default: 20
         - collectionFormat: multi
           in: query
           items:
@@ -328,6 +330,7 @@ paths:
         - in: query
           name: limit
           type: integer
+          default: 20
         - collectionFormat: multi
           in: query
           items:
@@ -462,6 +465,7 @@ paths:
         - in: query
           name: limit
           type: integer
+          default: 20
         - collectionFormat: multi
           in: query
           items:
@@ -568,6 +572,7 @@ paths:
         - in: query
           name: limit
           type: integer
+          default: 20
         - collectionFormat: multi
           in: query
           items:
@@ -960,6 +965,7 @@ definitions:
       limit:
         format: int64
         type: integer
+        default: 20
       orderBy:
         items:
           $ref: >-
