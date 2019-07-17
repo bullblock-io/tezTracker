@@ -22,7 +22,7 @@ func (h *getBlockListHandler) Handle(params blocks.GetBlocksListParams) middlewa
 		limit = uint64(*params.Limit)
 	}
 	before := uint64(0)
-	if params.Limit != nil {
+	if params.BeforeLevel != nil {
 		before = uint64(*params.BeforeLevel)
 	}
 	bs, err := service.BlockList(limit, before)
