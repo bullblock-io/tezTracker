@@ -2,6 +2,7 @@ package repos
 
 import (
 	"github.com/bullblock-io/tezTracker/repos/block"
+	"github.com/bullblock-io/tezTracker/repos/operation"
 	"github.com/bullblock-io/tezTracker/repos/operation_groups"
 	"github.com/jinzhu/gorm"
 )
@@ -23,7 +24,12 @@ func (u *Provider) GetBlock() block.Repo {
 	return block.New(u.db)
 }
 
-// GetOperationGroup returns a new opeataion group repository.
+// GetOperationGroup returns a new operation group repository.
 func (u *Provider) GetOperationGroup() operation_groups.Repo {
 	return operation_groups.New(u.db)
+}
+
+// GetOperation returns a new operation repository.
+func (u *Provider) GetOperation() operation.Repo {
+	return operation.New(u.db)
 }

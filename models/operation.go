@@ -3,10 +3,10 @@ package models
 import "time"
 
 type Operation struct {
-	OperationID         uint      `gorm:"primary_key;AUTO_INCREMENT" json:"operation_id"`
+	OperationID         int64     `gorm:"primary_key;AUTO_INCREMENT" json:"operation_id"`
 	OperationGroupHash  string    `json:"operation_group_hash"`
 	Kind                string    `json:"kind"`
-	Level               uint      `json:"level"`
+	Level               int64     `json:"level"`
 	Delegate            string    `json:"delegate"`
 	Slots               string    `json:"slots"`
 	Nonce               string    `json:"nonce"`
@@ -33,6 +33,6 @@ type Operation struct {
 	PaidStorageSizeDiff float64   `json:"paid_storage_size_diff"`
 	OriginatedContracts string    `json:"originated_contracts"`
 	BlockHash           string    `json:"block_hash"`
-	BlockLevel          uint      `json:"block_level"`
+	BlockLevel          int64     `json:"block_level"`
 	Timestamp           time.Time `json:"timestamp"`
 }

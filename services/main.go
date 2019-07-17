@@ -3,6 +3,7 @@ package services
 import (
 	"github.com/bullblock-io/tezTracker/repos/block"
 	"github.com/bullblock-io/tezTracker/repos/operation_groups"
+	"github.com/bullblock-io/tezTracker/repos/operation"
 )
 
 type (
@@ -15,6 +16,7 @@ type (
 	Provider interface {
 		GetBlock() block.Repo
 		GetOperationGroup() operation_groups.Repo
+		GetOperation() operation.Repo
 	}
 )
 

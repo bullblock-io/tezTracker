@@ -22,6 +22,7 @@ type GetOperationsListURL struct {
 	AccountDelegate      []string
 	AccountID            []string
 	AccountManager       []string
+	BeforeID             *int64
 	BlockID              []string
 	BlockLevel           []int64
 	BlockNetid           []string
@@ -120,6 +121,14 @@ func (o *GetOperationsListURL) Build() (*url.URL, error) {
 
 	for _, qsv := range accountManager {
 		qs.Add("account_manager", qsv)
+	}
+
+	var beforeID string
+	if o.BeforeID != nil {
+		beforeID = swag.FormatInt64(*o.BeforeID)
+	}
+	if beforeID != "" {
+		qs.Set("before_id", beforeID)
 	}
 
 	var blockIDIR []string

@@ -12,4 +12,5 @@ func SetHandlers(serv *operations.TezTrackerAPI, db *gorm.DB) {
 	serv.BlocksGetBlocksHeadHandler = &getHeadBlockHandler{db}
 	serv.BlocksGetBlocksListHandler = &getBlockListHandler{db}
 	serv.BlocksGetBlockHandler = &getBlockHandler{db}
+	serv.OperationsListGetOperationsListHandler = &getOperationListHandler{db}
 }

@@ -13,6 +13,7 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 
 	strfmt "github.com/go-openapi/strfmt"
 )
@@ -41,37 +42,41 @@ type GetOperationsListParams struct {
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
 
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
 	AccountDelegate []string
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
 	AccountID []string
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
 	AccountManager []string
 	/*
 	  In: query
+	*/
+	BeforeID *int64
+	/*Not used
+	  In: query
 	  Collection Format: multi
 	*/
 	BlockID []string
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
 	BlockLevel []int64
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
 	BlockNetid []string
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
@@ -81,17 +86,17 @@ type GetOperationsListParams struct {
 	  Default: 20
 	*/
 	Limit *int64
-	/*
+	/*Not used
 	  Required: true
 	  In: path
 	*/
 	Network string
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
 	OperationDestination []string
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
@@ -101,26 +106,26 @@ type GetOperationsListParams struct {
 	  Collection Format: multi
 	*/
 	OperationKind []string
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
 	OperationParticipant []string
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
 	OperationSource []string
-	/*
+	/*Not used
 	  In: query
 	*/
 	Order *string
-	/*
+	/*Not used
 	  Required: true
 	  In: path
 	*/
 	Platform string
-	/*
+	/*Not used
 	  In: query
 	*/
 	SortBy *string
@@ -149,6 +154,11 @@ func (o *GetOperationsListParams) BindRequest(r *http.Request, route *middleware
 
 	qAccountManager, qhkAccountManager, _ := qs.GetOK("account_manager")
 	if err := o.bindAccountManager(qAccountManager, qhkAccountManager, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
+	qBeforeID, qhkBeforeID, _ := qs.GetOK("before_id")
+	if err := o.bindBeforeID(qBeforeID, qhkBeforeID, route.Formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -296,6 +306,28 @@ func (o *GetOperationsListParams) bindAccountManager(rawData []string, hasKey bo
 	}
 
 	o.AccountManager = accountManagerIR
+
+	return nil
+}
+
+// bindBeforeID binds and validates parameter BeforeID from query.
+func (o *GetOperationsListParams) bindBeforeID(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+	if raw == "" { // empty values pass all other validations
+		return nil
+	}
+
+	value, err := swag.ConvertInt64(raw)
+	if err != nil {
+		return errors.InvalidType("before_id", "query", "int64", raw)
+	}
+	o.BeforeID = &value
 
 	return nil
 }
@@ -498,8 +530,12 @@ func (o *GetOperationsListParams) bindOperationKind(rawData []string, hasKey boo
 	}
 
 	var operationKindIR []string
-	for _, operationKindIV := range operationKindIC {
+	for i, operationKindIV := range operationKindIC {
 		operationKindI := operationKindIV
+
+		if err := validate.Enum(fmt.Sprintf("%s.%v", "operation_kind", i), "query", operationKindI, []interface{}{"endorsement", "proposals", "seed_nonce_revelation", "delegation", "transaction", "activate_account", "ballot", "origination", "reveal", "double_baking_evidence"}); err != nil {
+			return err
+		}
 
 		operationKindIR = append(operationKindIR, operationKindI)
 	}
@@ -571,6 +607,20 @@ func (o *GetOperationsListParams) bindOrder(rawData []string, hasKey bool, forma
 	}
 
 	o.Order = &raw
+
+	if err := o.validateOrder(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateOrder carries on validations for parameter Order
+func (o *GetOperationsListParams) validateOrder(formats strfmt.Registry) error {
+
+	if err := validate.Enum("order", "query", *o.Order, []interface{}{"asc", "desc"}); err != nil {
+		return err
+	}
 
 	return nil
 }

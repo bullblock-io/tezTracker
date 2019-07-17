@@ -714,12 +714,14 @@ func init() {
         "parameters": [
           {
             "type": "string",
+            "description": "Not used",
             "name": "platform",
             "in": "path",
             "required": true
           },
           {
             "type": "string",
+            "description": "Not used",
             "name": "network",
             "in": "path",
             "required": true
@@ -731,11 +733,17 @@ func init() {
             "in": "query"
           },
           {
+            "type": "integer",
+            "name": "before_id",
+            "in": "query"
+          },
+          {
             "type": "array",
             "items": {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "block_id",
             "in": "query"
           },
@@ -745,6 +753,7 @@ func init() {
               "type": "integer"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "block_level",
             "in": "query"
           },
@@ -754,6 +763,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "block_netid",
             "in": "query"
           },
@@ -763,6 +773,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "block_protocol",
             "in": "query"
           },
@@ -772,6 +783,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "operation_id",
             "in": "query"
           },
@@ -781,6 +793,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "operation_source",
             "in": "query"
           },
@@ -790,6 +803,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "operation_destination",
             "in": "query"
           },
@@ -799,12 +813,25 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "operation_participant",
             "in": "query"
           },
           {
             "type": "array",
             "items": {
+              "enum": [
+                "endorsement",
+                "proposals",
+                "seed_nonce_revelation",
+                "delegation",
+                "transaction",
+                "activate_account",
+                "ballot",
+                "origination",
+                "reveal",
+                "double_baking_evidence"
+              ],
               "type": "string"
             },
             "collectionFormat": "multi",
@@ -817,6 +844,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "account_id",
             "in": "query"
           },
@@ -826,6 +854,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "account_manager",
             "in": "query"
           },
@@ -835,16 +864,23 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "account_delegate",
             "in": "query"
           },
           {
             "type": "string",
+            "description": "Not used",
             "name": "sort_by",
             "in": "query"
           },
           {
+            "enum": [
+              "asc",
+              "desc"
+            ],
             "type": "string",
+            "description": "Not used",
             "name": "order",
             "in": "query"
           }
@@ -855,7 +891,7 @@ func init() {
             "schema": {
               "type": "array",
               "items": {
-                "type": "string"
+                "$ref": "#/definitions/OperationsRow"
               }
             }
           },
@@ -2728,12 +2764,14 @@ func init() {
         "parameters": [
           {
             "type": "string",
+            "description": "Not used",
             "name": "platform",
             "in": "path",
             "required": true
           },
           {
             "type": "string",
+            "description": "Not used",
             "name": "network",
             "in": "path",
             "required": true
@@ -2745,11 +2783,17 @@ func init() {
             "in": "query"
           },
           {
+            "type": "integer",
+            "name": "before_id",
+            "in": "query"
+          },
+          {
             "type": "array",
             "items": {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "block_id",
             "in": "query"
           },
@@ -2759,6 +2803,7 @@ func init() {
               "type": "integer"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "block_level",
             "in": "query"
           },
@@ -2768,6 +2813,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "block_netid",
             "in": "query"
           },
@@ -2777,6 +2823,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "block_protocol",
             "in": "query"
           },
@@ -2786,6 +2833,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "operation_id",
             "in": "query"
           },
@@ -2795,6 +2843,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "operation_source",
             "in": "query"
           },
@@ -2804,6 +2853,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "operation_destination",
             "in": "query"
           },
@@ -2813,12 +2863,25 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "operation_participant",
             "in": "query"
           },
           {
             "type": "array",
             "items": {
+              "enum": [
+                "endorsement",
+                "proposals",
+                "seed_nonce_revelation",
+                "delegation",
+                "transaction",
+                "activate_account",
+                "ballot",
+                "origination",
+                "reveal",
+                "double_baking_evidence"
+              ],
               "type": "string"
             },
             "collectionFormat": "multi",
@@ -2831,6 +2894,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "account_id",
             "in": "query"
           },
@@ -2840,6 +2904,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "account_manager",
             "in": "query"
           },
@@ -2849,16 +2914,23 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "account_delegate",
             "in": "query"
           },
           {
             "type": "string",
+            "description": "Not used",
             "name": "sort_by",
             "in": "query"
           },
           {
+            "enum": [
+              "asc",
+              "desc"
+            ],
             "type": "string",
+            "description": "Not used",
             "name": "order",
             "in": "query"
           }
@@ -2869,7 +2941,7 @@ func init() {
             "schema": {
               "type": "array",
               "items": {
-                "type": "string"
+                "$ref": "#/definitions/OperationsRow"
               }
             }
           },

@@ -9,6 +9,8 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+
+	models "github.com/bullblock-io/tezTracker/gen/models"
 )
 
 // GetOperationsListOKCode is the HTTP code returned for type GetOperationsListOK
@@ -23,7 +25,7 @@ type GetOperationsListOK struct {
 	/*
 	  In: Body
 	*/
-	Payload []string `json:"body,omitempty"`
+	Payload []*models.OperationsRow `json:"body,omitempty"`
 }
 
 // NewGetOperationsListOK creates GetOperationsListOK with default headers values
@@ -33,13 +35,13 @@ func NewGetOperationsListOK() *GetOperationsListOK {
 }
 
 // WithPayload adds the payload to the get operations list o k response
-func (o *GetOperationsListOK) WithPayload(payload []string) *GetOperationsListOK {
+func (o *GetOperationsListOK) WithPayload(payload []*models.OperationsRow) *GetOperationsListOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get operations list o k response
-func (o *GetOperationsListOK) SetPayload(payload []string) {
+func (o *GetOperationsListOK) SetPayload(payload []*models.OperationsRow) {
 	o.Payload = payload
 }
 
@@ -50,7 +52,7 @@ func (o *GetOperationsListOK) WriteResponse(rw http.ResponseWriter, producer run
 	payload := o.Payload
 	if payload == nil {
 		// return empty array
-		payload = make([]string, 0, 50)
+		payload = make([]*models.OperationsRow, 0, 50)
 	}
 
 	if err := producer.Produce(rw, payload); err != nil {
