@@ -1,6 +1,7 @@
 package repos
 
 import (
+	"github.com/bullblock-io/tezTracker/repos/account"
 	"github.com/bullblock-io/tezTracker/repos/block"
 	"github.com/bullblock-io/tezTracker/repos/operation"
 	"github.com/bullblock-io/tezTracker/repos/operation_groups"
@@ -32,4 +33,9 @@ func (u *Provider) GetOperationGroup() operation_groups.Repo {
 // GetOperation returns a new operation repository.
 func (u *Provider) GetOperation() operation.Repo {
 	return operation.New(u.db)
+}
+
+// GetAccount returns a new account repository.
+func (u *Provider) GetAccount() account.Repo {
+	return account.New(u.db)
 }

@@ -58,12 +58,14 @@ func init() {
         "parameters": [
           {
             "type": "string",
+            "description": "Not used",
             "name": "platform",
             "in": "path",
             "required": true
           },
           {
             "type": "string",
+            "description": "Not used",
             "name": "network",
             "in": "path",
             "required": true
@@ -74,6 +76,11 @@ func init() {
             "type": "integer",
             "default": 20,
             "name": "limit",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "name": "after_id",
             "in": "query"
           },
           {
@@ -88,7 +95,8 @@ func init() {
           {
             "type": "array",
             "items": {
-              "type": "integer"
+              "type": "integer",
+              "format": "int64"
             },
             "collectionFormat": "multi",
             "name": "block_level",
@@ -100,6 +108,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "block_netid",
             "in": "query"
           },
@@ -109,6 +118,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "block_protocol",
             "in": "query"
           },
@@ -118,6 +128,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "operation_id",
             "in": "query"
           },
@@ -127,6 +138,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "operation_source",
             "in": "query"
           },
@@ -136,6 +148,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "operation_destination",
             "in": "query"
           },
@@ -145,6 +158,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "operation_participant",
             "in": "query"
           },
@@ -154,6 +168,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "operation_kind",
             "in": "query"
           },
@@ -163,6 +178,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "account_id",
             "in": "query"
           },
@@ -172,6 +188,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "account_manager",
             "in": "query"
           },
@@ -181,16 +198,19 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "account_delegate",
             "in": "query"
           },
           {
             "type": "string",
+            "description": "Not used",
             "name": "sort_by",
             "in": "query"
           },
           {
             "type": "string",
+            "description": "Not used",
             "name": "order",
             "in": "query"
           }
@@ -201,7 +221,7 @@ func init() {
             "schema": {
               "type": "array",
               "items": {
-                "type": "string"
+                "$ref": "#/definitions/AccountsRow"
               }
             }
           },
@@ -223,12 +243,14 @@ func init() {
         "parameters": [
           {
             "type": "string",
+            "description": "Not used",
             "name": "platform",
             "in": "path",
             "required": true
           },
           {
             "type": "string",
+            "description": "Not used",
             "name": "network",
             "in": "path",
             "required": true
@@ -244,11 +266,14 @@ func init() {
           "200": {
             "description": "Query compatibility endpoint for account",
             "schema": {
-              "$ref": "#/definitions/AccountResult"
+              "$ref": "#/definitions/AccountsRow"
             }
           },
           "404": {
             "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal error"
           }
         }
       }
@@ -1447,7 +1472,8 @@ func init() {
           "type": "string"
         },
         "blockLevel": {
-          "type": "number"
+          "type": "integer",
+          "format": "int64"
         },
         "counter": {
           "type": "integer",
@@ -2142,12 +2168,14 @@ func init() {
         "parameters": [
           {
             "type": "string",
+            "description": "Not used",
             "name": "platform",
             "in": "path",
             "required": true
           },
           {
             "type": "string",
+            "description": "Not used",
             "name": "network",
             "in": "path",
             "required": true
@@ -2158,6 +2186,11 @@ func init() {
             "type": "integer",
             "default": 20,
             "name": "limit",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "name": "after_id",
             "in": "query"
           },
           {
@@ -2172,7 +2205,8 @@ func init() {
           {
             "type": "array",
             "items": {
-              "type": "integer"
+              "type": "integer",
+              "format": "int64"
             },
             "collectionFormat": "multi",
             "name": "block_level",
@@ -2184,6 +2218,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "block_netid",
             "in": "query"
           },
@@ -2193,6 +2228,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "block_protocol",
             "in": "query"
           },
@@ -2202,6 +2238,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "operation_id",
             "in": "query"
           },
@@ -2211,6 +2248,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "operation_source",
             "in": "query"
           },
@@ -2220,6 +2258,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "operation_destination",
             "in": "query"
           },
@@ -2229,6 +2268,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "operation_participant",
             "in": "query"
           },
@@ -2238,6 +2278,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "operation_kind",
             "in": "query"
           },
@@ -2247,6 +2288,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "account_id",
             "in": "query"
           },
@@ -2256,6 +2298,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "account_manager",
             "in": "query"
           },
@@ -2265,16 +2308,19 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "account_delegate",
             "in": "query"
           },
           {
             "type": "string",
+            "description": "Not used",
             "name": "sort_by",
             "in": "query"
           },
           {
             "type": "string",
+            "description": "Not used",
             "name": "order",
             "in": "query"
           }
@@ -2285,7 +2331,7 @@ func init() {
             "schema": {
               "type": "array",
               "items": {
-                "type": "string"
+                "$ref": "#/definitions/AccountsRow"
               }
             }
           },
@@ -2307,12 +2353,14 @@ func init() {
         "parameters": [
           {
             "type": "string",
+            "description": "Not used",
             "name": "platform",
             "in": "path",
             "required": true
           },
           {
             "type": "string",
+            "description": "Not used",
             "name": "network",
             "in": "path",
             "required": true
@@ -2328,11 +2376,14 @@ func init() {
           "200": {
             "description": "Query compatibility endpoint for account",
             "schema": {
-              "$ref": "#/definitions/AccountResult"
+              "$ref": "#/definitions/AccountsRow"
             }
           },
           "404": {
             "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal error"
           }
         }
       }
@@ -3531,7 +3582,8 @@ func init() {
           "type": "string"
         },
         "blockLevel": {
-          "type": "number"
+          "type": "integer",
+          "format": "int64"
         },
         "counter": {
           "type": "integer",

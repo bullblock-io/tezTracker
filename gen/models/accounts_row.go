@@ -31,7 +31,7 @@ type AccountsRow struct {
 
 	// block level
 	// Required: true
-	BlockLevel *float64 `json:"blockLevel"`
+	BlockLevel *int64 `json:"blockLevel"`
 
 	// counter
 	// Required: true

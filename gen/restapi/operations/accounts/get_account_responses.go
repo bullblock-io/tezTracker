@@ -25,7 +25,7 @@ type GetAccountOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *models.AccountResult `json:"body,omitempty"`
+	Payload *models.AccountsRow `json:"body,omitempty"`
 }
 
 // NewGetAccountOK creates GetAccountOK with default headers values
@@ -35,13 +35,13 @@ func NewGetAccountOK() *GetAccountOK {
 }
 
 // WithPayload adds the payload to the get account o k response
-func (o *GetAccountOK) WithPayload(payload *models.AccountResult) *GetAccountOK {
+func (o *GetAccountOK) WithPayload(payload *models.AccountsRow) *GetAccountOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get account o k response
-func (o *GetAccountOK) SetPayload(payload *models.AccountResult) {
+func (o *GetAccountOK) SetPayload(payload *models.AccountsRow) {
 	o.Payload = payload
 }
 
@@ -79,4 +79,28 @@ func (o *GetAccountNotFound) WriteResponse(rw http.ResponseWriter, producer runt
 	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
 
 	rw.WriteHeader(404)
+}
+
+// GetAccountInternalServerErrorCode is the HTTP code returned for type GetAccountInternalServerError
+const GetAccountInternalServerErrorCode int = 500
+
+/*GetAccountInternalServerError Internal error
+
+swagger:response getAccountInternalServerError
+*/
+type GetAccountInternalServerError struct {
+}
+
+// NewGetAccountInternalServerError creates GetAccountInternalServerError with default headers values
+func NewGetAccountInternalServerError() *GetAccountInternalServerError {
+
+	return &GetAccountInternalServerError{}
+}
+
+// WriteResponse to the client
+func (o *GetAccountInternalServerError) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
+
+	rw.WriteHeader(500)
 }

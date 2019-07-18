@@ -35,12 +35,12 @@ type GetAccountParams struct {
 	  In: path
 	*/
 	AccountID string
-	/*
+	/*Not used
 	  Required: true
 	  In: path
 	*/
 	Network string
-	/*
+	/*Not used
 	  Required: true
 	  In: path
 	*/

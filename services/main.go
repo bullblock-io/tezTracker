@@ -1,9 +1,10 @@
 package services
 
 import (
+	"github.com/bullblock-io/tezTracker/repos/account"
 	"github.com/bullblock-io/tezTracker/repos/block"
-	"github.com/bullblock-io/tezTracker/repos/operation_groups"
 	"github.com/bullblock-io/tezTracker/repos/operation"
+	"github.com/bullblock-io/tezTracker/repos/operation_groups"
 )
 
 type (
@@ -17,6 +18,7 @@ type (
 		GetBlock() block.Repo
 		GetOperationGroup() operation_groups.Repo
 		GetOperation() operation.Repo
+		GetAccount() account.Repo
 	}
 )
 

@@ -42,21 +42,25 @@ type GetAccountsListParams struct {
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
 
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
 	AccountDelegate []string
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
 	AccountID []string
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
 	AccountManager []string
+	/*
+	  In: query
+	*/
+	AfterID *string
 	/*
 	  In: query
 	  Collection Format: multi
@@ -67,12 +71,12 @@ type GetAccountsListParams struct {
 	  Collection Format: multi
 	*/
 	BlockLevel []int64
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
 	BlockNetid []string
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
@@ -84,46 +88,46 @@ type GetAccountsListParams struct {
 	  Default: 20
 	*/
 	Limit *int64
-	/*
+	/*Not used
 	  Required: true
 	  In: path
 	*/
 	Network string
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
 	OperationDestination []string
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
 	OperationID []string
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
 	OperationKind []string
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
 	OperationParticipant []string
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
 	OperationSource []string
-	/*
+	/*Not used
 	  In: query
 	*/
 	Order *string
-	/*
+	/*Not used
 	  Required: true
 	  In: path
 	*/
 	Platform string
-	/*
+	/*Not used
 	  In: query
 	*/
 	SortBy *string
@@ -152,6 +156,11 @@ func (o *GetAccountsListParams) BindRequest(r *http.Request, route *middleware.M
 
 	qAccountManager, qhkAccountManager, _ := qs.GetOK("account_manager")
 	if err := o.bindAccountManager(qAccountManager, qhkAccountManager, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
+	qAfterID, qhkAfterID, _ := qs.GetOK("after_id")
+	if err := o.bindAfterID(qAfterID, qhkAfterID, route.Formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -303,6 +312,24 @@ func (o *GetAccountsListParams) bindAccountManager(rawData []string, hasKey bool
 	return nil
 }
 
+// bindAfterID binds and validates parameter AfterID from query.
+func (o *GetAccountsListParams) bindAfterID(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+	if raw == "" { // empty values pass all other validations
+		return nil
+	}
+
+	o.AfterID = &raw
+
+	return nil
+}
+
 // bindBlockID binds and validates array parameter BlockID from query.
 //
 // Arrays are parsed according to CollectionFormat: "multi" (defaults to "csv" when empty).
@@ -341,6 +368,7 @@ func (o *GetAccountsListParams) bindBlockLevel(rawData []string, hasKey bool, fo
 
 	var blockLevelIR []int64
 	for i, blockLevelIV := range blockLevelIC {
+		// items.Format: "int64"
 		blockLevelI, err := swag.ConvertInt64(blockLevelIV)
 		if err != nil {
 			return errors.InvalidType(fmt.Sprintf("%s.%v", "block_level", i), "query", "int64", blockLevelI)
