@@ -35,12 +35,12 @@ type GetBlockParams struct {
 	  In: path
 	*/
 	Hash string
-	/*
+	/*Not used
 	  Required: true
 	  In: path
 	*/
 	Network string
-	/*
+	/*Not used
 	  Required: true
 	  In: path
 	*/

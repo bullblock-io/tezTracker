@@ -30,12 +30,12 @@ type GetBlocksHeadParams struct {
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
 
-	/*
+	/*Not used
 	  Required: true
 	  In: path
 	*/
 	Network string
-	/*
+	/*Not used
 	  Required: true
 	  In: path
 	*/
