@@ -69,6 +69,8 @@ func init() {
             "required": true
           },
           {
+            "maximum": 500,
+            "minimum": 1,
             "type": "integer",
             "default": 20,
             "name": "limit",
@@ -276,6 +278,8 @@ func init() {
             "required": true
           },
           {
+            "maximum": 500,
+            "minimum": 1,
             "type": "integer",
             "default": 20,
             "name": "limit",
@@ -543,6 +547,8 @@ func init() {
             "required": true
           },
           {
+            "maximum": 500,
+            "minimum": 1,
             "type": "integer",
             "default": 20,
             "name": "limit",
@@ -750,6 +756,8 @@ func init() {
             "required": true
           },
           {
+            "maximum": 500,
+            "minimum": 1,
             "type": "integer",
             "default": 20,
             "name": "limit",
@@ -766,7 +774,6 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
-            "description": "Not used",
             "name": "block_id",
             "in": "query"
           },
@@ -867,7 +874,6 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
-            "description": "Not used",
             "name": "account_id",
             "in": "query"
           },
@@ -947,6 +953,8 @@ func init() {
             "required": true
           },
           {
+            "maximum": 500,
+            "minimum": 1,
             "type": "integer",
             "default": 20,
             "name": "limit",
@@ -1704,7 +1712,9 @@ func init() {
         "limit": {
           "type": "integer",
           "format": "int64",
-          "default": 20
+          "default": 20,
+          "maximum": 500,
+          "minimum": 1
         },
         "orderBy": {
           "type": "array",
@@ -2142,6 +2152,8 @@ func init() {
             "required": true
           },
           {
+            "maximum": 500,
+            "minimum": 1,
             "type": "integer",
             "default": 20,
             "name": "limit",
@@ -2349,6 +2361,8 @@ func init() {
             "required": true
           },
           {
+            "maximum": 500,
+            "minimum": 1,
             "type": "integer",
             "default": 20,
             "name": "limit",
@@ -2616,6 +2630,8 @@ func init() {
             "required": true
           },
           {
+            "maximum": 500,
+            "minimum": 1,
             "type": "integer",
             "default": 20,
             "name": "limit",
@@ -2823,6 +2839,8 @@ func init() {
             "required": true
           },
           {
+            "maximum": 500,
+            "minimum": 1,
             "type": "integer",
             "default": 20,
             "name": "limit",
@@ -2839,7 +2857,6 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
-            "description": "Not used",
             "name": "block_id",
             "in": "query"
           },
@@ -2940,7 +2957,6 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
-            "description": "Not used",
             "name": "account_id",
             "in": "query"
           },
@@ -3020,6 +3036,8 @@ func init() {
             "required": true
           },
           {
+            "maximum": 500,
+            "minimum": 1,
             "type": "integer",
             "default": 20,
             "name": "limit",
@@ -3777,7 +3795,9 @@ func init() {
         "limit": {
           "type": "integer",
           "format": "int64",
-          "default": 20
+          "default": 20,
+          "maximum": 500,
+          "minimum": 1
         },
         "orderBy": {
           "type": "array",

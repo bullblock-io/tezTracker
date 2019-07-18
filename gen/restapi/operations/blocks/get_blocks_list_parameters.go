@@ -13,6 +13,7 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 
 	strfmt "github.com/go-openapi/strfmt"
 )
@@ -81,6 +82,8 @@ type GetBlocksListParams struct {
 	*/
 	BlockProtocol []string
 	/*
+	  Maximum: 500
+	  Minimum: 1
 	  In: query
 	  Default: 20
 	*/
@@ -449,6 +452,24 @@ func (o *GetBlocksListParams) bindLimit(rawData []string, hasKey bool, formats s
 		return errors.InvalidType("limit", "query", "int64", raw)
 	}
 	o.Limit = &value
+
+	if err := o.validateLimit(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateLimit carries on validations for parameter Limit
+func (o *GetBlocksListParams) validateLimit(formats strfmt.Registry) error {
+
+	if err := validate.MinimumInt("limit", "query", int64(*o.Limit), 1, false); err != nil {
+		return err
+	}
+
+	if err := validate.MaximumInt("limit", "query", int64(*o.Limit), 500, false); err != nil {
+		return err
+	}
 
 	return nil
 }
