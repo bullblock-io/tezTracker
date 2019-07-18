@@ -12,7 +12,7 @@ type (
 	}
 
 	Repo interface {
-		List(kinds []string, inBlocks[]string, limit, since int64) (operations []models.Operation, err error)
+		List(kinds []string, inBlocks, accountIDs []string, limit, since int64) (operations []models.Operation, err error)
 	}
 )
 
@@ -27,7 +27,7 @@ func New(db *gorm.DB) *Repository {
 // limit defines the limit for the maximum number of operations returned.
 // since is used to paginate results based on the operation id.
 // As the result is ordered descendingly the operations with operation_id < since will be returned.
-func (r *Repository) List(kinds []string, inBlocks[]string, limit, since int64) (operations []models.Operation, err error) {
+func (r *Repository) List(kinds []string, inBlocks, accountIDs []string, limit, since int64) (operations []models.Operation, err error) {
 	db := r.db.Model(&models.Operation{})
 	if since > 0 {
 		db = db.Where("operation_id < ?", since)
@@ -37,6 +37,9 @@ func (r *Repository) List(kinds []string, inBlocks[]string, limit, since int64) 
 	}
 	if len(inBlocks) > 0 {
 		db = db.Where("block_hash IN (?)", inBlocks)
+	}
+	if len(accountIDs) > 0 {
+		db = db.Where("delegate IN (?) OR pkh IN (?) OR source IN (?) OR public_key IN (?) OR destination IN (?)", accountIDs, accountIDs, accountIDs, accountIDs, accountIDs)
 	}
 	err = db.Order("operation_id desc").
 		Limit(limit).

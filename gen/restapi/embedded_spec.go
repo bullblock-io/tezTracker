@@ -899,7 +899,6 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
-            "description": "Not used",
             "name": "account_id",
             "in": "query"
           },
@@ -3009,7 +3008,6 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
-            "description": "Not used",
             "name": "account_id",
             "in": "query"
           },
