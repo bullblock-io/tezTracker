@@ -1,24 +1,27 @@
 package cmc
 
-
 import (
 	"encoding/json"
+	"fmt"
 
-	coingecko "github.com/superoo7/go-gecko/v3"
 	"github.com/bullblock-io/tezTracker/models"
+	coingecko "github.com/superoo7/go-gecko/v3"
 )
 
-type tezosMarketData struct{
-	Tezos MarketData `json:"tezos"`
+const baseURL = "https://api.coingecko.com/api/v3"
+
+type tezosMarketData struct {
+	Tezos USDMarketData `json:"tezos"`
 }
+
 // CoinGecko is market data provider.
 type CoinGecko struct{}
 
 // GetTezosMarketData gets the tezos price and price change from CoinGecko API.
 // TODO: some caching layer should be implemented.
 func (CoinGecko) GetTezosMarketData() (md models.MarketInfo, err error) {
-	url := "https://api.coingecko.com/api/v3/simple/price?ids=tezos&vs_currencies=usd&include_market_cap=false&include_24hr_vol=false&include_24hr_change=true&include_last_updated_at=true"
-	
+	url := fmt.Sprintf("%s/simple/price?ids=tezos&vs_currencies=usd&include_24hr_change=true&include_last_updated_at=true", baseURL)
+
 	cg := coingecko.NewClient(nil)
 	b, err := cg.MakeReq(url)
 	if err != nil {
@@ -26,7 +29,7 @@ func (CoinGecko) GetTezosMarketData() (md models.MarketInfo, err error) {
 	}
 	var tmd tezosMarketData
 	err = json.Unmarshal(b, &tmd)
-	if err != nil{
+	if err != nil {
 		return nil, err
 	}
 
