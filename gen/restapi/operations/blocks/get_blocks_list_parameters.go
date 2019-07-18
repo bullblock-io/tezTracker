@@ -13,6 +13,7 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 
 	strfmt "github.com/go-openapi/strfmt"
 )
@@ -41,17 +42,17 @@ type GetBlocksListParams struct {
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
 
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
 	AccountDelegate []string
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
 	AccountID []string
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
@@ -60,71 +61,73 @@ type GetBlocksListParams struct {
 	  In: query
 	*/
 	BeforeLevel *int64
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
 	BlockID []string
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
 	BlockLevel []int64
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
 	BlockNetid []string
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
 	BlockProtocol []string
 	/*
+	  Maximum: 500
+	  Minimum: 1
 	  In: query
 	  Default: 20
 	*/
 	Limit *int64
-	/*
+	/*Not used
 	  Required: true
 	  In: path
 	*/
 	Network string
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
 	OperationDestination []string
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
 	OperationID []string
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
 	OperationKind []string
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
 	OperationParticipant []string
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
 	OperationSource []string
-	/*
+	/*Not used
 	  In: query
 	*/
 	Order *string
-	/*
+	/*Not used
 	  Required: true
 	  In: path
 	*/
 	Platform string
-	/*
+	/*Not used
 	  In: query
 	*/
 	SortBy *string
@@ -449,6 +452,24 @@ func (o *GetBlocksListParams) bindLimit(rawData []string, hasKey bool, formats s
 		return errors.InvalidType("limit", "query", "int64", raw)
 	}
 	o.Limit = &value
+
+	if err := o.validateLimit(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateLimit carries on validations for parameter Limit
+func (o *GetBlocksListParams) validateLimit(formats strfmt.Registry) error {
+
+	if err := validate.MinimumInt("limit", "query", int64(*o.Limit), 1, false); err != nil {
+		return err
+	}
+
+	if err := validate.MaximumInt("limit", "query", int64(*o.Limit), 500, false); err != nil {
+		return err
+	}
 
 	return nil
 }

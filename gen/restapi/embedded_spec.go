@@ -66,6 +66,8 @@ func init() {
             "required": true
           },
           {
+            "maximum": 500,
+            "minimum": 1,
             "type": "integer",
             "default": 20,
             "name": "limit",
@@ -260,17 +262,21 @@ func init() {
         "parameters": [
           {
             "type": "string",
+            "description": "Not used",
             "name": "platform",
             "in": "path",
             "required": true
           },
           {
             "type": "string",
+            "description": "Not used",
             "name": "network",
             "in": "path",
             "required": true
           },
           {
+            "maximum": 500,
+            "minimum": 1,
             "type": "integer",
             "default": 20,
             "name": "limit",
@@ -282,6 +288,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "block_id",
             "in": "query"
           },
@@ -291,6 +298,7 @@ func init() {
               "type": "integer"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "block_level",
             "in": "query"
           },
@@ -305,6 +313,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "block_netid",
             "in": "query"
           },
@@ -314,6 +323,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "block_protocol",
             "in": "query"
           },
@@ -323,6 +333,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "operation_id",
             "in": "query"
           },
@@ -332,6 +343,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "operation_source",
             "in": "query"
           },
@@ -341,6 +353,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "operation_destination",
             "in": "query"
           },
@@ -350,6 +363,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "operation_participant",
             "in": "query"
           },
@@ -359,6 +373,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "operation_kind",
             "in": "query"
           },
@@ -368,6 +383,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "account_id",
             "in": "query"
           },
@@ -377,6 +393,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "account_manager",
             "in": "query"
           },
@@ -386,16 +403,19 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "account_delegate",
             "in": "query"
           },
           {
             "type": "string",
+            "description": "Not used",
             "name": "sort_by",
             "in": "query"
           },
           {
             "type": "string",
+            "description": "Not used",
             "name": "order",
             "in": "query"
           }
@@ -428,12 +448,14 @@ func init() {
         "parameters": [
           {
             "type": "string",
+            "description": "Not used",
             "name": "platform",
             "in": "path",
             "required": true
           },
           {
             "type": "string",
+            "description": "Not used",
             "name": "network",
             "in": "path",
             "required": true
@@ -464,12 +486,14 @@ func init() {
         "parameters": [
           {
             "type": "string",
+            "description": "Not used",
             "name": "platform",
             "in": "path",
             "required": true
           },
           {
             "type": "string",
+            "description": "Not used",
             "name": "network",
             "in": "path",
             "required": true
@@ -520,6 +544,8 @@ func init() {
             "required": true
           },
           {
+            "maximum": 500,
+            "minimum": 1,
             "type": "integer",
             "default": 20,
             "name": "limit",
@@ -727,6 +753,8 @@ func init() {
             "required": true
           },
           {
+            "maximum": 500,
+            "minimum": 1,
             "type": "integer",
             "default": 20,
             "name": "limit",
@@ -743,7 +771,6 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
-            "description": "Not used",
             "name": "block_id",
             "in": "query"
           },
@@ -924,6 +951,8 @@ func init() {
             "required": true
           },
           {
+            "maximum": 500,
+            "minimum": 1,
             "type": "integer",
             "default": 20,
             "name": "limit",
@@ -1681,7 +1710,9 @@ func init() {
         "limit": {
           "type": "integer",
           "format": "int64",
-          "default": 20
+          "default": 20,
+          "maximum": 500,
+          "minimum": 1
         },
         "orderBy": {
           "type": "array",
@@ -2116,6 +2147,8 @@ func init() {
             "required": true
           },
           {
+            "maximum": 500,
+            "minimum": 1,
             "type": "integer",
             "default": 20,
             "name": "limit",
@@ -2310,17 +2343,21 @@ func init() {
         "parameters": [
           {
             "type": "string",
+            "description": "Not used",
             "name": "platform",
             "in": "path",
             "required": true
           },
           {
             "type": "string",
+            "description": "Not used",
             "name": "network",
             "in": "path",
             "required": true
           },
           {
+            "maximum": 500,
+            "minimum": 1,
             "type": "integer",
             "default": 20,
             "name": "limit",
@@ -2332,6 +2369,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "block_id",
             "in": "query"
           },
@@ -2341,6 +2379,7 @@ func init() {
               "type": "integer"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "block_level",
             "in": "query"
           },
@@ -2355,6 +2394,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "block_netid",
             "in": "query"
           },
@@ -2364,6 +2404,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "block_protocol",
             "in": "query"
           },
@@ -2373,6 +2414,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "operation_id",
             "in": "query"
           },
@@ -2382,6 +2424,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "operation_source",
             "in": "query"
           },
@@ -2391,6 +2434,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "operation_destination",
             "in": "query"
           },
@@ -2400,6 +2444,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "operation_participant",
             "in": "query"
           },
@@ -2409,6 +2454,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "operation_kind",
             "in": "query"
           },
@@ -2418,6 +2464,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "account_id",
             "in": "query"
           },
@@ -2427,6 +2474,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "account_manager",
             "in": "query"
           },
@@ -2436,16 +2484,19 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "account_delegate",
             "in": "query"
           },
           {
             "type": "string",
+            "description": "Not used",
             "name": "sort_by",
             "in": "query"
           },
           {
             "type": "string",
+            "description": "Not used",
             "name": "order",
             "in": "query"
           }
@@ -2478,12 +2529,14 @@ func init() {
         "parameters": [
           {
             "type": "string",
+            "description": "Not used",
             "name": "platform",
             "in": "path",
             "required": true
           },
           {
             "type": "string",
+            "description": "Not used",
             "name": "network",
             "in": "path",
             "required": true
@@ -2514,12 +2567,14 @@ func init() {
         "parameters": [
           {
             "type": "string",
+            "description": "Not used",
             "name": "platform",
             "in": "path",
             "required": true
           },
           {
             "type": "string",
+            "description": "Not used",
             "name": "network",
             "in": "path",
             "required": true
@@ -2570,6 +2625,8 @@ func init() {
             "required": true
           },
           {
+            "maximum": 500,
+            "minimum": 1,
             "type": "integer",
             "default": 20,
             "name": "limit",
@@ -2777,6 +2834,8 @@ func init() {
             "required": true
           },
           {
+            "maximum": 500,
+            "minimum": 1,
             "type": "integer",
             "default": 20,
             "name": "limit",
@@ -2793,7 +2852,6 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
-            "description": "Not used",
             "name": "block_id",
             "in": "query"
           },
@@ -2974,6 +3032,8 @@ func init() {
             "required": true
           },
           {
+            "maximum": 500,
+            "minimum": 1,
             "type": "integer",
             "default": 20,
             "name": "limit",
@@ -3731,7 +3791,9 @@ func init() {
         "limit": {
           "type": "integer",
           "format": "int64",
-          "default": 20
+          "default": 20,
+          "maximum": 500,
+          "minimum": 1
         },
         "orderBy": {
           "type": "array",

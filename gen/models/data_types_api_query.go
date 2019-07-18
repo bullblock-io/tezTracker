@@ -27,7 +27,9 @@ type DataTypesAPIQuery struct {
 	Fields []string `json:"fields"`
 
 	// limit
-	Limit *int64 `json:"limit,omitempty"`
+	// Maximum: 500
+	// Minimum: 1
+	Limit int64 `json:"limit,omitempty"`
 
 	// order by
 	OrderBy []*DataTypesQueryOrdering `json:"orderBy"`
@@ -45,6 +47,10 @@ func (m *DataTypesAPIQuery) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateAggregation(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateLimit(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -86,6 +92,23 @@ func (m *DataTypesAPIQuery) validateAggregation(formats strfmt.Registry) error {
 			}
 		}
 
+	}
+
+	return nil
+}
+
+func (m *DataTypesAPIQuery) validateLimit(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Limit) { // not required
+		return nil
+	}
+
+	if err := validate.MinimumInt("limit", "body", int64(m.Limit), 1, false); err != nil {
+		return err
+	}
+
+	if err := validate.MaximumInt("limit", "body", int64(m.Limit), 500, false); err != nil {
+		return err
 	}
 
 	return nil
