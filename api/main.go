@@ -4,6 +4,8 @@ import (
 	"github.com/bullblock-io/tezTracker/gen/restapi/operations"
 	"github.com/jinzhu/gorm"
 	"github.com/sirupsen/logrus"
+	"github.com/bullblock-io/tezTracker/services/cmc"
+	
 )
 
 // SetHandlers initializes the API handlers with underlying services.
@@ -13,4 +15,5 @@ func SetHandlers(serv *operations.TezTrackerAPI, db *gorm.DB) {
 	serv.BlocksGetBlocksListHandler = &getBlockListHandler{db}
 	serv.BlocksGetBlockHandler = &getBlockHandler{db}
 	serv.OperationsListGetOperationsListHandler = &getOperationListHandler{db}
+	serv.AppInfoGetInfoHandler = &getInfoHandler{&cmc.CoinGecko{}}
 }

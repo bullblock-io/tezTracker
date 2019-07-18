@@ -17,24 +17,24 @@ import (
 // swagger:model Info
 type Info struct {
 
-	// application
+	// price
 	// Required: true
-	Application *string `json:"application"`
+	Price *float64 `json:"price"`
 
-	// version
+	// price 24h change
 	// Required: true
-	Version *string `json:"version"`
+	Price24hChange *float64 `json:"price_24h_change"`
 }
 
 // Validate validates this info
 func (m *Info) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateApplication(formats); err != nil {
+	if err := m.validatePrice(formats); err != nil {
 		res = append(res, err)
 	}
 
-	if err := m.validateVersion(formats); err != nil {
+	if err := m.validatePrice24hChange(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -44,18 +44,18 @@ func (m *Info) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *Info) validateApplication(formats strfmt.Registry) error {
+func (m *Info) validatePrice(formats strfmt.Registry) error {
 
-	if err := validate.Required("application", "body", m.Application); err != nil {
+	if err := validate.Required("price", "body", m.Price); err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func (m *Info) validateVersion(formats strfmt.Registry) error {
+func (m *Info) validatePrice24hChange(formats strfmt.Registry) error {
 
-	if err := validate.Required("version", "body", m.Version); err != nil {
+	if err := validate.Required("price_24h_change", "body", m.Price24hChange); err != nil {
 		return err
 	}
 

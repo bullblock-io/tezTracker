@@ -56,3 +56,27 @@ func (o *GetInfoOK) WriteResponse(rw http.ResponseWriter, producer runtime.Produ
 		}
 	}
 }
+
+// GetInfoInternalServerErrorCode is the HTTP code returned for type GetInfoInternalServerError
+const GetInfoInternalServerErrorCode int = 500
+
+/*GetInfoInternalServerError Internal error
+
+swagger:response getInfoInternalServerError
+*/
+type GetInfoInternalServerError struct {
+}
+
+// NewGetInfoInternalServerError creates GetInfoInternalServerError with default headers values
+func NewGetInfoInternalServerError() *GetInfoInternalServerError {
+
+	return &GetInfoInternalServerError{}
+}
+
+// WriteResponse to the client
+func (o *GetInfoInternalServerError) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
+
+	rw.WriteHeader(500)
+}

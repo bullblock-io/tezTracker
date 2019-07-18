@@ -13,6 +13,8 @@ paths:
           description: Application info endpoint
           schema:
             $ref: '#/definitions/Info'
+        '500':
+          description: Internal error
       tags:
         - App Info
   '/v2/data/{platform}/{network}/accounts':
@@ -1171,13 +1173,13 @@ definitions:
     type: object
   Info:
     properties:
-      application:
-        type: string
-      version:
-        type: string
+      price:
+        type: number
+      price_24h_change:
+        type: number
     required:
-      - application
-      - version
+      - price
+      - price_24h_change
     type: object
   AccountResult:
     properties:

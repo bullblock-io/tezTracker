@@ -39,6 +39,9 @@ func init() {
             "schema": {
               "$ref": "#/definitions/Info"
             }
+          },
+          "500": {
+            "description": "Internal error"
           }
         }
       }
@@ -1758,15 +1761,15 @@ func init() {
     "Info": {
       "type": "object",
       "required": [
-        "application",
-        "version"
+        "price",
+        "price_24h_change"
       ],
       "properties": {
-        "application": {
-          "type": "string"
+        "price": {
+          "type": "number"
         },
-        "version": {
-          "type": "string"
+        "price_24h_change": {
+          "type": "number"
         }
       }
     },
@@ -2120,6 +2123,9 @@ func init() {
             "schema": {
               "$ref": "#/definitions/Info"
             }
+          },
+          "500": {
+            "description": "Internal error"
           }
         }
       }
@@ -3839,15 +3845,15 @@ func init() {
     "Info": {
       "type": "object",
       "required": [
-        "application",
-        "version"
+        "price",
+        "price_24h_change"
       ],
       "properties": {
-        "application": {
-          "type": "string"
+        "price": {
+          "type": "number"
         },
-        "version": {
-          "type": "string"
+        "price_24h_change": {
+          "type": "number"
         }
       }
     },
