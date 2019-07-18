@@ -568,7 +568,6 @@ paths:
           items:
             type: string
           name: account_id
-          description: Not used
           type: array
         - collectionFormat: multi
           in: query

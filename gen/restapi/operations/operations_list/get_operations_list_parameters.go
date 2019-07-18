@@ -47,7 +47,7 @@ type GetOperationsListParams struct {
 	  Collection Format: multi
 	*/
 	AccountDelegate []string
-	/*Not used
+	/*
 	  In: query
 	  Collection Format: multi
 	*/
