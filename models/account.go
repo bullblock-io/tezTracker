@@ -1,18 +1,22 @@
 package models
 
+import (
+	"github.com/guregu/null"
+)
+
 type Account struct {
-	AccountID          string                `gorm:"primary_key;AUTO_INCREMENT" json:"account_id"`
-	BlockID            string                `json:"block_id"`
+	AccountID          null.String           `gorm:"primary_key;AUTO_INCREMENT" json:"account_id"`
+	BlockID            null.String           `json:"block_id"`
 	Block              *Block                `json:"block"` // This line is infered from column name "block_id".
-	Manager            string                `json:"manager"`
-	Spendable          bool                  `json:"spendable"`
-	DelegateSetable    bool                  `json:"delegate_setable"`
+	Manager            null.String           `json:"manager"`
+	Spendable          null.Bool             `json:"spendable"`
+	DelegateSetable    null.Bool             `json:"delegate_setable"`
 	DelegateValue      string                `json:"delegate_value"`
-	Counter            uint                  `json:"counter"`
+	Counter            null.Int              `json:"counter"`
 	Script             string                `json:"script"`
 	Storage            string                `json:"storage"`
-	Balance            float64               `json:"balance"`
-	BlockLevel         float64               `json:"block_level" sql:"DEFAULT:'-1'::integer"`
+	Balance            null.Float            `json:"balance"`
+	BlockLevel         null.Int              `json:"block_level" sql:"DEFAULT:'-1'::integer"`
 	AccountsCheckpoint []*AccountsCheckpoint `json:"accounts_checkpoint"` // This line is infered from other tables.
 	DelegatedContracts []*DelegatedContract  `json:"delegated_contracts"` // This line is infered from other tables.
 

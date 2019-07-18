@@ -25,10 +25,12 @@ paths:
       parameters:
         - in: path
           name: platform
+          description: Not used
           required: true
           type: string
         - in: path
           name: network
+          description: Not used
           required: true
           type: string
         - in: query
@@ -37,6 +39,9 @@ paths:
           default: 20
           minimum: 1
           maximum: 500
+        - in: query
+          name: after_id
+          type: string
         - collectionFormat: multi
           in: query
           items:
@@ -47,6 +52,7 @@ paths:
           in: query
           items:
             type: integer
+            format: int64
           name: block_level
           type: array
         - collectionFormat: multi
@@ -54,73 +60,85 @@ paths:
           items:
             type: string
           name: block_netid
+          description: Not used
           type: array
         - collectionFormat: multi
           in: query
           items:
             type: string
           name: block_protocol
+          description: Not used
           type: array
         - collectionFormat: multi
           in: query
           items:
             type: string
           name: operation_id
+          description: Not used
           type: array
         - collectionFormat: multi
           in: query
           items:
             type: string
           name: operation_source
+          description: Not used
           type: array
         - collectionFormat: multi
           in: query
           items:
             type: string
           name: operation_destination
+          description: Not used
           type: array
         - collectionFormat: multi
           in: query
           items:
             type: string
           name: operation_participant
+          description: Not used
           type: array
         - collectionFormat: multi
           in: query
           items:
             type: string
           name: operation_kind
+          description: Not used
           type: array
         - collectionFormat: multi
           in: query
           items:
             type: string
           name: account_id
+          description: Not used
           type: array
         - collectionFormat: multi
           in: query
           items:
             type: string
           name: account_manager
+          description: Not used
           type: array
         - collectionFormat: multi
           in: query
           items:
             type: string
           name: account_delegate
+          description: Not used
           type: array
         - in: query
           name: sort_by
+          description: Not used
           type: string
         - in: query
           name: order
+          description: Not used
           type: string
       responses:
         '200':
           description: Query compatibility endpoint for accounts
           schema:
             items:
-              type: string # Any - not yet supported
+              $ref: '#/definitions/AccountsRow'
             type: array
         '404':
           description: Not Found
@@ -134,10 +152,12 @@ paths:
       parameters:
         - in: path
           name: platform
+          description: Not used
           required: true
           type: string
         - in: path
           name: network
+          description: Not used
           required: true
           type: string
         - in: path
@@ -149,9 +169,11 @@ paths:
           description: Query compatibility endpoint for account
           schema:
             $ref: >-
-              #/definitions/AccountResult
+              #/definitions/AccountsRow
         '404':
           description: Not Found
+        '500':
+          description: Internal error
       tags:
         - Accounts
   '/v2/data/{platform}/{network}/blocks':
@@ -1221,7 +1243,8 @@ definitions:
       blockId:
         type: string
       blockLevel:
-        type: number
+        type: integer
+        format: int64
       counter:
         format: int64
         type: integer

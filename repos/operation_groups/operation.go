@@ -25,7 +25,7 @@ func New(db *gorm.DB) *Repository {
 
 // Last returns the last added block.
 func (r *Repository) GetGroupsFor(block models.Block) (og []*models.OperationGroup, err error) {
-	filter := models.OperationGroup{BlockID: block.Hash.ValueOrZero()}
+	filter := models.OperationGroup{BlockID: block.Hash}
 	err = r.db.Model(&filter).Where(&filter).Find(&og).Error
 	return og, err
 }

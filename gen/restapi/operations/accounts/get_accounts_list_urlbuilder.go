@@ -22,6 +22,7 @@ type GetAccountsListURL struct {
 	AccountDelegate      []string
 	AccountID            []string
 	AccountManager       []string
+	AfterID              *string
 	BlockID              []string
 	BlockLevel           []int64
 	BlockNetid           []string
@@ -120,6 +121,14 @@ func (o *GetAccountsListURL) Build() (*url.URL, error) {
 
 	for _, qsv := range accountManager {
 		qs.Add("account_manager", qsv)
+	}
+
+	var afterID string
+	if o.AfterID != nil {
+		afterID = *o.AfterID
+	}
+	if afterID != "" {
+		qs.Set("after_id", afterID)
 	}
 
 	var blockIDIR []string
