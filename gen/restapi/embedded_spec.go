@@ -39,6 +39,9 @@ func init() {
             "schema": {
               "$ref": "#/definitions/Info"
             }
+          },
+          "500": {
+            "description": "Internal error"
           }
         }
       }
@@ -260,12 +263,14 @@ func init() {
         "parameters": [
           {
             "type": "string",
+            "description": "Not used",
             "name": "platform",
             "in": "path",
             "required": true
           },
           {
             "type": "string",
+            "description": "Not used",
             "name": "network",
             "in": "path",
             "required": true
@@ -282,6 +287,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "block_id",
             "in": "query"
           },
@@ -291,6 +297,7 @@ func init() {
               "type": "integer"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "block_level",
             "in": "query"
           },
@@ -305,6 +312,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "block_netid",
             "in": "query"
           },
@@ -314,6 +322,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "block_protocol",
             "in": "query"
           },
@@ -323,6 +332,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "operation_id",
             "in": "query"
           },
@@ -332,6 +342,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "operation_source",
             "in": "query"
           },
@@ -341,6 +352,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "operation_destination",
             "in": "query"
           },
@@ -350,6 +362,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "operation_participant",
             "in": "query"
           },
@@ -359,6 +372,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "operation_kind",
             "in": "query"
           },
@@ -368,6 +382,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "account_id",
             "in": "query"
           },
@@ -377,6 +392,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "account_manager",
             "in": "query"
           },
@@ -386,16 +402,19 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "account_delegate",
             "in": "query"
           },
           {
             "type": "string",
+            "description": "Not used",
             "name": "sort_by",
             "in": "query"
           },
           {
             "type": "string",
+            "description": "Not used",
             "name": "order",
             "in": "query"
           }
@@ -428,12 +447,14 @@ func init() {
         "parameters": [
           {
             "type": "string",
+            "description": "Not used",
             "name": "platform",
             "in": "path",
             "required": true
           },
           {
             "type": "string",
+            "description": "Not used",
             "name": "network",
             "in": "path",
             "required": true
@@ -464,12 +485,14 @@ func init() {
         "parameters": [
           {
             "type": "string",
+            "description": "Not used",
             "name": "platform",
             "in": "path",
             "required": true
           },
           {
             "type": "string",
+            "description": "Not used",
             "name": "network",
             "in": "path",
             "required": true
@@ -1727,15 +1750,15 @@ func init() {
     "Info": {
       "type": "object",
       "required": [
-        "application",
-        "version"
+        "price",
+        "price_24h_change"
       ],
       "properties": {
-        "application": {
-          "type": "string"
+        "price": {
+          "type": "number"
         },
-        "version": {
-          "type": "string"
+        "price_24h_change": {
+          "type": "number"
         }
       }
     },
@@ -2089,6 +2112,9 @@ func init() {
             "schema": {
               "$ref": "#/definitions/Info"
             }
+          },
+          "500": {
+            "description": "Internal error"
           }
         }
       }
@@ -2310,12 +2336,14 @@ func init() {
         "parameters": [
           {
             "type": "string",
+            "description": "Not used",
             "name": "platform",
             "in": "path",
             "required": true
           },
           {
             "type": "string",
+            "description": "Not used",
             "name": "network",
             "in": "path",
             "required": true
@@ -2332,6 +2360,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "block_id",
             "in": "query"
           },
@@ -2341,6 +2370,7 @@ func init() {
               "type": "integer"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "block_level",
             "in": "query"
           },
@@ -2355,6 +2385,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "block_netid",
             "in": "query"
           },
@@ -2364,6 +2395,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "block_protocol",
             "in": "query"
           },
@@ -2373,6 +2405,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "operation_id",
             "in": "query"
           },
@@ -2382,6 +2415,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "operation_source",
             "in": "query"
           },
@@ -2391,6 +2425,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "operation_destination",
             "in": "query"
           },
@@ -2400,6 +2435,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "operation_participant",
             "in": "query"
           },
@@ -2409,6 +2445,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "operation_kind",
             "in": "query"
           },
@@ -2418,6 +2455,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "account_id",
             "in": "query"
           },
@@ -2427,6 +2465,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "account_manager",
             "in": "query"
           },
@@ -2436,16 +2475,19 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
+            "description": "Not used",
             "name": "account_delegate",
             "in": "query"
           },
           {
             "type": "string",
+            "description": "Not used",
             "name": "sort_by",
             "in": "query"
           },
           {
             "type": "string",
+            "description": "Not used",
             "name": "order",
             "in": "query"
           }
@@ -2478,12 +2520,14 @@ func init() {
         "parameters": [
           {
             "type": "string",
+            "description": "Not used",
             "name": "platform",
             "in": "path",
             "required": true
           },
           {
             "type": "string",
+            "description": "Not used",
             "name": "network",
             "in": "path",
             "required": true
@@ -2514,12 +2558,14 @@ func init() {
         "parameters": [
           {
             "type": "string",
+            "description": "Not used",
             "name": "platform",
             "in": "path",
             "required": true
           },
           {
             "type": "string",
+            "description": "Not used",
             "name": "network",
             "in": "path",
             "required": true
@@ -3777,15 +3823,15 @@ func init() {
     "Info": {
       "type": "object",
       "required": [
-        "application",
-        "version"
+        "price",
+        "price_24h_change"
       ],
       "properties": {
-        "application": {
-          "type": "string"
+        "price": {
+          "type": "number"
         },
-        "version": {
-          "type": "string"
+        "price_24h_change": {
+          "type": "number"
         }
       }
     },

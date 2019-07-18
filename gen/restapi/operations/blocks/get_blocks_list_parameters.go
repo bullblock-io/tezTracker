@@ -41,17 +41,17 @@ type GetBlocksListParams struct {
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
 
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
 	AccountDelegate []string
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
 	AccountID []string
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
@@ -60,22 +60,22 @@ type GetBlocksListParams struct {
 	  In: query
 	*/
 	BeforeLevel *int64
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
 	BlockID []string
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
 	BlockLevel []int64
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
 	BlockNetid []string
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
@@ -85,46 +85,46 @@ type GetBlocksListParams struct {
 	  Default: 20
 	*/
 	Limit *int64
-	/*
+	/*Not used
 	  Required: true
 	  In: path
 	*/
 	Network string
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
 	OperationDestination []string
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
 	OperationID []string
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
 	OperationKind []string
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
 	OperationParticipant []string
-	/*
+	/*Not used
 	  In: query
 	  Collection Format: multi
 	*/
 	OperationSource []string
-	/*
+	/*Not used
 	  In: query
 	*/
 	Order *string
-	/*
+	/*Not used
 	  Required: true
 	  In: path
 	*/
 	Platform string
-	/*
+	/*Not used
 	  In: query
 	*/
 	SortBy *string
