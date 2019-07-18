@@ -8,11 +8,11 @@ import (
 // OperationGroup renders an app level model to a gennerated OpenAPI model.
 func OperationGroup(b models.OperationGroup) *genModels.OperationGroupsRow {
 	return &genModels.OperationGroupsRow{
-		Protocol:  &b.Protocol,
+		Protocol:  b.Protocol.Ptr(),
 		ChainID:   b.ChainID,
-		Hash:      &b.Hash,
-		Branch:    &b.Branch,
+		Hash:      b.Hash.Ptr(),
+		Branch:    b.Branch.Ptr(),
 		Signature: b.Signature,
-		BlockID:   &b.BlockID,
+		BlockID:   b.BlockID.Ptr(),
 	}
 }

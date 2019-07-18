@@ -10,9 +10,9 @@ func Operation(b models.Operation) *genModels.OperationsRow {
 	ts := b.Timestamp.Unix()
 
 	return &genModels.OperationsRow{
-		OperationID:         &b.OperationID,
-		OperationGroupHash:  &b.OperationGroupHash,
-		Kind:                &b.Kind,
+		OperationID:         b.OperationID.Ptr(),
+		OperationGroupHash:  b.OperationGroupHash.Ptr(),
+		Kind:                b.Kind.Ptr(),
 		Level:               b.Level,
 		Delegate:            b.Delegate,
 		Slots:               b.Slots,
@@ -39,8 +39,8 @@ func Operation(b models.Operation) *genModels.OperationsRow {
 		StorageSize:         b.StorageSize,
 		PaidStorageSizeDiff: b.PaidStorageSizeDiff,
 		OriginatedContracts: b.OriginatedContracts,
-		BlockHash:           &b.BlockHash,
-		BlockLevel:          &b.BlockLevel,
+		BlockHash:           b.BlockHash.Ptr(),
+		BlockLevel:          b.BlockLevel.Ptr(),
 		Timestamp:           &ts,
 	}
 }
