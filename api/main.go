@@ -17,4 +17,5 @@ func SetHandlers(serv *operations.TezTrackerAPI, db *gorm.DB) {
 	serv.AppInfoGetInfoHandler = &getInfoHandler{&cmc.CoinGecko{}}
 	serv.AccountsGetAccountsListHandler = &getAccountListHandler{db}
 	serv.AccountsGetAccountHandler = &getAccountHandler{db}
+	serv.BlocksGetBlockEndorsementsHandler = &getBlockEndorsementsHandler{db}
 }

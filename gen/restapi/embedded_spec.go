@@ -527,6 +527,53 @@ func init() {
         }
       }
     },
+    "/v2/data/{platform}/{network}/blocks/{hash}/endorsements": {
+      "get": {
+        "tags": [
+          "Blocks"
+        ],
+        "operationId": "getBlockEndorsements",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Not used",
+            "name": "platform",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Not used",
+            "name": "network",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "name": "hash",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Endpoint for endorsements of a block by hash or level",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/OperationsRow"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        }
+      }
+    },
     "/v2/data/{platform}/{network}/info": {
       "get": {
         "produces": [
@@ -2706,6 +2753,53 @@ func init() {
             "description": "Query compatibility endpoint for block by hash",
             "schema": {
               "$ref": "#/definitions/BlockResult"
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        }
+      }
+    },
+    "/v2/data/{platform}/{network}/blocks/{hash}/endorsements": {
+      "get": {
+        "tags": [
+          "Blocks"
+        ],
+        "operationId": "getBlockEndorsements",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Not used",
+            "name": "platform",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Not used",
+            "name": "network",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "name": "hash",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Endpoint for endorsements of a block by hash or level",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/OperationsRow"
+              }
             }
           },
           "404": {
