@@ -17,11 +17,17 @@ import (
 // swagger:model BlocksRow
 type BlocksRow struct {
 
+	// activate accounts
+	ActivateAccounts int64 `json:"activate_accounts,omitempty"`
+
 	// active proposal
 	ActiveProposal string `json:"activeProposal,omitempty"`
 
 	// baker
 	Baker string `json:"baker,omitempty"`
+
+	// ballots
+	Ballots int64 `json:"ballots,omitempty"`
 
 	// chain Id
 	ChainID string `json:"chainId,omitempty"`
@@ -35,8 +41,20 @@ type BlocksRow struct {
 	// current expected quorum
 	CurrentExpectedQuorum int64 `json:"currentExpectedQuorum,omitempty"`
 
+	// delegations
+	Delegations int64 `json:"delegations,omitempty"`
+
+	// double baking evidence
+	DoubleBakingEvidence int64 `json:"double_baking_evidence,omitempty"`
+
+	// endorsements
+	Endorsements int64 `json:"endorsements,omitempty"`
+
 	// expected commitment
 	ExpectedCommitment bool `json:"expectedCommitment,omitempty"`
+
+	// fees
+	Fees int64 `json:"fees,omitempty"`
 
 	// fitness
 	// Required: true
@@ -74,12 +92,18 @@ type BlocksRow struct {
 	// operations hash
 	OperationsHash string `json:"operationsHash,omitempty"`
 
+	// originations
+	Originations int64 `json:"originations,omitempty"`
+
 	// period kind
 	PeriodKind string `json:"periodKind,omitempty"`
 
 	// predecessor
 	// Required: true
 	Predecessor *string `json:"predecessor"`
+
+	// proposals
+	Proposals int64 `json:"proposals,omitempty"`
 
 	// proto
 	// Required: true
@@ -89,6 +113,12 @@ type BlocksRow struct {
 	// Required: true
 	Protocol *string `json:"protocol"`
 
+	// reveals
+	Reveals int64 `json:"reveals,omitempty"`
+
+	// seed nonce revelations
+	SeedNonceRevelations int64 `json:"seed_nonce_revelations,omitempty"`
+
 	// signature
 	Signature string `json:"signature,omitempty"`
 
@@ -96,9 +126,15 @@ type BlocksRow struct {
 	// Required: true
 	Timestamp *int64 `json:"timestamp"`
 
+	// transactions
+	Transactions int64 `json:"transactions,omitempty"`
+
 	// validation pass
 	// Required: true
 	ValidationPass *int64 `json:"validationPass"`
+
+	// volume
+	Volume int64 `json:"volume,omitempty"`
 }
 
 // Validate validates this blocks row

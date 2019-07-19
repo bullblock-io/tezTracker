@@ -24,7 +24,7 @@ type Block struct {
 	ActiveProposal           string                 `json:"active_proposal"`
 	Baker                    string                 `json:"baker"`
 	NonceHash                string                 `json:"nonce_hash"`
-	ConsumedGas              int64                `json:"consumed_gas"`
+	ConsumedGas              int64                  `json:"consumed_gas"`
 	MetaLevel                int64                  `json:"meta_level"`
 	MetaLevelPosition        int64                  `json:"meta_level_position"`
 	MetaCycle                int64                  `json:"meta_cycle"`
@@ -32,6 +32,7 @@ type Block struct {
 	MetaVotingPeriod         int64                  `json:"meta_voting_period"`
 	MetaVotingPeriodPosition int64                  `json:"meta_voting_period_position"`
 	ExpectedCommitment       bool                   `json:"expected_commitment"`
+	BlockAggregation         *BlockAggregationView  `json:"-"`
 	Delegates                []*Delegate            `json:"delegates"`            // This line is infered from other tables.
 	Proposals                []*Proposal            `json:"proposals"`            // This line is infered from other tables.
 	Rolls                    []*Roll                `json:"rolls"`                // This line is infered from other tables.

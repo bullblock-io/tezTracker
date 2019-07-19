@@ -1552,11 +1552,19 @@ func init() {
         "level"
       ],
       "properties": {
+        "activate_accounts": {
+          "type": "integer",
+          "format": "int64"
+        },
         "activeProposal": {
           "type": "string"
         },
         "baker": {
           "type": "string"
+        },
+        "ballots": {
+          "type": "integer",
+          "format": "int64"
         },
         "chainId": {
           "type": "string"
@@ -1572,8 +1580,24 @@ func init() {
           "type": "integer",
           "format": "int64"
         },
+        "delegations": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "double_baking_evidence": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "endorsements": {
+          "type": "integer",
+          "format": "int64"
+        },
         "expectedCommitment": {
           "type": "boolean"
+        },
+        "fees": {
+          "type": "integer",
+          "format": "int64"
         },
         "fitness": {
           "type": "string"
@@ -1615,11 +1639,19 @@ func init() {
         "operationsHash": {
           "type": "string"
         },
+        "originations": {
+          "type": "integer",
+          "format": "int64"
+        },
         "periodKind": {
           "type": "string"
         },
         "predecessor": {
           "type": "string"
+        },
+        "proposals": {
+          "type": "integer",
+          "format": "int64"
         },
         "proto": {
           "type": "integer",
@@ -1628,6 +1660,14 @@ func init() {
         "protocol": {
           "type": "string"
         },
+        "reveals": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "seed_nonce_revelations": {
+          "type": "integer",
+          "format": "int64"
+        },
         "signature": {
           "type": "string"
         },
@@ -1635,7 +1675,15 @@ func init() {
           "type": "integer",
           "format": "int64"
         },
+        "transactions": {
+          "type": "integer",
+          "format": "int64"
+        },
         "validationPass": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "volume": {
           "type": "integer",
           "format": "int64"
         }
@@ -3694,11 +3742,19 @@ func init() {
         "level"
       ],
       "properties": {
+        "activate_accounts": {
+          "type": "integer",
+          "format": "int64"
+        },
         "activeProposal": {
           "type": "string"
         },
         "baker": {
           "type": "string"
+        },
+        "ballots": {
+          "type": "integer",
+          "format": "int64"
         },
         "chainId": {
           "type": "string"
@@ -3714,8 +3770,24 @@ func init() {
           "type": "integer",
           "format": "int64"
         },
+        "delegations": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "double_baking_evidence": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "endorsements": {
+          "type": "integer",
+          "format": "int64"
+        },
         "expectedCommitment": {
           "type": "boolean"
+        },
+        "fees": {
+          "type": "integer",
+          "format": "int64"
         },
         "fitness": {
           "type": "string"
@@ -3757,11 +3829,19 @@ func init() {
         "operationsHash": {
           "type": "string"
         },
+        "originations": {
+          "type": "integer",
+          "format": "int64"
+        },
         "periodKind": {
           "type": "string"
         },
         "predecessor": {
           "type": "string"
+        },
+        "proposals": {
+          "type": "integer",
+          "format": "int64"
         },
         "proto": {
           "type": "integer",
@@ -3770,6 +3850,14 @@ func init() {
         "protocol": {
           "type": "string"
         },
+        "reveals": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "seed_nonce_revelations": {
+          "type": "integer",
+          "format": "int64"
+        },
         "signature": {
           "type": "string"
         },
@@ -3777,7 +3865,15 @@ func init() {
           "type": "integer",
           "format": "int64"
         },
+        "transactions": {
+          "type": "integer",
+          "format": "int64"
+        },
         "validationPass": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "volume": {
           "type": "integer",
           "format": "int64"
         }

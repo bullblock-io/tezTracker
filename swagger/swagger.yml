@@ -1348,6 +1348,42 @@ definitions:
       validationPass:
         format: int64
         type: integer
+      volume:
+        format: int64
+        type: integer
+      fees:
+        format: int64
+        type: integer
+      endorsements:
+        format: int64
+        type: integer
+      proposals:
+        format: int64
+        type: integer
+      seed_nonce_revelations:
+        format: int64
+        type: integer
+      delegations:
+        format: int64
+        type: integer
+      transactions:
+        format: int64
+        type: integer
+      activate_accounts:
+        format: int64
+        type: integer
+      ballots:
+        format: int64
+        type: integer
+      originations:
+        format: int64
+        type: integer
+      reveals:
+        format: int64
+        type: integer
+      double_baking_evidence:
+        format: int64
+        type: integer
     required:
       - timestamp
       - proto
