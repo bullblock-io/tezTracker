@@ -8,13 +8,8 @@ import (
 // Block renders an app level model to a gennerated OpenAPI model.
 func Block(b models.Block) *genModels.BlocksRow {
 	ts := b.Timestamp.Unix()
-	var volume, fees int64
-	if b.BlockAggregation != nil {
-		volume = b.BlockAggregation.Volume
-		fees = b.BlockAggregation.Fees
-	}
 
-	return &genModels.BlocksRow{
+	genBlock := genModels.BlocksRow{
 		Level:                    b.Level.Ptr(),
 		Proto:                    b.Proto.Ptr(),
 		Predecessor:              b.Predecessor.Ptr(),
@@ -40,9 +35,24 @@ func Block(b models.Block) *genModels.BlocksRow {
 		MetaVotingPeriod:         b.MetaVotingPeriod,
 		MetaVotingPeriodPosition: b.MetaVotingPeriodPosition,
 		ExpectedCommitment:       b.ExpectedCommitment,
-		Volume:                   volume,
-		Fees:                     fees,
 	}
+
+	if b.BlockAggregation != nil {
+		genBlock.Volume = b.BlockAggregation.Volume
+		genBlock.Fees = b.BlockAggregation.Fees
+		genBlock.Endorsements = b.BlockAggregation.Endorsements
+		genBlock.Proposals = b.BlockAggregation.Proposals
+		genBlock.SeedNonceRevelations = b.BlockAggregation.SeedNonceRevelations
+		genBlock.Delegations = b.BlockAggregation.Delegations
+		genBlock.Transactions = b.BlockAggregation.Transactions
+		genBlock.ActivateAccounts = b.BlockAggregation.ActivateAccounts
+		genBlock.Ballots = b.BlockAggregation.Ballots
+		genBlock.Originations = b.BlockAggregation.Originations
+		genBlock.Reveals = b.BlockAggregation.Reveals
+		genBlock.DoubleBakingEvidence = b.BlockAggregation.DoubleBakingEvidence
+	}
+
+	return &genBlock
 }
 
 // Blocks renders a slice of app level Blocks into a slice of OpenAPI models.
