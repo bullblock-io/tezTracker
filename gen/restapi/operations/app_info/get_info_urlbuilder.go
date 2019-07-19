@@ -9,11 +9,17 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
+	"strings"
 )
 
 // GetInfoURL generates an URL for the get info operation
 type GetInfoURL struct {
+	Network  string
+	Platform string
+
 	_basePath string
+	// avoid unkeyed usage
+	_ struct{}
 }
 
 // WithBasePath sets the base path for this url builder, only required when it's different from the
@@ -35,7 +41,21 @@ func (o *GetInfoURL) SetBasePath(bp string) {
 func (o *GetInfoURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/info"
+	var _path = "/v2/data/{platform}/{network}/info"
+
+	network := o.Network
+	if network != "" {
+		_path = strings.Replace(_path, "{network}", network, -1)
+	} else {
+		return nil, errors.New("network is required on GetInfoURL")
+	}
+
+	platform := o.Platform
+	if platform != "" {
+		_path = strings.Replace(_path, "{platform}", platform, -1)
+	} else {
+		return nil, errors.New("platform is required on GetInfoURL")
+	}
 
 	_basePath := o._basePath
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)

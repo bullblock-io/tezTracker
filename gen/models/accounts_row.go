@@ -23,7 +23,7 @@ type AccountsRow struct {
 
 	// balance
 	// Required: true
-	Balance *float64 `json:"balance"`
+	Balance *int64 `json:"balance"`
 
 	// block Id
 	// Required: true

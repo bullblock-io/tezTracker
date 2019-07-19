@@ -29,7 +29,7 @@ func NewGetInfo(ctx *middleware.Context, handler GetInfoHandler) *GetInfo {
 	return &GetInfo{Context: ctx, Handler: handler}
 }
 
-/*GetInfo swagger:route GET /info App Info getInfo
+/*GetInfo swagger:route GET /v2/data/{platform}/{network}/info App Info getInfo
 
 GetInfo get info API
 

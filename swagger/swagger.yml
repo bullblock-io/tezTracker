@@ -3,9 +3,22 @@ info:
   title: Conseil API
   version: 0.0.1
 paths:
-  /info:
+  '/v2/data/{platform}/{network}/info':
     get:
       operationId: getInfo
+      parameters:
+        - in: path
+          name: platform
+          description: Not used
+          required: true
+          type: string
+          enum: [tezos]
+        - in: path
+          name: network
+          description: Not used
+          required: true
+          type: string
+          enum: [mainnet]
       produces:
         - application/json
       responses:
@@ -1239,7 +1252,8 @@ definitions:
       accountId:
         type: string
       balance:
-        type: number
+        format: int64
+        type: integer
       blockId:
         type: string
       blockLevel:
@@ -1279,7 +1293,8 @@ definitions:
       chainId:
         type: string
       consumedGas:
-        type: number
+        type: integer
+        format: int64
       context:
         type: string
       currentExpectedQuorum:
@@ -1368,18 +1383,22 @@ definitions:
       parameters:
         type: string
       amount:
-        type: number
+        type: integer
+        format: int64
       balance:
-        type: number
+        format: int64
+        type: integer
       blockHash:
         type: string
       blockLevel:
         format: int64
         type: integer
       consumedGas:
-        type: number
+        type: integer
+        format: int64
       counter:
-        type: number
+        type: integer
+        format: int64
       delegatable:
         type: boolean
       delegate:
@@ -1387,9 +1406,11 @@ definitions:
       destination:
         type: string
       fee:
-        type: number
+        type: integer
+        format: int64
       gasLimit:
-        type: number
+        type: integer
+        format: int64
       kind:
         type: string
       level:
@@ -1407,7 +1428,8 @@ definitions:
       originatedContracts:
         type: string
       paidStorageSizeDiff:
-        type: number
+        type: integer
+        format: int64
       pkh:
         type: string
       publicKey:
@@ -1427,9 +1449,11 @@ definitions:
       storage:
         type: string
       storageLimit:
-        type: number
+        type: integer
+        format: int64
       storageSize:
-        type: number
+        type: integer
+        format: int64
       timestamp:
         format: int64
         type: integer

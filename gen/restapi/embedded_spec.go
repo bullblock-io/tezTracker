@@ -24,28 +24,6 @@ func init() {
     "version": "0.0.1"
   },
   "paths": {
-    "/info": {
-      "get": {
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "App Info"
-        ],
-        "operationId": "getInfo",
-        "responses": {
-          "200": {
-            "description": "Application info endpoint",
-            "schema": {
-              "$ref": "#/definitions/Info"
-            }
-          },
-          "500": {
-            "description": "Internal error"
-          }
-        }
-      }
-    },
     "/v2/data/{platform}/{network}/accounts": {
       "get": {
         "produces": [
@@ -542,6 +520,50 @@ func init() {
           },
           "404": {
             "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        }
+      }
+    },
+    "/v2/data/{platform}/{network}/info": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "App Info"
+        ],
+        "operationId": "getInfo",
+        "parameters": [
+          {
+            "enum": [
+              "tezos"
+            ],
+            "type": "string",
+            "description": "Not used",
+            "name": "platform",
+            "in": "path",
+            "required": true
+          },
+          {
+            "enum": [
+              "mainnet"
+            ],
+            "type": "string",
+            "description": "Not used",
+            "name": "network",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Application info endpoint",
+            "schema": {
+              "$ref": "#/definitions/Info"
+            }
           },
           "500": {
             "description": "Internal error"
@@ -1465,7 +1487,8 @@ func init() {
           "type": "string"
         },
         "balance": {
-          "type": "number"
+          "type": "integer",
+          "format": "int64"
         },
         "blockId": {
           "type": "string"
@@ -1539,7 +1562,8 @@ func init() {
           "type": "string"
         },
         "consumedGas": {
-          "type": "number"
+          "type": "integer",
+          "format": "int64"
         },
         "context": {
           "type": "string"
@@ -1857,10 +1881,12 @@ func init() {
       ],
       "properties": {
         "amount": {
-          "type": "number"
+          "type": "integer",
+          "format": "int64"
         },
         "balance": {
-          "type": "number"
+          "type": "integer",
+          "format": "int64"
         },
         "blockHash": {
           "type": "string"
@@ -1870,10 +1896,12 @@ func init() {
           "format": "int64"
         },
         "consumedGas": {
-          "type": "number"
+          "type": "integer",
+          "format": "int64"
         },
         "counter": {
-          "type": "number"
+          "type": "integer",
+          "format": "int64"
         },
         "delegatable": {
           "type": "boolean"
@@ -1885,10 +1913,12 @@ func init() {
           "type": "string"
         },
         "fee": {
-          "type": "number"
+          "type": "integer",
+          "format": "int64"
         },
         "gasLimit": {
-          "type": "number"
+          "type": "integer",
+          "format": "int64"
         },
         "kind": {
           "type": "string"
@@ -1914,7 +1944,8 @@ func init() {
           "type": "string"
         },
         "paidStorageSizeDiff": {
-          "type": "number"
+          "type": "integer",
+          "format": "int64"
         },
         "parameters": {
           "type": "string"
@@ -1947,10 +1978,12 @@ func init() {
           "type": "string"
         },
         "storageLimit": {
-          "type": "number"
+          "type": "integer",
+          "format": "int64"
         },
         "storageSize": {
-          "type": "number"
+          "type": "integer",
+          "format": "int64"
         },
         "timestamp": {
           "type": "integer",
@@ -2133,28 +2166,6 @@ func init() {
     "version": "0.0.1"
   },
   "paths": {
-    "/info": {
-      "get": {
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "App Info"
-        ],
-        "operationId": "getInfo",
-        "responses": {
-          "200": {
-            "description": "Application info endpoint",
-            "schema": {
-              "$ref": "#/definitions/Info"
-            }
-          },
-          "500": {
-            "description": "Internal error"
-          }
-        }
-      }
-    },
     "/v2/data/{platform}/{network}/accounts": {
       "get": {
         "produces": [
@@ -2651,6 +2662,50 @@ func init() {
           },
           "404": {
             "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        }
+      }
+    },
+    "/v2/data/{platform}/{network}/info": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "App Info"
+        ],
+        "operationId": "getInfo",
+        "parameters": [
+          {
+            "enum": [
+              "tezos"
+            ],
+            "type": "string",
+            "description": "Not used",
+            "name": "platform",
+            "in": "path",
+            "required": true
+          },
+          {
+            "enum": [
+              "mainnet"
+            ],
+            "type": "string",
+            "description": "Not used",
+            "name": "network",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Application info endpoint",
+            "schema": {
+              "$ref": "#/definitions/Info"
+            }
           },
           "500": {
             "description": "Internal error"
@@ -3574,7 +3629,8 @@ func init() {
           "type": "string"
         },
         "balance": {
-          "type": "number"
+          "type": "integer",
+          "format": "int64"
         },
         "blockId": {
           "type": "string"
@@ -3648,7 +3704,8 @@ func init() {
           "type": "string"
         },
         "consumedGas": {
-          "type": "number"
+          "type": "integer",
+          "format": "int64"
         },
         "context": {
           "type": "string"
@@ -3966,10 +4023,12 @@ func init() {
       ],
       "properties": {
         "amount": {
-          "type": "number"
+          "type": "integer",
+          "format": "int64"
         },
         "balance": {
-          "type": "number"
+          "type": "integer",
+          "format": "int64"
         },
         "blockHash": {
           "type": "string"
@@ -3979,10 +4038,12 @@ func init() {
           "format": "int64"
         },
         "consumedGas": {
-          "type": "number"
+          "type": "integer",
+          "format": "int64"
         },
         "counter": {
-          "type": "number"
+          "type": "integer",
+          "format": "int64"
         },
         "delegatable": {
           "type": "boolean"
@@ -3994,10 +4055,12 @@ func init() {
           "type": "string"
         },
         "fee": {
-          "type": "number"
+          "type": "integer",
+          "format": "int64"
         },
         "gasLimit": {
-          "type": "number"
+          "type": "integer",
+          "format": "int64"
         },
         "kind": {
           "type": "string"
@@ -4023,7 +4086,8 @@ func init() {
           "type": "string"
         },
         "paidStorageSizeDiff": {
-          "type": "number"
+          "type": "integer",
+          "format": "int64"
         },
         "parameters": {
           "type": "string"
@@ -4056,10 +4120,12 @@ func init() {
           "type": "string"
         },
         "storageLimit": {
-          "type": "number"
+          "type": "integer",
+          "format": "int64"
         },
         "storageSize": {
-          "type": "number"
+          "type": "integer",
+          "format": "int64"
         },
         "timestamp": {
           "type": "integer",

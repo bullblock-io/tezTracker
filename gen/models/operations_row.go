@@ -18,10 +18,10 @@ import (
 type OperationsRow struct {
 
 	// amount
-	Amount float64 `json:"amount,omitempty"`
+	Amount int64 `json:"amount,omitempty"`
 
 	// balance
-	Balance float64 `json:"balance,omitempty"`
+	Balance int64 `json:"balance,omitempty"`
 
 	// block hash
 	// Required: true
@@ -32,10 +32,10 @@ type OperationsRow struct {
 	BlockLevel *int64 `json:"blockLevel"`
 
 	// consumed gas
-	ConsumedGas float64 `json:"consumedGas,omitempty"`
+	ConsumedGas int64 `json:"consumedGas,omitempty"`
 
 	// counter
-	Counter float64 `json:"counter,omitempty"`
+	Counter int64 `json:"counter,omitempty"`
 
 	// delegatable
 	Delegatable bool `json:"delegatable,omitempty"`
@@ -47,10 +47,10 @@ type OperationsRow struct {
 	Destination string `json:"destination,omitempty"`
 
 	// fee
-	Fee float64 `json:"fee,omitempty"`
+	Fee int64 `json:"fee,omitempty"`
 
 	// gas limit
-	GasLimit float64 `json:"gasLimit,omitempty"`
+	GasLimit int64 `json:"gasLimit,omitempty"`
 
 	// kind
 	// Required: true
@@ -77,7 +77,7 @@ type OperationsRow struct {
 	OriginatedContracts string `json:"originatedContracts,omitempty"`
 
 	// paid storage size diff
-	PaidStorageSizeDiff float64 `json:"paidStorageSizeDiff,omitempty"`
+	PaidStorageSizeDiff int64 `json:"paidStorageSizeDiff,omitempty"`
 
 	// parameters
 	Parameters string `json:"parameters,omitempty"`
@@ -110,10 +110,10 @@ type OperationsRow struct {
 	Storage string `json:"storage,omitempty"`
 
 	// storage limit
-	StorageLimit float64 `json:"storageLimit,omitempty"`
+	StorageLimit int64 `json:"storageLimit,omitempty"`
 
 	// storage size
-	StorageSize float64 `json:"storageSize,omitempty"`
+	StorageSize int64 `json:"storageSize,omitempty"`
 
 	// timestamp
 	// Required: true

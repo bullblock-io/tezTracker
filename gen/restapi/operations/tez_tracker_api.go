@@ -482,7 +482,7 @@ func (o *TezTrackerAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/info"] = app_info.NewGetInfo(o.context, o.AppInfoGetInfoHandler)
+	o.handlers["GET"]["/v2/data/{platform}/{network}/info"] = app_info.NewGetInfo(o.context, o.AppInfoGetInfoHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)

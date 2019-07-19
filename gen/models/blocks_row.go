@@ -27,7 +27,7 @@ type BlocksRow struct {
 	ChainID string `json:"chainId,omitempty"`
 
 	// consumed gas
-	ConsumedGas float64 `json:"consumedGas,omitempty"`
+	ConsumedGas int64 `json:"consumedGas,omitempty"`
 
 	// context
 	Context string `json:"context,omitempty"`

@@ -24,7 +24,7 @@ type Block struct {
 	ActiveProposal           string                 `json:"active_proposal"`
 	Baker                    string                 `json:"baker"`
 	NonceHash                string                 `json:"nonce_hash"`
-	ConsumedGas              float64                `json:"consumed_gas"`
+	ConsumedGas              int64                `json:"consumed_gas"`
 	MetaLevel                int64                  `json:"meta_level"`
 	MetaLevelPosition        int64                  `json:"meta_level_position"`
 	MetaCycle                int64                  `json:"meta_cycle"`
