@@ -8,6 +8,12 @@ import (
 // Block renders an app level model to a gennerated OpenAPI model.
 func Block(b models.Block) *genModels.BlocksRow {
 	ts := b.Timestamp.Unix()
+	var volume, fees int64
+	if b.BlockAggregation != nil {
+		volume = b.BlockAggregation.Volume
+		fees = b.BlockAggregation.Fees
+	}
+
 	return &genModels.BlocksRow{
 		Level:                    b.Level.Ptr(),
 		Proto:                    b.Proto.Ptr(),
@@ -34,6 +40,8 @@ func Block(b models.Block) *genModels.BlocksRow {
 		MetaVotingPeriod:         b.MetaVotingPeriod,
 		MetaVotingPeriodPosition: b.MetaVotingPeriodPosition,
 		ExpectedCommitment:       b.ExpectedCommitment,
+		Volume:                   volume,
+		Fees:                     fees,
 	}
 }
 

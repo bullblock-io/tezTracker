@@ -1575,6 +1575,10 @@ func init() {
         "expectedCommitment": {
           "type": "boolean"
         },
+        "fees": {
+          "type": "integer",
+          "format": "int64"
+        },
         "fitness": {
           "type": "string"
         },
@@ -1636,6 +1640,10 @@ func init() {
           "format": "int64"
         },
         "validationPass": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "volume": {
           "type": "integer",
           "format": "int64"
         }
@@ -3717,6 +3725,10 @@ func init() {
         "expectedCommitment": {
           "type": "boolean"
         },
+        "fees": {
+          "type": "integer",
+          "format": "int64"
+        },
         "fitness": {
           "type": "string"
         },
@@ -3778,6 +3790,10 @@ func init() {
           "format": "int64"
         },
         "validationPass": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "volume": {
           "type": "integer",
           "format": "int64"
         }

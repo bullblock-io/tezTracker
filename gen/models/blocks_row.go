@@ -38,6 +38,9 @@ type BlocksRow struct {
 	// expected commitment
 	ExpectedCommitment bool `json:"expectedCommitment,omitempty"`
 
+	// fees
+	Fees int64 `json:"fees,omitempty"`
+
 	// fitness
 	// Required: true
 	Fitness *string `json:"fitness"`
@@ -99,6 +102,9 @@ type BlocksRow struct {
 	// validation pass
 	// Required: true
 	ValidationPass *int64 `json:"validationPass"`
+
+	// volume
+	Volume int64 `json:"volume,omitempty"`
 }
 
 // Validate validates this blocks row

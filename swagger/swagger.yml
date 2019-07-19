@@ -1348,6 +1348,12 @@ definitions:
       validationPass:
         format: int64
         type: integer
+      volume:
+        format: int64
+        type: integer
+      fees:
+        format: int64
+        type: integer
     required:
       - timestamp
       - proto

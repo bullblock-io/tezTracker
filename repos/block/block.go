@@ -1,6 +1,8 @@
 package block
 
 import (
+	"fmt"
+
 	"github.com/bullblock-io/tezTracker/models"
 	"github.com/jinzhu/gorm"
 )
@@ -15,6 +17,8 @@ type (
 		Last() (block models.Block, err error)
 		List(limit, since uint64) (blocks []models.Block, err error)
 		Find(filter models.Block) (found bool, block models.Block, err error)
+		FindExtended(filter models.Block) (found bool, block models.Block, err error)
+		ListExtended(limit, since uint64) (blocks []models.Block, err error)
 	}
 )
 
@@ -45,6 +49,22 @@ func (r *Repository) List(limit, since uint64) (blocks []models.Block, err error
 	return blocks, err
 }
 
+// Find looks up for a block with filter and extends it with aggregated info.
+func (r *Repository) FindExtended(filter models.Block) (found bool, block models.Block, err error) {
+	found, block, err = r.Find(filter)
+	if err != nil || !found {
+		return found, block, err
+	}
+	blocks, err := r.ExtendBlocks([]models.Block{block})
+	if err != nil {
+		return false, block, err
+	}
+	if len(blocks) == 0 {
+		return false, block, fmt.Errorf("failed to extend block: empty slice")
+	}
+	return true, blocks[0], nil
+}
+
 // Find looks up for blocks with filter.
 func (r *Repository) Find(filter models.Block) (found bool, block models.Block, err error) {
 	if res := r.db.Model(&filter).Where(&filter).Find(&block); res.Error != nil {
@@ -54,4 +74,45 @@ func (r *Repository) Find(filter models.Block) (found bool, block models.Block, 
 		return false, block, err
 	}
 	return true, block, nil
+}
+
+// ListBlockAggregation returns a list of block aggreagation data for blocks in levels slice.
+func (r *Repository) ListBlockAggregation(levels []int64) (blocks []models.BlockAggregationView, err error) {
+	db := r.db.Model(&models.BlockAggregationView{})
+	db = db.Where("level IN (?)", levels)
+	err = db.Order("level desc").
+		Find(&blocks).Error
+	return blocks, err
+}
+
+// ListExtended returns a list of blocks with populated aggregation data from the newest to oldest.
+// limit defines the limit for the maximum number of blocks returned.
+// since is used to paginate results based on the level. As the result is ordered descendingly the blocks with level < since will be returned.
+func (r *Repository) ListExtended(limit, since uint64) (blocks []models.Block, err error) {
+	blocks, err = r.List(limit, since)
+	if err != nil || len(blocks) == 0 {
+		return blocks, err
+	}
+	return r.ExtendBlocks(blocks)
+}
+
+func (r *Repository) ExtendBlocks(blocks []models.Block) (extended []models.Block, err error) {
+	count := len(blocks)
+	ids := make([]int64, count)
+	m := make(map[int64]*models.Block, count)
+	for i := range blocks {
+		ids[i] = blocks[i].Level.Int64
+		m[blocks[i].Level.Int64] = &blocks[i]
+	}
+	aggInfo, err := r.ListBlockAggregation(ids)
+	if err != nil {
+		return blocks, err
+	}
+	for i := range aggInfo {
+		level := aggInfo[i].Level
+		if b, ok := m[level]; ok {
+			b.BlockAggregation = &aggInfo[i]
+		}
+	}
+	return blocks, err
 }
