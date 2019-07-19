@@ -84,6 +84,9 @@ func NewTezTrackerAPI(spec *loads.Document) *TezTrackerAPI {
 		BlocksGetBlockHandler: blocks.GetBlockHandlerFunc(func(params blocks.GetBlockParams) middleware.Responder {
 			return middleware.NotImplemented("operation BlocksGetBlock has not yet been implemented")
 		}),
+		BlocksGetBlockEndorsementsHandler: blocks.GetBlockEndorsementsHandlerFunc(func(params blocks.GetBlockEndorsementsParams) middleware.Responder {
+			return middleware.NotImplemented("operation BlocksGetBlockEndorsements has not yet been implemented")
+		}),
 		BlocksGetBlocksHeadHandler: blocks.GetBlocksHeadHandlerFunc(func(params blocks.GetBlocksHeadParams) middleware.Responder {
 			return middleware.NotImplemented("operation BlocksGetBlocksHead has not yet been implemented")
 		}),
@@ -159,6 +162,8 @@ type TezTrackerAPI struct {
 	FeesGetAvgFeesHandler fees.GetAvgFeesHandler
 	// BlocksGetBlockHandler sets the operation handler for the get block operation
 	BlocksGetBlockHandler blocks.GetBlockHandler
+	// BlocksGetBlockEndorsementsHandler sets the operation handler for the get block endorsements operation
+	BlocksGetBlockEndorsementsHandler blocks.GetBlockEndorsementsHandler
 	// BlocksGetBlocksHeadHandler sets the operation handler for the get blocks head operation
 	BlocksGetBlocksHeadHandler blocks.GetBlocksHeadHandler
 	// BlocksGetBlocksListHandler sets the operation handler for the get blocks list operation
@@ -284,6 +289,10 @@ func (o *TezTrackerAPI) Validate() error {
 
 	if o.BlocksGetBlockHandler == nil {
 		unregistered = append(unregistered, "blocks.GetBlockHandler")
+	}
+
+	if o.BlocksGetBlockEndorsementsHandler == nil {
+		unregistered = append(unregistered, "blocks.GetBlockEndorsementsHandler")
 	}
 
 	if o.BlocksGetBlocksHeadHandler == nil {
@@ -468,6 +477,11 @@ func (o *TezTrackerAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/v2/data/{platform}/{network}/blocks/{hash}"] = blocks.NewGetBlock(o.context, o.BlocksGetBlockHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/v2/data/{platform}/{network}/blocks/{hash}/endorsements"] = blocks.NewGetBlockEndorsements(o.context, o.BlocksGetBlockEndorsementsHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)

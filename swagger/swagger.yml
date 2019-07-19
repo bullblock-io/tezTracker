@@ -374,6 +374,37 @@ paths:
           description: Internal error
       tags:
         - Blocks
+  '/v2/data/{platform}/{network}/blocks/{hash}/endorsements':
+    get:
+      operationId: getBlockEndorsements
+      parameters:
+        - in: path
+          name: platform
+          description: Not used
+          required: true
+          type: string
+        - in: path
+          name: network
+          description: Not used
+          required: true
+          type: string
+        - in: path
+          name: hash
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Endpoint for endorsements of a block by hash or level
+          schema:
+            items:
+              $ref: '#/definitions/OperationsRow'
+            type: array
+        '404':
+          description: Not Found
+        '500':
+          description: Internal error
+      tags:
+        - Blocks
   '/v2/data/{platform}/{network}/operation_groups':
     get:
       operationId: getOperationGroups

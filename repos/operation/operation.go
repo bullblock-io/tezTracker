@@ -13,8 +13,11 @@ type (
 
 	Repo interface {
 		List(kinds []string, inBlocks, accountIDs []string, limit, since int64) (operations []models.Operation, err error)
+		EndorsementsFor(blockLevel int64) (operations []models.Operation, err error)
 	}
 )
+
+const endorsementKind = "endorsement"
 
 // New creates an instance of repository using the provided db.
 func New(db *gorm.DB) *Repository {
@@ -43,6 +46,15 @@ func (r *Repository) List(kinds []string, inBlocks, accountIDs []string, limit, 
 	}
 	err = db.Order("operation_id desc").
 		Limit(limit).
+		Find(&operations).Error
+	return operations, err
+}
+
+// EndorsementsFor returns a list of endorsement operations for the provided block level.
+func (r *Repository) EndorsementsFor(blockLevel int64) (operations []models.Operation, err error) {
+	err = r.db.Model(&models.Operation{}).
+		Where("kind = ?", endorsementKind).
+		Where("level = ?", blockLevel).
 		Find(&operations).Error
 	return operations, err
 }
