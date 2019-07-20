@@ -7,6 +7,7 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
+//go:generate mockgen -source ./block.go -destination ./mock_block/main.go Repo
 type (
 	// Repository is the block repo implementation.
 	Repository struct {

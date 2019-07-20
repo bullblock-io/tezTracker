@@ -5,6 +5,7 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
+//go:generate mockgen -source ./operation.go -destination ./mock_operation/main.go Repo
 type (
 	// Repository is the operation repo implementation.
 	Repository struct {

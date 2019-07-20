@@ -5,6 +5,7 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
+//go:generate mockgen -source ./account.go -destination ./mock_account/main.go Repo
 type (
 	// Repository is the account repo implementation.
 	Repository struct {
