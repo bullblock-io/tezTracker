@@ -256,6 +256,60 @@ func init() {
         }
       }
     },
+    "/v2/data/{platform}/{network}/bakers": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Accounts"
+        ],
+        "operationId": "getBakersList",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Not used",
+            "name": "platform",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Not used",
+            "name": "network",
+            "in": "path",
+            "required": true
+          },
+          {
+            "maximum": 500,
+            "minimum": 1,
+            "type": "integer",
+            "default": 20,
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "name": "after_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Query Endpoint for getting list of baker accounts ordered by staking balance.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/BakersRow"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
     "/v2/data/{platform}/{network}/blocks": {
       "get": {
         "produces": [
@@ -1565,6 +1619,37 @@ func init() {
         },
         "storage": {
           "type": "string"
+        }
+      }
+    },
+    "BakersRow": {
+      "type": "object",
+      "required": [
+        "stakingBalance",
+        "accountId",
+        "blocks",
+        "endorsements",
+        "fees"
+      ],
+      "properties": {
+        "accountId": {
+          "type": "string"
+        },
+        "blocks": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "endorsements": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "fees": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "stakingBalance": {
+          "type": "integer",
+          "format": "int64"
         }
       }
     },
@@ -2493,6 +2578,60 @@ func init() {
         }
       }
     },
+    "/v2/data/{platform}/{network}/bakers": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Accounts"
+        ],
+        "operationId": "getBakersList",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Not used",
+            "name": "platform",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Not used",
+            "name": "network",
+            "in": "path",
+            "required": true
+          },
+          {
+            "maximum": 500,
+            "minimum": 1,
+            "type": "integer",
+            "default": 20,
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "name": "after_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Query Endpoint for getting list of baker accounts ordered by staking balance.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/BakersRow"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
     "/v2/data/{platform}/{network}/blocks": {
       "get": {
         "produces": [
@@ -3802,6 +3941,37 @@ func init() {
         },
         "storage": {
           "type": "string"
+        }
+      }
+    },
+    "BakersRow": {
+      "type": "object",
+      "required": [
+        "stakingBalance",
+        "accountId",
+        "blocks",
+        "endorsements",
+        "fees"
+      ],
+      "properties": {
+        "accountId": {
+          "type": "string"
+        },
+        "blocks": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "endorsements": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "fees": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "stakingBalance": {
+          "type": "integer",
+          "format": "int64"
         }
       }
     },
