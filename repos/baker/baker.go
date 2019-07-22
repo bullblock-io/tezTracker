@@ -19,7 +19,6 @@ type (
 	BakerCounter struct {
 		Baker string
 		Count int64
-		Fees  int64
 	}
 )
 
@@ -99,7 +98,6 @@ func (r *Repository) ExtendBakers(bakers []models.Baker) (extended []models.Bake
 		baker := aggInfo[i].Baker
 		if b, ok := m[baker]; ok {
 			b.Endorsements = aggInfo[i].Count
-			b.Fees = aggInfo[i].Fees
 		}
 	}
 	return bakers, nil
@@ -123,7 +121,7 @@ func (r *Repository) ListEndorsementCount(ids []string) (counter []BakerCounter,
 	err = r.db.Model(&models.Operation{}).
 		Where("delegate IN (?)", ids).
 		Where("kind = ?", endorsementKind).
-		Select("count(1) as count, delegate as baker, sum(fee) as fees").
+		Select("count(1) as count, delegate as baker").
 		Group("delegate").Scan(&counter).Error
 	if err != nil {
 		return nil, err
