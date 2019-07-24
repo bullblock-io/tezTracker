@@ -21,6 +21,11 @@ type (
 		GetOperation() operation.Repo
 		GetAccount() account.Repo
 	}
+
+	Limiter interface {
+		Limit() uint
+		Offset() uint
+	}
 )
 
 // New creates a new TexTracker service using the repository provider.
