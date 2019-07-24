@@ -21,6 +21,9 @@ type AccountsRow struct {
 	// Required: true
 	AccountID *string `json:"accountId"`
 
+	// baker info
+	BakerInfo *BakerInfo `json:"bakerInfo,omitempty"`
+
 	// balance
 	// Required: true
 	Balance *int64 `json:"balance"`
@@ -67,6 +70,10 @@ func (m *AccountsRow) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateBakerInfo(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateBalance(formats); err != nil {
 		res = append(res, err)
 	}
@@ -105,6 +112,24 @@ func (m *AccountsRow) validateAccountID(formats strfmt.Registry) error {
 
 	if err := validate.Required("accountId", "body", m.AccountID); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func (m *AccountsRow) validateBakerInfo(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.BakerInfo) { // not required
+		return nil
+	}
+
+	if m.BakerInfo != nil {
+		if err := m.BakerInfo.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("bakerInfo")
+			}
+			return err
+		}
 	}
 
 	return nil

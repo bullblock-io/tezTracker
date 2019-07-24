@@ -81,6 +81,9 @@ func NewTezTrackerAPI(spec *loads.Document) *TezTrackerAPI {
 		FeesGetAvgFeesHandler: fees.GetAvgFeesHandlerFunc(func(params fees.GetAvgFeesParams) middleware.Responder {
 			return middleware.NotImplemented("operation FeesGetAvgFees has not yet been implemented")
 		}),
+		AccountsGetBakersListHandler: accounts.GetBakersListHandlerFunc(func(params accounts.GetBakersListParams) middleware.Responder {
+			return middleware.NotImplemented("operation AccountsGetBakersList has not yet been implemented")
+		}),
 		BlocksGetBlockHandler: blocks.GetBlockHandlerFunc(func(params blocks.GetBlockParams) middleware.Responder {
 			return middleware.NotImplemented("operation BlocksGetBlock has not yet been implemented")
 		}),
@@ -160,6 +163,8 @@ type TezTrackerAPI struct {
 	AccountsGetAccountsListHandler accounts.GetAccountsListHandler
 	// FeesGetAvgFeesHandler sets the operation handler for the get avg fees operation
 	FeesGetAvgFeesHandler fees.GetAvgFeesHandler
+	// AccountsGetBakersListHandler sets the operation handler for the get bakers list operation
+	AccountsGetBakersListHandler accounts.GetBakersListHandler
 	// BlocksGetBlockHandler sets the operation handler for the get block operation
 	BlocksGetBlockHandler blocks.GetBlockHandler
 	// BlocksGetBlockEndorsementsHandler sets the operation handler for the get block endorsements operation
@@ -285,6 +290,10 @@ func (o *TezTrackerAPI) Validate() error {
 
 	if o.FeesGetAvgFeesHandler == nil {
 		unregistered = append(unregistered, "fees.GetAvgFeesHandler")
+	}
+
+	if o.AccountsGetBakersListHandler == nil {
+		unregistered = append(unregistered, "accounts.GetBakersListHandler")
 	}
 
 	if o.BlocksGetBlockHandler == nil {
@@ -472,6 +481,11 @@ func (o *TezTrackerAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/v2/data/{platform}/{network}/operations/avgFees"] = fees.NewGetAvgFees(o.context, o.FeesGetAvgFeesHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/v2/data/{platform}/{network}/bakers"] = accounts.NewGetBakersList(o.context, o.AccountsGetBakersListHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)

@@ -25,5 +25,10 @@ func (t *TezTracker) GetAccount(id string) (acc models.Account, err error) {
 		return acc, ErrNotFound
 	}
 
+	bi, err := t.GetBakerInfo(id)
+	if err != nil {
+		return acc, err
+	}
+	acc.BakerInfo = bi
 	return acc, nil
 }

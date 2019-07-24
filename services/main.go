@@ -2,6 +2,7 @@ package services
 
 import (
 	"github.com/bullblock-io/tezTracker/repos/account"
+	"github.com/bullblock-io/tezTracker/repos/baker"
 	"github.com/bullblock-io/tezTracker/repos/block"
 	"github.com/bullblock-io/tezTracker/repos/operation"
 	"github.com/bullblock-io/tezTracker/repos/operation_groups"
@@ -20,6 +21,7 @@ type (
 		GetOperationGroup() operation_groups.Repo
 		GetOperation() operation.Repo
 		GetAccount() account.Repo
+		GetBaker() baker.Repo
 	}
 
 	Limiter interface {
