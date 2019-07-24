@@ -15,9 +15,9 @@ type Account struct {
 	Counter            null.Int              `json:"counter"`
 	Script             string                `json:"script"`
 	Storage            string                `json:"storage"`
-	Balance            null.Int            `json:"balance"`
+	Balance            null.Int              `json:"balance"`
 	BlockLevel         null.Int              `json:"block_level" sql:"DEFAULT:'-1'::integer"`
 	AccountsCheckpoint []*AccountsCheckpoint `json:"accounts_checkpoint"` // This line is infered from other tables.
 	DelegatedContracts []*DelegatedContract  `json:"delegated_contracts"` // This line is infered from other tables.
-	BakerInfo 			*BakerInfo	`json:"baker_info"`
+	BakerInfo          *BakerInfo            `json:"baker_info"`
 }
