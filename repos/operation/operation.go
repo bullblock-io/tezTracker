@@ -57,7 +57,7 @@ func (r *Repository) EndorsementsFor(blockLevel int64, limit, offset uint) (oper
 	err = r.db.Model(&models.Operation{}).
 		Where("kind = ?", endorsementKind).
 		Where("level = ?", blockLevel).
-		Order("operation_id").
+		Order("operation_id DESC").
 		Limit(limit).
 		Offset(offset).
 		Find(&operations).Error
