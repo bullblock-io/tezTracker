@@ -25,6 +25,7 @@ func Bakers(ams []models.Baker) []*genModels.BakersRow {
 	return accs
 }
 
+// BakerInfo renders a baker info details.
 func BakerInfo(bi *models.BakerInfo) *genModels.BakerInfo {
 	if bi == nil {
 		return nil
