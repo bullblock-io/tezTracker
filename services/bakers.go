@@ -52,7 +52,7 @@ func (t *TezTracker) GetBakerInfo(accountID string) (bi *models.BakerInfo, err e
 	if err != nil {
 		return bi, err
 	}
-	fpb := GetFirstPreservedBlock(curCycle)
+	fpb := getFirstPreservedBlock(curCycle)
 	counter, err := r.BlocksCountBakedBy([]string{accountID}, fpb)
 	if err != nil {
 		return bi, err
