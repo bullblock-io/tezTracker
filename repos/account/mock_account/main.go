@@ -34,18 +34,18 @@ func (m *MockRepo) EXPECT() *MockRepoMockRecorder {
 }
 
 // List mocks base method
-func (m *MockRepo) List(limit uint64, after string) ([]models.Account, error) {
+func (m *MockRepo) List(limit, offset uint, after string) ([]models.Account, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "List", limit, after)
+	ret := m.ctrl.Call(m, "List", limit, offset, after)
 	ret0, _ := ret[0].([]models.Account)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // List indicates an expected call of List
-func (mr *MockRepoMockRecorder) List(limit, after interface{}) *gomock.Call {
+func (mr *MockRepoMockRecorder) List(limit, offset, after interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockRepo)(nil).List), limit, after)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockRepo)(nil).List), limit, offset, after)
 }
 
 // Find mocks base method

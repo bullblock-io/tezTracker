@@ -49,18 +49,18 @@ func (mr *MockRepoMockRecorder) Last() *gomock.Call {
 }
 
 // List mocks base method
-func (m *MockRepo) List(limit, since uint64) ([]models.Block, error) {
+func (m *MockRepo) List(limit, offset uint, since uint64) ([]models.Block, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "List", limit, since)
+	ret := m.ctrl.Call(m, "List", limit, offset, since)
 	ret0, _ := ret[0].([]models.Block)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // List indicates an expected call of List
-func (mr *MockRepoMockRecorder) List(limit, since interface{}) *gomock.Call {
+func (mr *MockRepoMockRecorder) List(limit, offset, since interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockRepo)(nil).List), limit, since)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockRepo)(nil).List), limit, offset, since)
 }
 
 // Find mocks base method
@@ -77,4 +77,35 @@ func (m *MockRepo) Find(filter models.Block) (bool, models.Block, error) {
 func (mr *MockRepoMockRecorder) Find(filter interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Find", reflect.TypeOf((*MockRepo)(nil).Find), filter)
+}
+
+// FindExtended mocks base method
+func (m *MockRepo) FindExtended(filter models.Block) (bool, models.Block, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "FindExtended", filter)
+	ret0, _ := ret[0].(bool)
+	ret1, _ := ret[1].(models.Block)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// FindExtended indicates an expected call of FindExtended
+func (mr *MockRepoMockRecorder) FindExtended(filter interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindExtended", reflect.TypeOf((*MockRepo)(nil).FindExtended), filter)
+}
+
+// ListExtended mocks base method
+func (m *MockRepo) ListExtended(limit, offset uint, since uint64) ([]models.Block, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListExtended", limit, offset, since)
+	ret0, _ := ret[0].([]models.Block)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListExtended indicates an expected call of ListExtended
+func (mr *MockRepoMockRecorder) ListExtended(limit, offset, since interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListExtended", reflect.TypeOf((*MockRepo)(nil).ListExtended), limit, offset, since)
 }
