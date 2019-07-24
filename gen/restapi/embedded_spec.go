@@ -57,6 +57,13 @@ func init() {
             "in": "query"
           },
           {
+            "type": "integer",
+            "default": 0,
+            "description": "Offset",
+            "name": "offset",
+            "in": "query"
+          },
+          {
             "type": "string",
             "name": "after_id",
             "in": "query"
@@ -343,6 +350,13 @@ func init() {
             "in": "query"
           },
           {
+            "type": "integer",
+            "default": 0,
+            "description": "Offset",
+            "name": "offset",
+            "in": "query"
+          },
+          {
             "type": "array",
             "items": {
               "type": "string"
@@ -607,6 +621,21 @@ func init() {
             "name": "hash",
             "in": "path",
             "required": true
+          },
+          {
+            "maximum": 500,
+            "minimum": 1,
+            "type": "integer",
+            "default": 20,
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "default": 0,
+            "description": "Offset",
+            "name": "offset",
+            "in": "query"
           }
         ],
         "responses": {
@@ -700,6 +729,13 @@ func init() {
             "type": "integer",
             "default": 20,
             "name": "limit",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "default": 0,
+            "description": "Offset",
+            "name": "offset",
             "in": "query"
           },
           {
@@ -913,6 +949,13 @@ func init() {
           },
           {
             "type": "integer",
+            "default": 0,
+            "description": "Offset",
+            "name": "offset",
+            "in": "query"
+          },
+          {
+            "type": "integer",
             "name": "before_id",
             "in": "query"
           },
@@ -1106,6 +1149,13 @@ func init() {
             "type": "integer",
             "default": 20,
             "name": "limit",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "default": 0,
+            "description": "Offset",
+            "name": "offset",
             "in": "query"
           },
           {
@@ -2411,6 +2461,14 @@ func init() {
             "in": "query"
           },
           {
+            "minimum": 0,
+            "type": "integer",
+            "default": 0,
+            "description": "Offset",
+            "name": "offset",
+            "in": "query"
+          },
+          {
             "type": "string",
             "name": "after_id",
             "in": "query"
@@ -2697,6 +2755,14 @@ func init() {
             "in": "query"
           },
           {
+            "minimum": 0,
+            "type": "integer",
+            "default": 0,
+            "description": "Offset",
+            "name": "offset",
+            "in": "query"
+          },
+          {
             "type": "array",
             "items": {
               "type": "string"
@@ -2961,6 +3027,22 @@ func init() {
             "name": "hash",
             "in": "path",
             "required": true
+          },
+          {
+            "maximum": 500,
+            "minimum": 1,
+            "type": "integer",
+            "default": 20,
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "minimum": 0,
+            "type": "integer",
+            "default": 0,
+            "description": "Offset",
+            "name": "offset",
+            "in": "query"
           }
         ],
         "responses": {
@@ -3054,6 +3136,14 @@ func init() {
             "type": "integer",
             "default": 20,
             "name": "limit",
+            "in": "query"
+          },
+          {
+            "minimum": 0,
+            "type": "integer",
+            "default": 0,
+            "description": "Offset",
+            "name": "offset",
             "in": "query"
           },
           {
@@ -3266,6 +3356,14 @@ func init() {
             "in": "query"
           },
           {
+            "minimum": 0,
+            "type": "integer",
+            "default": 0,
+            "description": "Offset",
+            "name": "offset",
+            "in": "query"
+          },
+          {
             "type": "integer",
             "name": "before_id",
             "in": "query"
@@ -3460,6 +3558,14 @@ func init() {
             "type": "integer",
             "default": 20,
             "name": "limit",
+            "in": "query"
+          },
+          {
+            "minimum": 0,
+            "type": "integer",
+            "default": 0,
+            "description": "Offset",
+            "name": "offset",
             "in": "query"
           },
           {

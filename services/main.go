@@ -23,6 +23,11 @@ type (
 		GetAccount() account.Repo
 		GetBaker() baker.Repo
 	}
+
+	Limiter interface {
+		Limit() uint
+		Offset() uint
+	}
 )
 
 // New creates a new TexTracker service using the repository provider.

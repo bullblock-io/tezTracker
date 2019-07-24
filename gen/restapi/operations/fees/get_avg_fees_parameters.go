@@ -26,10 +26,14 @@ func NewGetAvgFeesParams() GetAvgFeesParams {
 		// initialize parameters with default values
 
 		limitDefault = int64(20)
+
+		offsetDefault = int64(0)
 	)
 
 	return GetAvgFeesParams{
 		Limit: &limitDefault,
+
+		Offset: &offsetDefault,
 	}
 }
 
@@ -89,6 +93,12 @@ type GetAvgFeesParams struct {
 	  In: path
 	*/
 	Network string
+	/*Offset
+	  Minimum: 0
+	  In: query
+	  Default: 0
+	*/
+	Offset *int64
 	/*
 	  In: query
 	  Collection Format: multi
@@ -182,6 +192,11 @@ func (o *GetAvgFeesParams) BindRequest(r *http.Request, route *middleware.Matche
 
 	rNetwork, rhkNetwork, _ := route.Params.GetOK("network")
 	if err := o.bindNetwork(rNetwork, rhkNetwork, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
+	qOffset, qhkOffset, _ := qs.GetOK("offset")
+	if err := o.bindOffset(qOffset, qhkOffset, route.Formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -454,6 +469,43 @@ func (o *GetAvgFeesParams) bindNetwork(rawData []string, hasKey bool, formats st
 	// Parameter is provided by construction from the route
 
 	o.Network = raw
+
+	return nil
+}
+
+// bindOffset binds and validates parameter Offset from query.
+func (o *GetAvgFeesParams) bindOffset(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+	if raw == "" { // empty values pass all other validations
+		// Default values have been previously initialized by NewGetAvgFeesParams()
+		return nil
+	}
+
+	value, err := swag.ConvertInt64(raw)
+	if err != nil {
+		return errors.InvalidType("offset", "query", "int64", raw)
+	}
+	o.Offset = &value
+
+	if err := o.validateOffset(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateOffset carries on validations for parameter Offset
+func (o *GetAvgFeesParams) validateOffset(formats strfmt.Registry) error {
+
+	if err := validate.MinimumInt("offset", "query", int64(*o.Offset), 0, false); err != nil {
+		return err
+	}
 
 	return nil
 }

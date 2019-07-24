@@ -10,6 +10,8 @@ import (
 	"net/url"
 	golangswaggerpaths "path"
 	"strings"
+
+	"github.com/go-openapi/swag"
 )
 
 // GetBlockEndorsementsURL generates an URL for the get block endorsements operation
@@ -17,6 +19,9 @@ type GetBlockEndorsementsURL struct {
 	Hash     string
 	Network  string
 	Platform string
+
+	Limit  *int64
+	Offset *int64
 
 	_basePath string
 	// avoid unkeyed usage
@@ -67,6 +72,26 @@ func (o *GetBlockEndorsementsURL) Build() (*url.URL, error) {
 
 	_basePath := o._basePath
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
+
+	qs := make(url.Values)
+
+	var limit string
+	if o.Limit != nil {
+		limit = swag.FormatInt64(*o.Limit)
+	}
+	if limit != "" {
+		qs.Set("limit", limit)
+	}
+
+	var offset string
+	if o.Offset != nil {
+		offset = swag.FormatInt64(*o.Offset)
+	}
+	if offset != "" {
+		qs.Set("offset", offset)
+	}
+
+	_result.RawQuery = qs.Encode()
 
 	return &_result, nil
 }

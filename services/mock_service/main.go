@@ -91,3 +91,54 @@ func (mr *MockProviderMockRecorder) GetAccount() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAccount", reflect.TypeOf((*MockProvider)(nil).GetAccount))
 }
+
+// MockLimiter is a mock of Limiter interface
+type MockLimiter struct {
+	ctrl     *gomock.Controller
+	recorder *MockLimiterMockRecorder
+}
+
+// MockLimiterMockRecorder is the mock recorder for MockLimiter
+type MockLimiterMockRecorder struct {
+	mock *MockLimiter
+}
+
+// NewMockLimiter creates a new mock instance
+func NewMockLimiter(ctrl *gomock.Controller) *MockLimiter {
+	mock := &MockLimiter{ctrl: ctrl}
+	mock.recorder = &MockLimiterMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use
+func (m *MockLimiter) EXPECT() *MockLimiterMockRecorder {
+	return m.recorder
+}
+
+// Limit mocks base method
+func (m *MockLimiter) Limit() uint {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Limit")
+	ret0, _ := ret[0].(uint)
+	return ret0
+}
+
+// Limit indicates an expected call of Limit
+func (mr *MockLimiterMockRecorder) Limit() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Limit", reflect.TypeOf((*MockLimiter)(nil).Limit))
+}
+
+// Offset mocks base method
+func (m *MockLimiter) Offset() uint {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Offset")
+	ret0, _ := ret[0].(uint)
+	return ret0
+}
+
+// Offset indicates an expected call of Offset
+func (mr *MockLimiterMockRecorder) Offset() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Offset", reflect.TypeOf((*MockLimiter)(nil).Offset))
+}

@@ -27,6 +27,7 @@ type GetOperationGroupsURL struct {
 	BlockNetid           []string
 	BlockProtocol        []string
 	Limit                *int64
+	Offset               *int64
 	OperationDestination []string
 	OperationID          []string
 	OperationKind        []string
@@ -184,6 +185,14 @@ func (o *GetOperationGroupsURL) Build() (*url.URL, error) {
 	}
 	if limit != "" {
 		qs.Set("limit", limit)
+	}
+
+	var offset string
+	if o.Offset != nil {
+		offset = swag.FormatInt64(*o.Offset)
+	}
+	if offset != "" {
+		qs.Set("offset", offset)
 	}
 
 	var operationDestinationIR []string
