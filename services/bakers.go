@@ -29,7 +29,7 @@ func (t *TezTracker) GetCurrentCycle() (int64, error) {
 	return lastBlock.MetaCycle, nil
 }
 
-func GetFirstPreservedBlock(currentCycle int64) (fpb int64) {
+func getFirstPreservedBlock(currentCycle int64) (fpb int64) {
 	fpc := currentCycle - PreservedCycles
 
 	if fpc > 0 {
