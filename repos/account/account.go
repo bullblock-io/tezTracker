@@ -36,7 +36,6 @@ func (r *Repository) List(limit, offset uint, after string) (accounts []models.A
 	err = db.Order("account_id asc").
 		Limit(limit).
 		Offset(offset).
-		Order("account_id DESC").
 		Find(&accounts).Error
 	return accounts, err
 }
