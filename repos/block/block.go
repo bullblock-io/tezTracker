@@ -16,10 +16,10 @@ type (
 
 	Repo interface {
 		Last() (block models.Block, err error)
-		List(limit, since uint64) (blocks []models.Block, err error)
+		List(limit, offset uint, since uint64) (blocks []models.Block, err error)
 		Find(filter models.Block) (found bool, block models.Block, err error)
 		FindExtended(filter models.Block) (found bool, block models.Block, err error)
-		ListExtended(limit, since uint64) (blocks []models.Block, err error)
+		ListExtended(limit, offset uint, since uint64) (blocks []models.Block, err error)
 	}
 )
 
@@ -39,13 +39,14 @@ func (r *Repository) Last() (block models.Block, err error) {
 // List returns a list of blocks from the newest to oldest.
 // limit defines the limit for the maximum number of blocks returned.
 // since is used to paginate results based on the level. As the result is ordered descendingly the blocks with level < since will be returned.
-func (r *Repository) List(limit, since uint64) (blocks []models.Block, err error) {
+func (r *Repository) List(limit, offset uint, since uint64) (blocks []models.Block, err error) {
 	db := r.db.Model(&models.Block{})
 	if since > 0 {
 		db = db.Where("level < ?", since)
 	}
 	err = db.Order("level desc").
 		Limit(limit).
+		Offset(offset).
 		Find(&blocks).Error
 	return blocks, err
 }
@@ -89,8 +90,8 @@ func (r *Repository) ListBlockAggregation(levels []int64) (blocks []models.Block
 // ListExtended returns a list of blocks with populated aggregation data from the newest to oldest.
 // limit defines the limit for the maximum number of blocks returned.
 // since is used to paginate results based on the level. As the result is ordered descendingly the blocks with level < since will be returned.
-func (r *Repository) ListExtended(limit, since uint64) (blocks []models.Block, err error) {
-	blocks, err = r.List(limit, since)
+func (r *Repository) ListExtended(limit, offset uint, since uint64) (blocks []models.Block, err error) {
+	blocks, err = r.List(limit, offset, since)
 	if err != nil || len(blocks) == 0 {
 		return blocks, err
 	}

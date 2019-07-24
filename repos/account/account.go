@@ -13,7 +13,7 @@ type (
 	}
 
 	Repo interface {
-		List(limit uint64, after string) ([]models.Account, error)
+		List(limit uint, offset uint, after string) ([]models.Account, error)
 		Find(filter models.Account) (found bool, acc models.Account, err error)
 	}
 )
@@ -28,13 +28,15 @@ func New(db *gorm.DB) *Repository {
 // List returns a list of accounts from the newest to oldest.
 // limit defines the limit for the maximum number of accounts returned.
 // before is used to paginate results based on the level. As the result is ordered descendingly the accounts with level < before will be returned.
-func (r *Repository) List(limit uint64, after string) (accounts []models.Account, err error) {
+func (r *Repository) List(limit, offset uint, after string) (accounts []models.Account, err error) {
 	db := r.db.Model(&models.Account{})
 	if after != "" {
 		db = db.Where("account_id > ?", after)
 	}
 	err = db.Order("account_id asc").
 		Limit(limit).
+		Offset(offset).
+		Order("account_id DESC").
 		Find(&accounts).Error
 	return accounts, err
 }

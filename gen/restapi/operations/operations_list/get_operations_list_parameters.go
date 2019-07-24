@@ -26,10 +26,14 @@ func NewGetOperationsListParams() GetOperationsListParams {
 		// initialize parameters with default values
 
 		limitDefault = int64(20)
+
+		offsetDefault = int64(0)
 	)
 
 	return GetOperationsListParams{
 		Limit: &limitDefault,
+
+		Offset: &offsetDefault,
 	}
 }
 
@@ -93,6 +97,12 @@ type GetOperationsListParams struct {
 	  In: path
 	*/
 	Network string
+	/*Offset
+	  Minimum: 0
+	  In: query
+	  Default: 0
+	*/
+	Offset *int64
 	/*Not used
 	  In: query
 	  Collection Format: multi
@@ -191,6 +201,11 @@ func (o *GetOperationsListParams) BindRequest(r *http.Request, route *middleware
 
 	rNetwork, rhkNetwork, _ := route.Params.GetOK("network")
 	if err := o.bindNetwork(rNetwork, rhkNetwork, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
+	qOffset, qhkOffset, _ := qs.GetOK("offset")
+	if err := o.bindOffset(qOffset, qhkOffset, route.Formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -485,6 +500,43 @@ func (o *GetOperationsListParams) bindNetwork(rawData []string, hasKey bool, for
 	// Parameter is provided by construction from the route
 
 	o.Network = raw
+
+	return nil
+}
+
+// bindOffset binds and validates parameter Offset from query.
+func (o *GetOperationsListParams) bindOffset(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+	if raw == "" { // empty values pass all other validations
+		// Default values have been previously initialized by NewGetOperationsListParams()
+		return nil
+	}
+
+	value, err := swag.ConvertInt64(raw)
+	if err != nil {
+		return errors.InvalidType("offset", "query", "int64", raw)
+	}
+	o.Offset = &value
+
+	if err := o.validateOffset(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateOffset carries on validations for parameter Offset
+func (o *GetOperationsListParams) validateOffset(formats strfmt.Registry) error {
+
+	if err := validate.MinimumInt("offset", "query", int64(*o.Offset), 0, false); err != nil {
+		return err
+	}
 
 	return nil
 }

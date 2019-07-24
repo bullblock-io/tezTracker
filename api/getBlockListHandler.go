@@ -17,15 +17,12 @@ type getBlockListHandler struct {
 // Handle serves the Get Block List request.
 func (h *getBlockListHandler) Handle(params blocks.GetBlocksListParams) middleware.Responder {
 	service := services.New(repos.New(h.db))
-	limit := uint64(0)
-	if params.Limit != nil {
-		limit = uint64(*params.Limit)
-	}
+	limiter := NewLimiter(params.Limit, params.Offset)
 	before := uint64(0)
 	if params.BeforeLevel != nil {
 		before = uint64(*params.BeforeLevel)
 	}
-	bs, err := service.BlockList(limit, before)
+	bs, err := service.BlockList(before, limiter)
 	if err != nil {
 		logrus.Errorf("failed to get blocks: %s", err.Error())
 		return blocks.NewGetBlocksListNotFound()

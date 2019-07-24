@@ -53,6 +53,12 @@ paths:
           minimum: 1
           maximum: 500
         - in: query
+          name: offset
+          description: Offset
+          type: integer
+          default: 0
+          minimum: 0
+        - in: query
           name: after_id
           type: string
         - collectionFormat: multi
@@ -211,6 +217,12 @@ paths:
           default: 20
           minimum: 1
           maximum: 500
+        - in: query
+          name: offset
+          description: Offset
+          type: integer
+          default: 0
+          minimum: 0
         - collectionFormat: multi
           in: query
           items:
@@ -392,6 +404,18 @@ paths:
           name: hash
           required: true
           type: string
+        - in: query
+          name: limit
+          type: integer
+          default: 20
+          minimum: 1
+          maximum: 500
+        - in: query
+          name: offset
+          description: Offset
+          type: integer
+          default: 0
+          minimum: 0
       responses:
         '200':
           description: Endpoint for endorsements of a block by hash or level
@@ -425,6 +449,12 @@ paths:
           default: 20
           minimum: 1
           maximum: 500
+        - in: query
+          name: offset
+          description: Offset
+          type: integer
+          default: 0
+          minimum: 0
         - collectionFormat: multi
           in: query
           items:
@@ -565,6 +595,12 @@ paths:
           minimum: 1
           maximum: 500
         - in: query
+          name: offset
+          description: Offset
+          type: integer
+          default: 0
+          minimum: 0
+        - in: query
           name: before_id
           type: integer
         - collectionFormat: multi
@@ -690,6 +726,12 @@ paths:
           default: 20
           minimum: 1
           maximum: 500
+        - in: query
+          name: offset
+          description: Offset
+          type: integer
+          default: 0
+          minimum: 0
         - collectionFormat: multi
           in: query
           items:

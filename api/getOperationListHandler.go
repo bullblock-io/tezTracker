@@ -17,16 +17,13 @@ type getOperationListHandler struct {
 // Handle serves the Get Operations List request.
 func (h *getOperationListHandler) Handle(params ops.GetOperationsListParams) middleware.Responder {
 	service := services.New(repos.New(h.db))
-	limit := int64(0)
-	if params.Limit != nil {
-		limit = *params.Limit
-	}
+	limiter := NewLimiter(params.Limit, params.Offset)
 	before := int64(0)
 	if params.BeforeID != nil {
 		before = *params.BeforeID
 	}
 
-	operations, err := service.GetOperations(params.OperationKind, params.BlockID, params.AccountID, limit, before)
+	operations, err := service.GetOperations(params.OperationKind, params.BlockID, params.AccountID, limiter, before)
 
 	if err != nil {
 		logrus.Errorf("failed to get operations: %s", err.Error())

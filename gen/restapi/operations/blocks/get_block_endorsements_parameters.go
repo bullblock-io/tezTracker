@@ -9,16 +9,31 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 
 	strfmt "github.com/go-openapi/strfmt"
 )
 
 // NewGetBlockEndorsementsParams creates a new GetBlockEndorsementsParams object
-// no default values defined in spec.
+// with the default values initialized.
 func NewGetBlockEndorsementsParams() GetBlockEndorsementsParams {
 
-	return GetBlockEndorsementsParams{}
+	var (
+		// initialize parameters with default values
+
+		limitDefault = int64(20)
+
+		offsetDefault = int64(0)
+	)
+
+	return GetBlockEndorsementsParams{
+		Limit: &limitDefault,
+
+		Offset: &offsetDefault,
+	}
 }
 
 // GetBlockEndorsementsParams contains all the bound params for the get block endorsements operation
@@ -35,11 +50,24 @@ type GetBlockEndorsementsParams struct {
 	  In: path
 	*/
 	Hash string
+	/*
+	  Maximum: 500
+	  Minimum: 1
+	  In: query
+	  Default: 20
+	*/
+	Limit *int64
 	/*Not used
 	  Required: true
 	  In: path
 	*/
 	Network string
+	/*Offset
+	  Minimum: 0
+	  In: query
+	  Default: 0
+	*/
+	Offset *int64
 	/*Not used
 	  Required: true
 	  In: path
@@ -56,13 +84,25 @@ func (o *GetBlockEndorsementsParams) BindRequest(r *http.Request, route *middlew
 
 	o.HTTPRequest = r
 
+	qs := runtime.Values(r.URL.Query())
+
 	rHash, rhkHash, _ := route.Params.GetOK("hash")
 	if err := o.bindHash(rHash, rhkHash, route.Formats); err != nil {
 		res = append(res, err)
 	}
 
+	qLimit, qhkLimit, _ := qs.GetOK("limit")
+	if err := o.bindLimit(qLimit, qhkLimit, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
 	rNetwork, rhkNetwork, _ := route.Params.GetOK("network")
 	if err := o.bindNetwork(rNetwork, rhkNetwork, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
+	qOffset, qhkOffset, _ := qs.GetOK("offset")
+	if err := o.bindOffset(qOffset, qhkOffset, route.Formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -92,6 +132,47 @@ func (o *GetBlockEndorsementsParams) bindHash(rawData []string, hasKey bool, for
 	return nil
 }
 
+// bindLimit binds and validates parameter Limit from query.
+func (o *GetBlockEndorsementsParams) bindLimit(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+	if raw == "" { // empty values pass all other validations
+		// Default values have been previously initialized by NewGetBlockEndorsementsParams()
+		return nil
+	}
+
+	value, err := swag.ConvertInt64(raw)
+	if err != nil {
+		return errors.InvalidType("limit", "query", "int64", raw)
+	}
+	o.Limit = &value
+
+	if err := o.validateLimit(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateLimit carries on validations for parameter Limit
+func (o *GetBlockEndorsementsParams) validateLimit(formats strfmt.Registry) error {
+
+	if err := validate.MinimumInt("limit", "query", int64(*o.Limit), 1, false); err != nil {
+		return err
+	}
+
+	if err := validate.MaximumInt("limit", "query", int64(*o.Limit), 500, false); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // bindNetwork binds and validates parameter Network from path.
 func (o *GetBlockEndorsementsParams) bindNetwork(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	var raw string
@@ -103,6 +184,43 @@ func (o *GetBlockEndorsementsParams) bindNetwork(rawData []string, hasKey bool, 
 	// Parameter is provided by construction from the route
 
 	o.Network = raw
+
+	return nil
+}
+
+// bindOffset binds and validates parameter Offset from query.
+func (o *GetBlockEndorsementsParams) bindOffset(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+	if raw == "" { // empty values pass all other validations
+		// Default values have been previously initialized by NewGetBlockEndorsementsParams()
+		return nil
+	}
+
+	value, err := swag.ConvertInt64(raw)
+	if err != nil {
+		return errors.InvalidType("offset", "query", "int64", raw)
+	}
+	o.Offset = &value
+
+	if err := o.validateOffset(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateOffset carries on validations for parameter Offset
+func (o *GetBlockEndorsementsParams) validateOffset(formats strfmt.Registry) error {
+
+	if err := validate.MinimumInt("offset", "query", int64(*o.Offset), 0, false); err != nil {
+		return err
+	}
 
 	return nil
 }

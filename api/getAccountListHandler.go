@@ -17,15 +17,12 @@ type getAccountListHandler struct {
 // Handle serves the Get Account List request.
 func (h *getAccountListHandler) Handle(params accounts.GetAccountsListParams) middleware.Responder {
 	service := services.New(repos.New(h.db))
-	limit := uint64(0)
-	if params.Limit != nil {
-		limit = uint64(*params.Limit)
-	}
+	limiter := NewLimiter(params.Limit, params.Offset)
 	before := ""
 	if params.AfterID != nil {
 		before = *params.AfterID
 	}
-	accs, err := service.AccountList(limit, before)
+	accs, err := service.AccountList(before, limiter)
 	if err != nil {
 		logrus.Errorf("failed to get accounts: %s", err.Error())
 		return accounts.NewGetAccountsListNotFound()
