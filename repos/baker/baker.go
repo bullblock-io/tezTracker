@@ -14,7 +14,7 @@ type (
 
 	Repo interface {
 		Find(accountID string) (bool, models.Delegate, error)
-		List(limit uint64, after string) ([]models.Baker, error)
+		List(limit, offset uint) ([]models.Baker, error)
 		BlocksCountBakedBy(ids []string, startingLevel int64) (counter []BakerCounter, err error)
 		EndorsementsCountBy(ids []string, startingLevel int64) (counter []BakerWeightedCounter, err error)
 	}
@@ -27,12 +27,11 @@ type (
 		BakerCounter
 		Weight float64
 	}
-
 )
 
 const (
 	endorsementKind = "endorsement"
-	firstBlock = 0
+	firstBlock      = 0
 )
 
 // New creates an instance of repository using the provided db.
@@ -42,8 +41,8 @@ func New(db *gorm.DB) *Repository {
 	}
 }
 
-func (r *Repository) Find(accountID string) (found bool, delegate models.Delegate, err error){
-	filter := models.Delegate{Pkh:accountID}
+func (r *Repository) Find(accountID string) (found bool, delegate models.Delegate, err error) {
+	filter := models.Delegate{Pkh: accountID}
 	if res := r.db.Model(&filter).Where(&filter).Find(&delegate); res.Error != nil {
 		if res.RecordNotFound() {
 			return false, delegate, nil
@@ -54,18 +53,15 @@ func (r *Repository) Find(accountID string) (found bool, delegate models.Delegat
 }
 
 // List returns a list of bakers ordered by their staking balance.
-// limit defines the limit for the maximum number of bakers returned.
-// before is used to paginate results.
-// TODO:The pagination is broken for now.
-func (r *Repository) List(limit uint64, after string) (bakers []models.Baker, err error) {
+// limit defines the limit for the maximum number of bakers returned,
+// offset sets the offset for thenumber of rows returned.
+func (r *Repository) List(limit, offset uint) (bakers []models.Baker, err error) {
 	var delegates []models.Delegate
 	db := r.db.Model(&models.Delegate{})
-	if after != "" {
-		db = db.Where("pkh > ?", after)
-	}
 
 	err = db.Order("staking_balance desc").
 		Limit(limit).
+		Offset(offset).
 		Find(&delegates).Error
 	if err != nil {
 		return nil, err
@@ -112,7 +108,7 @@ func (r *Repository) ExtendBakers(bakers []models.Baker) (extended []models.Bake
 			b.Blocks = aggInfo[i].Count
 		}
 	}
-	aggInfo, err = r.EndorsementsOperationsCountBy(ids,firstBlock)
+	aggInfo, err = r.EndorsementsOperationsCountBy(ids, firstBlock)
 	if err != nil {
 		return bakers, err
 	}
@@ -127,10 +123,10 @@ func (r *Repository) ExtendBakers(bakers []models.Baker) (extended []models.Bake
 
 // BlocksCountBakedBy returns a slice of block counters with the number of blocks baked by each baker among ids.
 func (r *Repository) BlocksCountBakedBy(ids []string, startingLevel int64) (counter []BakerCounter, err error) {
-	db:=r.db.Model(&models.Block{}).
+	db := r.db.Model(&models.Block{}).
 		Where("baker IN (?)", ids)
-	if startingLevel > 0{
-		db = db.Where("level >= ?",startingLevel)
+	if startingLevel > 0 {
+		db = db.Where("level >= ?", startingLevel)
 	}
 	err = db.Select("baker, count(1) count").
 		Group("baker").Scan(&counter).Error
@@ -145,11 +141,11 @@ func (r *Repository) BlocksCountBakedBy(ids []string, startingLevel int64) (coun
 func (r *Repository) EndorsementsCountBy(ids []string, startingLevel int64) (counter []BakerWeightedCounter, err error) {
 	db := r.db.Table("endorsements_view").
 		Where("baker IN (?)", ids)
-	if startingLevel > 0{
-			db = db.Where("block_level >= ?",startingLevel)
-		}
-		
-		err = db.Select("SUM(count) as count, SUM(count*trunc(1/priority,6)) as weight, baker").
+	if startingLevel > 0 {
+		db = db.Where("block_level >= ?", startingLevel)
+	}
+
+	err = db.Select("SUM(count) as count, SUM(count*trunc(1/priority,6)) as weight, baker").
 		Group("baker").Scan(&counter).Error
 	if err != nil {
 		return nil, err
@@ -157,16 +153,17 @@ func (r *Repository) EndorsementsCountBy(ids []string, startingLevel int64) (cou
 
 	return counter, nil
 }
+
 // EndorsementsOperationsCountBy returns a slice of block counters with the number of endorsements made by each baker among ids.
 func (r *Repository) EndorsementsOperationsCountBy(ids []string, startingLevel int64) (counter []BakerCounter, err error) {
 	db := r.db.Model(&models.Operation{}).
 		Where("delegate IN (?)", ids).
 		Where("kind = ?", endorsementKind)
-	if startingLevel > 0{
-			db = db.Where("block_level >= ?",startingLevel)
-		}
-		
-		err = db.Select("count(1) as count, delegate as baker").
+	if startingLevel > 0 {
+		db = db.Where("block_level >= ?", startingLevel)
+	}
+
+	err = db.Select("count(1) as count, delegate as baker").
 		Group("delegate").Scan(&counter).Error
 	if err != nil {
 		return nil, err

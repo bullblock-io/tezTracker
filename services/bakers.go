@@ -15,9 +15,9 @@ const (
 )
 
 // BakerList retrives up to limit of bakers after the specified id.
-func (t *TezTracker) BakerList(limit uint64, after string) ([]models.Baker, error) {
+func (t *TezTracker) BakerList(limits Limiter) ([]models.Baker, error) {
 	r := t.repoProvider.GetBaker()
-	return r.List(limit, after)
+	return r.List(limits.Limit(), limits.Offset())
 }
 
 func (t *TezTracker) GetCurrentCycle() (int64, error) {

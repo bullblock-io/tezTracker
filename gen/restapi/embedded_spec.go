@@ -296,8 +296,10 @@ func init() {
             "in": "query"
           },
           {
-            "type": "string",
-            "name": "after_id",
+            "type": "integer",
+            "default": 0,
+            "description": "Offset",
+            "name": "offset",
             "in": "query"
           }
         ],
@@ -2701,8 +2703,11 @@ func init() {
             "in": "query"
           },
           {
-            "type": "string",
-            "name": "after_id",
+            "minimum": 0,
+            "type": "integer",
+            "default": 0,
+            "description": "Offset",
+            "name": "offset",
             "in": "query"
           }
         ],

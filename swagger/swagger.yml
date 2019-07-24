@@ -186,8 +186,11 @@ paths:
           minimum: 1
           maximum: 500
         - in: query
-          name: after_id
-          type: string
+          name: offset
+          description: Offset
+          type: integer
+          default: 0
+          minimum: 0
       responses:
         '200':
           description: Query Endpoint for getting list of baker accounts ordered by staking balance.

@@ -17,15 +17,9 @@ type getBakerListHandler struct {
 // Handle serves the Get Baker List request.
 func (h *getBakerListHandler) Handle(params accounts.GetBakersListParams) middleware.Responder {
 	service := services.New(repos.New(h.db))
-	limit := uint64(0)
-	if params.Limit != nil {
-		limit = uint64(*params.Limit)
-	}
-	after := ""
-	if params.AfterID != nil {
-		after = *params.AfterID
-	}
-	accs, err := service.BakerList(limit, after)
+	limiter := NewLimiter(params.Limit, params.Offset)
+
+	accs, err := service.BakerList(limiter)
 	if err != nil {
 		logrus.Errorf("failed to get accounts: %s", err.Error())
 		return accounts.NewGetBakersListNotFound()

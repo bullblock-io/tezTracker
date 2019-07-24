@@ -19,8 +19,8 @@ type GetBakersListURL struct {
 	Network  string
 	Platform string
 
-	AfterID *string
-	Limit   *int64
+	Limit  *int64
+	Offset *int64
 
 	_basePath string
 	// avoid unkeyed usage
@@ -67,20 +67,20 @@ func (o *GetBakersListURL) Build() (*url.URL, error) {
 
 	qs := make(url.Values)
 
-	var afterID string
-	if o.AfterID != nil {
-		afterID = *o.AfterID
-	}
-	if afterID != "" {
-		qs.Set("after_id", afterID)
-	}
-
 	var limit string
 	if o.Limit != nil {
 		limit = swag.FormatInt64(*o.Limit)
 	}
 	if limit != "" {
 		qs.Set("limit", limit)
+	}
+
+	var offset string
+	if o.Offset != nil {
+		offset = swag.FormatInt64(*o.Offset)
+	}
+	if offset != "" {
+		qs.Set("offset", offset)
 	}
 
 	_result.RawQuery = qs.Encode()

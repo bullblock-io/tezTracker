@@ -25,10 +25,14 @@ func NewGetBakersListParams() GetBakersListParams {
 		// initialize parameters with default values
 
 		limitDefault = int64(20)
+
+		offsetDefault = int64(0)
 	)
 
 	return GetBakersListParams{
 		Limit: &limitDefault,
+
+		Offset: &offsetDefault,
 	}
 }
 
@@ -42,10 +46,6 @@ type GetBakersListParams struct {
 	HTTPRequest *http.Request `json:"-"`
 
 	/*
-	  In: query
-	*/
-	AfterID *string
-	/*
 	  Maximum: 500
 	  Minimum: 1
 	  In: query
@@ -57,6 +57,12 @@ type GetBakersListParams struct {
 	  In: path
 	*/
 	Network string
+	/*Offset
+	  Minimum: 0
+	  In: query
+	  Default: 0
+	*/
+	Offset *int64
 	/*Not used
 	  Required: true
 	  In: path
@@ -75,11 +81,6 @@ func (o *GetBakersListParams) BindRequest(r *http.Request, route *middleware.Mat
 
 	qs := runtime.Values(r.URL.Query())
 
-	qAfterID, qhkAfterID, _ := qs.GetOK("after_id")
-	if err := o.bindAfterID(qAfterID, qhkAfterID, route.Formats); err != nil {
-		res = append(res, err)
-	}
-
 	qLimit, qhkLimit, _ := qs.GetOK("limit")
 	if err := o.bindLimit(qLimit, qhkLimit, route.Formats); err != nil {
 		res = append(res, err)
@@ -87,6 +88,11 @@ func (o *GetBakersListParams) BindRequest(r *http.Request, route *middleware.Mat
 
 	rNetwork, rhkNetwork, _ := route.Params.GetOK("network")
 	if err := o.bindNetwork(rNetwork, rhkNetwork, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
+	qOffset, qhkOffset, _ := qs.GetOK("offset")
+	if err := o.bindOffset(qOffset, qhkOffset, route.Formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -98,24 +104,6 @@ func (o *GetBakersListParams) BindRequest(r *http.Request, route *middleware.Mat
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-// bindAfterID binds and validates parameter AfterID from query.
-func (o *GetBakersListParams) bindAfterID(rawData []string, hasKey bool, formats strfmt.Registry) error {
-	var raw string
-	if len(rawData) > 0 {
-		raw = rawData[len(rawData)-1]
-	}
-
-	// Required: false
-	// AllowEmptyValue: false
-	if raw == "" { // empty values pass all other validations
-		return nil
-	}
-
-	o.AfterID = &raw
-
 	return nil
 }
 
@@ -171,6 +159,43 @@ func (o *GetBakersListParams) bindNetwork(rawData []string, hasKey bool, formats
 	// Parameter is provided by construction from the route
 
 	o.Network = raw
+
+	return nil
+}
+
+// bindOffset binds and validates parameter Offset from query.
+func (o *GetBakersListParams) bindOffset(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+	if raw == "" { // empty values pass all other validations
+		// Default values have been previously initialized by NewGetBakersListParams()
+		return nil
+	}
+
+	value, err := swag.ConvertInt64(raw)
+	if err != nil {
+		return errors.InvalidType("offset", "query", "int64", raw)
+	}
+	o.Offset = &value
+
+	if err := o.validateOffset(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateOffset carries on validations for parameter Offset
+func (o *GetBakersListParams) validateOffset(formats strfmt.Registry) error {
+
+	if err := validate.MinimumInt("offset", "query", int64(*o.Offset), 0, false); err != nil {
+		return err
+	}
 
 	return nil
 }
