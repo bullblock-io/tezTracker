@@ -1587,6 +1587,9 @@ func init() {
         "accountId": {
           "type": "string"
         },
+        "bakerInfo": {
+          "$ref": "#/definitions/BakerInfo"
+        },
         "balance": {
           "type": "integer",
           "format": "int64"
@@ -1619,6 +1622,35 @@ func init() {
         },
         "storage": {
           "type": "string"
+        }
+      }
+    },
+    "BakerInfo": {
+      "type": "object",
+      "properties": {
+        "bakingDeposits": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "bakingRewards": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "endorsementDeposits": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "endorsementRewards": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "evaluatedBalance": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "stakingBalance": {
+          "type": "integer",
+          "format": "int64"
         }
       }
     },
@@ -3909,6 +3941,9 @@ func init() {
         "accountId": {
           "type": "string"
         },
+        "bakerInfo": {
+          "$ref": "#/definitions/BakerInfo"
+        },
         "balance": {
           "type": "integer",
           "format": "int64"
@@ -3941,6 +3976,35 @@ func init() {
         },
         "storage": {
           "type": "string"
+        }
+      }
+    },
+    "BakerInfo": {
+      "type": "object",
+      "properties": {
+        "bakingDeposits": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "bakingRewards": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "endorsementDeposits": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "endorsementRewards": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "evaluatedBalance": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "stakingBalance": {
+          "type": "integer",
+          "format": "int64"
         }
       }
     },

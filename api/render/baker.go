@@ -24,3 +24,17 @@ func Bakers(ams []models.Baker) []*genModels.BakersRow {
 	}
 	return accs
 }
+
+func BakerInfo(bi *models.BakerInfo) *genModels.BakerInfo{
+	if bi == nil{
+		return nil
+	}
+	return &genModels.BakerInfo{
+		EvaluatedBalance: bi.Balance,
+		StakingBalance: bi.StakingBalance,
+		BakingDeposits: bi.BakingDeposits,
+		BakingRewards: bi.BakingRewards,
+		EndorsementDeposits: bi.EndorsementDeposits,
+		EndorsementRewards: bi.EndorsementRewards,
+	}
+}

@@ -13,22 +13,44 @@ type (
 	}
 
 	Repo interface {
+		Find(accountID string) (bool, models.Delegate, error)
 		List(limit uint64, after string) ([]models.Baker, error)
+		BlocksCountBakedBy(ids []string, startingLevel int64) (counter []BakerCounter, err error)
+		EndorsementsCountBy(ids []string, startingLevel int64) (counter []BakerWeightedCounter, err error)
 	}
 
 	BakerCounter struct {
 		Baker string
 		Count int64
 	}
+	BakerWeightedCounter struct {
+		BakerCounter
+		Weight float64
+	}
+
 )
 
-const endorsementKind = "endorsement"
+const (
+	endorsementKind = "endorsement"
+	firstBlock = 0
+)
 
 // New creates an instance of repository using the provided db.
 func New(db *gorm.DB) *Repository {
 	return &Repository{
 		db: db,
 	}
+}
+
+func (r *Repository) Find(accountID string) (found bool, delegate models.Delegate, err error){
+	filter := models.Delegate{Pkh:accountID}
+	if res := r.db.Model(&filter).Where(&filter).Find(&delegate); res.Error != nil {
+		if res.RecordNotFound() {
+			return false, delegate, nil
+		}
+		return false, delegate, err
+	}
+	return true, delegate, nil
 }
 
 // List returns a list of bakers ordered by their staking balance.
@@ -80,7 +102,7 @@ func (r *Repository) ExtendBakers(bakers []models.Baker) (extended []models.Bake
 		ids[i] = pkh
 		m[pkh] = &bakers[i]
 	}
-	aggInfo, err := r.ListBlocksCount(ids)
+	aggInfo, err := r.BlocksCountBakedBy(ids, firstBlock)
 	if err != nil {
 		return bakers, err
 	}
@@ -90,7 +112,7 @@ func (r *Repository) ExtendBakers(bakers []models.Baker) (extended []models.Bake
 			b.Blocks = aggInfo[i].Count
 		}
 	}
-	aggInfo, err = r.ListEndorsementCount(ids)
+	aggInfo, err = r.EndorsementsOperationsCountBy(ids,firstBlock)
 	if err != nil {
 		return bakers, err
 	}
@@ -103,11 +125,14 @@ func (r *Repository) ExtendBakers(bakers []models.Baker) (extended []models.Bake
 	return bakers, nil
 }
 
-// ListBlocksCount returns a slice of block counters with the number of blocks baked by each baker among ids.
-func (r *Repository) ListBlocksCount(ids []string) (counter []BakerCounter, err error) {
-	err = r.db.Model(&models.Block{}).
-		Where("baker IN (?)", ids).
-		Select("baker, count(1) count").
+// BlocksCountBakedBy returns a slice of block counters with the number of blocks baked by each baker among ids.
+func (r *Repository) BlocksCountBakedBy(ids []string, startingLevel int64) (counter []BakerCounter, err error) {
+	db:=r.db.Model(&models.Block{}).
+		Where("baker IN (?)", ids)
+	if startingLevel > 0{
+		db = db.Where("level >= ?",startingLevel)
+	}
+	err = db.Select("baker, count(1) count").
 		Group("baker").Scan(&counter).Error
 	if err != nil {
 		return nil, err
@@ -116,12 +141,32 @@ func (r *Repository) ListBlocksCount(ids []string) (counter []BakerCounter, err 
 	return counter, nil
 }
 
-// ListBlocksCount returns a slice of block counters with the number of endorsements made by each baker among ids.
-func (r *Repository) ListEndorsementCount(ids []string) (counter []BakerCounter, err error) {
-	err = r.db.Model(&models.Operation{}).
+// BlocksCountBakedBy returns a slice of block counters with the number of endorsements made by each baker among ids.
+func (r *Repository) EndorsementsCountBy(ids []string, startingLevel int64) (counter []BakerWeightedCounter, err error) {
+	db := r.db.Table("endorsements_view").
+		Where("baker IN (?)", ids)
+	if startingLevel > 0{
+			db = db.Where("block_level >= ?",startingLevel)
+		}
+		
+		err = db.Select("SUM(count) as count, SUM(count*trunc(1/priority,6)) as weight, baker").
+		Group("baker").Scan(&counter).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return counter, nil
+}
+// EndorsementsOperationsCountBy returns a slice of block counters with the number of endorsements made by each baker among ids.
+func (r *Repository) EndorsementsOperationsCountBy(ids []string, startingLevel int64) (counter []BakerCounter, err error) {
+	db := r.db.Model(&models.Operation{}).
 		Where("delegate IN (?)", ids).
-		Where("kind = ?", endorsementKind).
-		Select("count(1) as count, delegate as baker").
+		Where("kind = ?", endorsementKind)
+	if startingLevel > 0{
+			db = db.Where("block_level >= ?",startingLevel)
+		}
+		
+		err = db.Select("count(1) as count, delegate as baker").
 		Group("delegate").Scan(&counter).Error
 	if err != nil {
 		return nil, err
