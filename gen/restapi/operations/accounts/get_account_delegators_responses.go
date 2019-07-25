@@ -9,6 +9,7 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
 
 	models "github.com/bullblock-io/tezTracker/gen/models"
 )
@@ -21,6 +22,10 @@ const GetAccountDelegatorsOKCode int = 200
 swagger:response getAccountDelegatorsOK
 */
 type GetAccountDelegatorsOK struct {
+	/*The total number of data entities
+
+	 */
+	XCount int64 `json:"X-Count"`
 
 	/*
 	  In: Body
@@ -32,6 +37,17 @@ type GetAccountDelegatorsOK struct {
 func NewGetAccountDelegatorsOK() *GetAccountDelegatorsOK {
 
 	return &GetAccountDelegatorsOK{}
+}
+
+// WithXCount adds the xCount to the get account delegators o k response
+func (o *GetAccountDelegatorsOK) WithXCount(xCount int64) *GetAccountDelegatorsOK {
+	o.XCount = xCount
+	return o
+}
+
+// SetXCount sets the xCount to the get account delegators o k response
+func (o *GetAccountDelegatorsOK) SetXCount(xCount int64) {
+	o.XCount = xCount
 }
 
 // WithPayload adds the payload to the get account delegators o k response
@@ -47,6 +63,13 @@ func (o *GetAccountDelegatorsOK) SetPayload(payload []*models.AccountsRow) {
 
 // WriteResponse to the client
 func (o *GetAccountDelegatorsOK) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header X-Count
+
+	xCount := swag.FormatInt64(o.XCount)
+	if xCount != "" {
+		rw.Header().Set("X-Count", xCount)
+	}
 
 	rw.WriteHeader(200)
 	payload := o.Payload

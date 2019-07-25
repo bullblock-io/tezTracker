@@ -317,6 +317,12 @@ func init() {
               "items": {
                 "$ref": "#/definitions/AccountsRow"
               }
+            },
+            "headers": {
+              "X-Count": {
+                "type": "integer",
+                "description": "The total number of data entities"
+              }
             }
           },
           "500": {
@@ -2789,6 +2795,12 @@ func init() {
               "type": "array",
               "items": {
                 "$ref": "#/definitions/AccountsRow"
+              }
+            },
+            "headers": {
+              "X-Count": {
+                "type": "integer",
+                "description": "The total number of data entities"
               }
             }
           },
