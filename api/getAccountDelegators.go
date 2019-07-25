@@ -23,5 +23,5 @@ func (h *getAccountDelegatorsHandler) Handle(params accounts.GetAccountDelegator
 		logrus.Errorf("failed to get account's delegators: %s", err.Error())
 		return accounts.NewGetAccountInternalServerError()
 	}
-	return accounts.NewGetAccountDelegatorsOK().WithPayload(render.Accounts(accs)).WithXCount(count)
+	return accounts.NewGetAccountDelegatorsOK().WithPayload(render.Accounts(accs)).WithXTotalCount(count)
 }

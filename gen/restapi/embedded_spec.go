@@ -319,7 +319,7 @@ func init() {
               }
             },
             "headers": {
-              "X-Count": {
+              "X-Total-Count": {
                 "type": "integer",
                 "description": "The total number of data entities"
               }
@@ -2798,7 +2798,7 @@ func init() {
               }
             },
             "headers": {
-              "X-Count": {
+              "X-Total-Count": {
                 "type": "integer",
                 "description": "The total number of data entities"
               }

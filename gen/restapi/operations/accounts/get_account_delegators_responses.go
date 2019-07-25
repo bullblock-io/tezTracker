@@ -25,7 +25,7 @@ type GetAccountDelegatorsOK struct {
 	/*The total number of data entities
 
 	 */
-	XCount int64 `json:"X-Count"`
+	XTotalCount int64 `json:"X-Total-Count"`
 
 	/*
 	  In: Body
@@ -39,15 +39,15 @@ func NewGetAccountDelegatorsOK() *GetAccountDelegatorsOK {
 	return &GetAccountDelegatorsOK{}
 }
 
-// WithXCount adds the xCount to the get account delegators o k response
-func (o *GetAccountDelegatorsOK) WithXCount(xCount int64) *GetAccountDelegatorsOK {
-	o.XCount = xCount
+// WithXTotalCount adds the xTotalCount to the get account delegators o k response
+func (o *GetAccountDelegatorsOK) WithXTotalCount(xTotalCount int64) *GetAccountDelegatorsOK {
+	o.XTotalCount = xTotalCount
 	return o
 }
 
-// SetXCount sets the xCount to the get account delegators o k response
-func (o *GetAccountDelegatorsOK) SetXCount(xCount int64) {
-	o.XCount = xCount
+// SetXTotalCount sets the xTotalCount to the get account delegators o k response
+func (o *GetAccountDelegatorsOK) SetXTotalCount(xTotalCount int64) {
+	o.XTotalCount = xTotalCount
 }
 
 // WithPayload adds the payload to the get account delegators o k response
@@ -64,11 +64,11 @@ func (o *GetAccountDelegatorsOK) SetPayload(payload []*models.AccountsRow) {
 // WriteResponse to the client
 func (o *GetAccountDelegatorsOK) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
-	// response header X-Count
+	// response header X-Total-Count
 
-	xCount := swag.FormatInt64(o.XCount)
-	if xCount != "" {
-		rw.Header().Set("X-Count", xCount)
+	xTotalCount := swag.FormatInt64(o.XTotalCount)
+	if xTotalCount != "" {
+		rw.Header().Set("X-Total-Count", xTotalCount)
 	}
 
 	rw.WriteHeader(200)
