@@ -20,7 +20,7 @@ func (h *getAccountDelegatorsHandler) Handle(params accounts.GetAccountDelegator
 	limiter := NewLimiter(params.Limit, params.Offset)
 	accs, err := service.AccountDelegatorsList(params.AccountID, limiter)
 	if err != nil {
-		logrus.Errorf("failed to get accounts: %s", err.Error())
+		logrus.Errorf("failed to get account's delegators: %s", err.Error())
 		return accounts.NewGetAccountInternalServerError()
 	}
 	return accounts.NewGetAccountDelegatorsOK().WithPayload(render.Accounts(accs))
