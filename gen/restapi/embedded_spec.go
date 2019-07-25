@@ -2083,6 +2083,9 @@ func init() {
         },
         "price_24h_change": {
           "type": "number"
+        },
+        "staking_ratio": {
+          "type": "number"
         }
       }
     },
@@ -4495,6 +4498,9 @@ func init() {
           "type": "number"
         },
         "price_24h_change": {
+          "type": "number"
+        },
+        "staking_ratio": {
           "type": "number"
         }
       }

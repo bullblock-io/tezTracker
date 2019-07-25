@@ -24,6 +24,9 @@ type Info struct {
 	// price 24h change
 	// Required: true
 	Price24hChange *float64 `json:"price_24h_change"`
+
+	// staking ratio
+	StakingRatio float64 `json:"staking_ratio,omitempty"`
 }
 
 // Validate validates this info

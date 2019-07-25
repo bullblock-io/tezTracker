@@ -15,6 +15,7 @@ type (
 	Repo interface {
 		List(limit uint, offset uint, after string) ([]models.Account, error)
 		Find(filter models.Account) (found bool, acc models.Account, err error)
+		TotalBalance() (int64, error)
 	}
 )
 
@@ -49,4 +50,16 @@ func (r *Repository) Find(filter models.Account) (found bool, acc models.Account
 		return false, acc, err
 	}
 	return true, acc, nil
+}
+
+// TotalBalance gets the total available balance of all accounts.
+func (r *Repository) TotalBalance() (b int64, err error) {
+	bal := struct {
+		Balance int64 `json:"balance"`
+	}{}
+	err = r.db.Table("accounts").Select("SUM(balance) balance").First(&bal).Error
+	if err != nil {
+		return 0, err
+	}
+	return bal.Balance, nil
 }

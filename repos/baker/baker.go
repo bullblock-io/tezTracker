@@ -17,6 +17,7 @@ type (
 		List(limit, offset uint) ([]models.Baker, error)
 		BlocksCountBakedBy(ids []string, startingLevel int64) (counter []BakerCounter, err error)
 		EndorsementsCountBy(ids []string, startingLevel int64) (counter []BakerWeightedCounter, err error)
+		TotalStakingBalance() (int64, error)
 	}
 
 	BakerCounter struct {
@@ -170,4 +171,16 @@ func (r *Repository) EndorsementsOperationsCountBy(ids []string, startingLevel i
 	}
 
 	return counter, nil
+}
+
+// TotalStakingBalance gets the total staked balance of all delegates.
+func (r *Repository) TotalStakingBalance() (b int64, err error) {
+	bal := struct {
+		Balance int64
+	}{}
+	err = r.db.Table("delegates").Select("SUM(staking_balance) balance").Find(&bal).Error
+	if err != nil {
+		return 0, err
+	}
+	return bal.Balance, nil
 }
