@@ -19,4 +19,5 @@ func SetHandlers(serv *operations.TezTrackerAPI, db *gorm.DB) {
 	serv.AccountsGetAccountHandler = &getAccountHandler{db}
 	serv.BlocksGetBlockEndorsementsHandler = &getBlockEndorsementsHandler{db}
 	serv.AccountsGetBakersListHandler = &getBakerListHandler{db}
+	serv.AccountsGetAccountDelegatorsHandler = &getAccountDelegatorsHandler{db}
 }

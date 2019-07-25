@@ -14,6 +14,7 @@ type (
 
 	Repo interface {
 		List(limit uint, offset uint, after string) ([]models.Account, error)
+		Filter(filter models.Account, limit, offset uint) (accounts []models.Account, err error)
 		Find(filter models.Account) (found bool, acc models.Account, err error)
 		TotalBalance() (int64, error)
 	}
@@ -35,6 +36,17 @@ func (r *Repository) List(limit, offset uint, after string) (accounts []models.A
 		db = db.Where("account_id > ?", after)
 	}
 	err = db.Order("account_id asc").
+		Limit(limit).
+		Offset(offset).
+		Find(&accounts).Error
+	return accounts, err
+}
+
+// Filter returns a list of accounts that suffices filter.
+func (r *Repository) Filter(filter models.Account, limit, offset uint) (accounts []models.Account, err error) {
+	err = r.db.Model(&filter).
+		Where(&filter).
+		Order("account_id asc").
 		Limit(limit).
 		Offset(offset).
 		Find(&accounts).Error
