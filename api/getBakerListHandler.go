@@ -19,10 +19,10 @@ func (h *getBakerListHandler) Handle(params accounts.GetBakersListParams) middle
 	service := services.New(repos.New(h.db))
 	limiter := NewLimiter(params.Limit, params.Offset)
 
-	accs, err := service.BakerList(limiter)
+	accs, count, err := service.BakerList(limiter)
 	if err != nil {
 		logrus.Errorf("failed to get accounts: %s", err.Error())
 		return accounts.NewGetBakersListNotFound()
 	}
-	return accounts.NewGetBakersListOK().WithPayload(render.Bakers(accs))
+	return accounts.NewGetBakersListOK().WithPayload(render.Bakers(accs)).WithXTotalCount(count)
 }

@@ -159,6 +159,10 @@ paths:
             items:
               $ref: '#/definitions/AccountsRow'
             type: array
+          headers:
+            X-Total-Count:
+              description: The total number of data entries.
+              type: integer
         '404':
           description: Not Found
       tags:
@@ -198,6 +202,10 @@ paths:
             items:
               $ref: '#/definitions/BakersRow'
             type: array
+          headers:
+            X-Total-Count:
+              description: The total number of data entries.
+              type: integer
         '404':
           description: Not Found
       tags:
@@ -275,7 +283,7 @@ paths:
             type: array
           headers:
             X-Total-Count:
-              description: The total number of data entities
+              description: The total number of data entries.
               type: integer
         '500':
           description: Internal error

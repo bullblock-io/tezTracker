@@ -6,9 +6,14 @@ import (
 )
 
 // AccountList retrives up to limit of account before the specified id.
-func (t *TezTracker) AccountList(before string, limits Limiter) ([]models.Account, error) {
+func (t *TezTracker) AccountList(before string, limits Limiter) (accs []models.Account, count int64, err error) {
 	r := t.repoProvider.GetAccount()
-	return r.List(limits.Limit(), limits.Offset(), before)
+	count, err = r.Count(models.Account{})
+	if err != nil {
+		return nil, 0, err
+	}
+	accs, err = r.List(limits.Limit(), limits.Offset(), before)
+	return accs, count, err
 }
 
 // AccountDelegatorsList retrives up to limit of delegators accounts for the specified accountID.

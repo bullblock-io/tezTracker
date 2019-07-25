@@ -15,6 +15,7 @@ type (
 	Repo interface {
 		Find(accountID string) (bool, models.Delegate, error)
 		List(limit, offset uint) ([]models.Baker, error)
+		Count(filter models.Delegate) (int64, error)
 		BlocksCountBakedBy(ids []string, startingLevel int64) (counter []BakerCounter, err error)
 		EndorsementsCountBy(ids []string, startingLevel int64) (counter []BakerWeightedCounter, err error)
 		TotalStakingBalance() (int64, error)
@@ -183,4 +184,11 @@ func (r *Repository) TotalStakingBalance() (b int64, err error) {
 		return 0, err
 	}
 	return bal.Balance, nil
+}
+
+// Count counts a number of bakers sutisfying the filter.
+func (r *Repository) Count(filter models.Delegate) (count int64, err error) {
+	err = r.db.Model(&filter).
+		Where(&filter).Count(&count).Error
+	return count, err
 }

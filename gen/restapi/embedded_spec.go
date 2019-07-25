@@ -208,6 +208,12 @@ func init() {
               "items": {
                 "$ref": "#/definitions/AccountsRow"
               }
+            },
+            "headers": {
+              "X-Total-Count": {
+                "type": "integer",
+                "description": "The total number of data entries."
+              }
             }
           },
           "404": {
@@ -321,7 +327,7 @@ func init() {
             "headers": {
               "X-Total-Count": {
                 "type": "integer",
-                "description": "The total number of data entities"
+                "description": "The total number of data entries."
               }
             }
           },
@@ -378,6 +384,12 @@ func init() {
               "type": "array",
               "items": {
                 "$ref": "#/definitions/BakersRow"
+              }
+            },
+            "headers": {
+              "X-Total-Count": {
+                "type": "integer",
+                "description": "The total number of data entries."
               }
             }
           },
@@ -2686,6 +2698,12 @@ func init() {
               "items": {
                 "$ref": "#/definitions/AccountsRow"
               }
+            },
+            "headers": {
+              "X-Total-Count": {
+                "type": "integer",
+                "description": "The total number of data entries."
+              }
             }
           },
           "404": {
@@ -2800,7 +2818,7 @@ func init() {
             "headers": {
               "X-Total-Count": {
                 "type": "integer",
-                "description": "The total number of data entities"
+                "description": "The total number of data entries."
               }
             }
           },
@@ -2858,6 +2876,12 @@ func init() {
               "type": "array",
               "items": {
                 "$ref": "#/definitions/BakersRow"
+              }
+            },
+            "headers": {
+              "X-Total-Count": {
+                "type": "integer",
+                "description": "The total number of data entries."
               }
             }
           },

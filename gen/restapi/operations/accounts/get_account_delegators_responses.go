@@ -22,7 +22,7 @@ const GetAccountDelegatorsOKCode int = 200
 swagger:response getAccountDelegatorsOK
 */
 type GetAccountDelegatorsOK struct {
-	/*The total number of data entities
+	/*The total number of data entries.
 
 	 */
 	XTotalCount int64 `json:"X-Total-Count"`
