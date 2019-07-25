@@ -18,10 +18,10 @@ type getAccountDelegatorsHandler struct {
 func (h *getAccountDelegatorsHandler) Handle(params accounts.GetAccountDelegatorsParams) middleware.Responder {
 	service := services.New(repos.New(h.db))
 	limiter := NewLimiter(params.Limit, params.Offset)
-	accs, err := service.AccountDelegatorsList(params.AccountID, limiter)
+	accs, count, err := service.AccountDelegatorsList(params.AccountID, limiter)
 	if err != nil {
 		logrus.Errorf("failed to get account's delegators: %s", err.Error())
 		return accounts.NewGetAccountInternalServerError()
 	}
-	return accounts.NewGetAccountDelegatorsOK().WithPayload(render.Accounts(accs))
+	return accounts.NewGetAccountDelegatorsOK().WithPayload(render.Accounts(accs)).WithXTotalCount(count)
 }
