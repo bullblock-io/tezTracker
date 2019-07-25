@@ -12,6 +12,8 @@ const (
 	EndorsementSecurityDeposit = 64 * XTZ
 	BlockReward                = 16 * XTZ
 	EndorsementReward          = 2 * XTZ
+	BlockEndorsers             = 32
+	BlockLockEstimate          = BlockReward + BlockSecurityDeposit + BlockEndorsers*(EndorsementReward+EndorsementSecurityDeposit)
 )
 
 // BakerList retrives up to limit of bakers after the specified id.
@@ -78,4 +80,47 @@ func (t *TezTracker) GetBakerInfo(accountID string) (bi *models.BakerInfo, err e
 	bi.EndorsementRewards = int64(endorsementWeight * EndorsementReward)
 
 	return bi, nil
+}
+
+func (t *TezTracker) getLockedBalance() (int64, error) {
+	blockR := t.repoProvider.GetBlock()
+	lastBlock, err := blockR.Last()
+	if err != nil {
+		return 0, err
+	}
+	curCycle := lastBlock.MetaCycle
+	fpb := getFirstPreservedBlock(curCycle)
+	lockedBlocks := lastBlock.Level.Int64 - fpb
+	lockedBalanceEstimate := lockedBlocks * BlockLockEstimate
+
+	return lockedBalanceEstimate, nil
+}
+
+// GetStakingRatio calculates the rough ratio of staked balance to the total supply.
+func (t *TezTracker) GetStakingRatio() (float64, error) {
+	lockedBalanceEstimate, err := t.getLockedBalance()
+	if err != nil {
+		return 0, err
+	}
+
+	ar := t.repoProvider.GetAccount()
+	liquidBalance, err := ar.TotalBalance()
+	if err != nil {
+		return 0, err
+	}
+
+	br := t.repoProvider.GetBaker()
+	stakedBalance, err := br.TotalStakingBalance()
+	if err != nil {
+		return 0, err
+	}
+
+	supply := liquidBalance + lockedBalanceEstimate
+	if supply == 0 {
+		return 0, nil
+	}
+
+	ratio := float64(stakedBalance) / float64(supply)
+
+	return ratio, nil
 }
