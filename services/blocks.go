@@ -18,9 +18,14 @@ func (t *TezTracker) HeadBlock() (models.Block, error) {
 }
 
 // BlockList retrives up to limit of blocks before the specified level.
-func (t *TezTracker) BlockList(beforeLevel uint64, limits Limiter) ([]models.Block, error) {
+func (t *TezTracker) BlockList(beforeLevel uint64, limits Limiter) ([]models.Block, int64, error) {
 	r := t.repoProvider.GetBlock()
-	return r.ListExtended(limits.Limit(), limits.Offset(), beforeLevel)
+	last, err := r.Last()
+	if err != nil {
+		return nil, 0, err
+	}
+	blocks, err := r.ListExtended(limits.Limit(), limits.Offset(), beforeLevel)
+	return blocks, last.Level.Int64 + 1, err
 }
 
 // GetBlockWithOperationGroups retrieves a block by hash or by level. It loads OperationGroups into the found block.
