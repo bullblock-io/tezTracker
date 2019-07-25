@@ -1195,6 +1195,12 @@ func init() {
               "items": {
                 "$ref": "#/definitions/OperationsRow"
               }
+            },
+            "headers": {
+              "X-Total-Count": {
+                "type": "integer",
+                "description": "The total number of data entries."
+              }
             }
           },
           "404": {
@@ -3690,6 +3696,12 @@ func init() {
               "type": "array",
               "items": {
                 "$ref": "#/definitions/OperationsRow"
+              }
+            },
+            "headers": {
+              "X-Total-Count": {
+                "type": "integer",
+                "description": "The total number of data entries."
               }
             }
           },

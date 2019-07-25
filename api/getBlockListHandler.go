@@ -27,5 +27,6 @@ func (h *getBlockListHandler) Handle(params blocks.GetBlocksListParams) middlewa
 		logrus.Errorf("failed to get blocks: %s", err.Error())
 		return blocks.NewGetBlocksListNotFound()
 	}
+
 	return blocks.NewGetBlocksListOK().WithPayload(render.Blocks(bs))
 }

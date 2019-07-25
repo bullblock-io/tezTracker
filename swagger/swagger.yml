@@ -796,6 +796,10 @@ paths:
               $ref: '#/definitions/OperationsRow'
               #type: string # Any - not yet supported
             type: array
+          headers:
+            X-Total-Count:
+              description: The total number of data entries.
+              type: integer
         '404':
           description: Not Found
       tags:
