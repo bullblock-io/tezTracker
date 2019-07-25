@@ -12,10 +12,15 @@ func (t *TezTracker) AccountList(before string, limits Limiter) ([]models.Accoun
 }
 
 // AccountDelegatorsList retrives up to limit of delegators accounts for the specified accountID.
-func (t *TezTracker) AccountDelegatorsList(accountID string, limits Limiter) ([]models.Account, error) {
+func (t *TezTracker) AccountDelegatorsList(accountID string, limits Limiter) ([]models.Account, int64, error) {
 	r := t.repoProvider.GetAccount()
 	filter := models.Account{DelegateValue: accountID}
-	return r.Filter(filter, limits.Limit(), limits.Offset())
+	count, err := r.Count(filter)
+	if err != nil {
+		return nil, 0, err
+	}
+	accs, err := r.Filter(filter, limits.Limit(), limits.Offset())
+	return accs, count, err
 }
 
 // GetAccount retrieves an account by its ID.
