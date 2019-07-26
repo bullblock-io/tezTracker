@@ -9,5 +9,5 @@ import (
 func Info(mi models.MarketInfo, ratio float64) *genModels.Info {
 	p := mi.GetPrice()
 	p24 := mi.GetPriceChange()
-	return &genModels.Info{Price: &p, Price24hChange: &p24, StakingRatio: ratio}
+	return &genModels.Info{Price: &p, Price24hChange: &p24, StakingRatio: ratio * 100}
 }
