@@ -2161,6 +2161,10 @@ func init() {
         "price_24h_change"
       ],
       "properties": {
+        "annual_yield": {
+          "description": "Expected annual return in percents.",
+          "type": "number"
+        },
         "price": {
           "type": "number"
         },
@@ -2168,7 +2172,9 @@ func init() {
           "type": "number"
         },
         "staking_ratio": {
-          "type": "number"
+          "description": "Staking ratio in percents (0-100).",
+          "type": "number",
+          "maximum": 100
         }
       }
     },
@@ -4660,6 +4666,10 @@ func init() {
         "price_24h_change"
       ],
       "properties": {
+        "annual_yield": {
+          "description": "Expected annual return in percents.",
+          "type": "number"
+        },
         "price": {
           "type": "number"
         },
@@ -4667,7 +4677,10 @@ func init() {
           "type": "number"
         },
         "staking_ratio": {
-          "type": "number"
+          "description": "Staking ratio in percents (0-100).",
+          "type": "number",
+          "maximum": 100,
+          "minimum": 0
         }
       }
     },
