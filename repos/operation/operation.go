@@ -15,7 +15,7 @@ type (
 	Repo interface {
 		List(kinds []string, inBlocks, accountIDs []string, limit, offset uint, since int64) (operations []models.Operation, err error)
 		Count(kinds, inBlocks, accountIDs []string) (count int64, err error)
-		EndorsementsFor(blockLevel int64, limit, offset uint) (operations []models.Operation, err error)
+		EndorsementsFor(blockLevel int64) (operations []models.Operation, err error)
 	}
 )
 
@@ -67,13 +67,11 @@ func (r *Repository) List(kinds []string, inBlocks, accountIDs []string, limit, 
 }
 
 // EndorsementsFor returns a list of endorsement operations for the provided block level.
-func (r *Repository) EndorsementsFor(blockLevel int64, limit, offset uint) (operations []models.Operation, err error) {
+func (r *Repository) EndorsementsFor(blockLevel int64) (operations []models.Operation, err error) {
 	err = r.db.Model(&models.Operation{}).
 		Where("kind = ?", endorsementKind).
 		Where("level = ?", blockLevel).
 		Order("operation_id DESC").
-		Limit(limit).
-		Offset(offset).
 		Find(&operations).Error
 	return operations, err
 }
