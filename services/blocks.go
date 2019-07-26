@@ -11,10 +11,19 @@ import (
 // ErrNotFound is an error returned when the requested entity doesn't exist in the repository.
 var ErrNotFound = fmt.Errorf("not found")
 
-// HeadBlock retrieves the last added block from the repository.
+// // HeadBlock retrieves the last added block from the repository.
+// func (t *TezTracker) HeadBlock() (models.Block, error) {
+// 	r := t.repoProvider.GetBlock()
+// 	return r.Last()
+// }
+
 func (t *TezTracker) HeadBlock() (models.Block, error) {
-	r := t.repoProvider.GetBlock()
-	return r.Last()
+	r := t.repoProvider.GetNotification()
+	for i := 0; i < 5; i++ {
+		lvl, err := r.GetBlockUpdate()
+		fmt.Printf("lvl %d, err: %s\n", lvl, err)
+	}
+	return t.repoProvider.GetBlock().Last()
 }
 
 // BlockList retrives up to limit of blocks before the specified level.

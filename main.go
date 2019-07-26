@@ -29,6 +29,9 @@ func main() {
 	// Enable log mode only on trace level. It's safe to set it to true always, but that'll be a little slower.
 	db.LogMode(strings.EqualFold(cfg.LogLevel, log.TraceLevel.String()))
 
+
+
+
 	swaggerSpec, err := loads.Analyzed(restapi.SwaggerJSON, "")
 	if err != nil {
 		log.Fatalln(err)
