@@ -2,7 +2,7 @@ version: "3.1"
 
 services:
   conseil-lorre:
-    build: 
+    build:
       context: .
       dockerfile: Dockerfile-conseil
     command: lorre
@@ -18,6 +18,14 @@ services:
       restart_policy:
         condition: on-failure
         delay: 5s
+  fe-server:
+    build:
+      context: https://github.com/bullblock-io/tezos-tracker-vue.git
+    ports:
+      - "8080:8080"
+    deploy:
+      restart_policy:
+        condition: on-failure
   api-server:
     build: .
     ports:
