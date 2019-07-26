@@ -70,7 +70,8 @@ func (r *Repository) List(kinds []string, inBlocks, accountIDs []string, limit, 
 func (r *Repository) EndorsementsFor(blockLevel int64) (operations []models.Operation, err error) {
 	err = r.db.Model(&models.Operation{}).
 		Where("kind = ?", endorsementKind).
-		Where("level = ?", blockLevel).
+		// the endorsements of the block with blockLevel can only be in a block with level (blockLevel + 1)
+		Where("block_level = ?", blockLevel+1).
 		Order("operation_id DESC").
 		Find(&operations).Error
 	return operations, err
