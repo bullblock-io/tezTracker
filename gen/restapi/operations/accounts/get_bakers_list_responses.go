@@ -9,6 +9,7 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
 
 	models "github.com/bullblock-io/tezTracker/gen/models"
 )
@@ -21,6 +22,10 @@ const GetBakersListOKCode int = 200
 swagger:response getBakersListOK
 */
 type GetBakersListOK struct {
+	/*The total number of data entries.
+
+	 */
+	XTotalCount int64 `json:"X-Total-Count"`
 
 	/*
 	  In: Body
@@ -32,6 +37,17 @@ type GetBakersListOK struct {
 func NewGetBakersListOK() *GetBakersListOK {
 
 	return &GetBakersListOK{}
+}
+
+// WithXTotalCount adds the xTotalCount to the get bakers list o k response
+func (o *GetBakersListOK) WithXTotalCount(xTotalCount int64) *GetBakersListOK {
+	o.XTotalCount = xTotalCount
+	return o
+}
+
+// SetXTotalCount sets the xTotalCount to the get bakers list o k response
+func (o *GetBakersListOK) SetXTotalCount(xTotalCount int64) {
+	o.XTotalCount = xTotalCount
 }
 
 // WithPayload adds the payload to the get bakers list o k response
@@ -47,6 +63,13 @@ func (o *GetBakersListOK) SetPayload(payload []*models.BakersRow) {
 
 // WriteResponse to the client
 func (o *GetBakersListOK) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	// response header X-Total-Count
+
+	xTotalCount := swag.FormatInt64(o.XTotalCount)
+	if xTotalCount != "" {
+		rw.Header().Set("X-Total-Count", xTotalCount)
+	}
 
 	rw.WriteHeader(200)
 	payload := o.Payload

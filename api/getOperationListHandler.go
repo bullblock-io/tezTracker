@@ -23,7 +23,7 @@ func (h *getOperationListHandler) Handle(params ops.GetOperationsListParams) mid
 		before = *params.BeforeID
 	}
 
-	operations, err := service.GetOperations(params.OperationKind, params.BlockID, params.AccountID, limiter, before)
+	operations, count, err := service.GetOperations(params.OperationKind, params.BlockID, params.AccountID, limiter, before)
 
 	if err != nil {
 		logrus.Errorf("failed to get operations: %s", err.Error())
@@ -31,5 +31,5 @@ func (h *getOperationListHandler) Handle(params ops.GetOperationsListParams) mid
 
 	}
 
-	return ops.NewGetOperationsListOK().WithPayload(render.Operations(operations))
+	return ops.NewGetOperationsListOK().WithPayload(render.Operations(operations)).WithXTotalCount(count)
 }

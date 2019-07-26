@@ -17,8 +17,7 @@ type getBlockEndorsementsHandler struct {
 // Handle serves the Get Block request.
 func (h *getBlockEndorsementsHandler) Handle(params blocks.GetBlockEndorsementsParams) middleware.Responder {
 	service := services.New(repos.New(h.db))
-	limiter := NewLimiter(params.Limit, params.Offset)
-	operations, err := service.GetBlockEndorsements(params.Hash, limiter)
+	operations, count, err := service.GetBlockEndorsements(params.Hash)
 
 	if err != nil {
 		if err == services.ErrNotFound {
@@ -28,5 +27,5 @@ func (h *getBlockEndorsementsHandler) Handle(params blocks.GetBlockEndorsementsP
 		return blocks.NewGetBlockEndorsementsInternalServerError()
 	}
 
-	return blocks.NewGetBlockEndorsementsOK().WithPayload(render.Operations(operations))
+	return blocks.NewGetBlockEndorsementsOK().WithPayload(render.Operations(operations)).WithXTotalCount(count)
 }

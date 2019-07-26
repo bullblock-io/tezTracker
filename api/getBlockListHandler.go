@@ -22,10 +22,11 @@ func (h *getBlockListHandler) Handle(params blocks.GetBlocksListParams) middlewa
 	if params.BeforeLevel != nil {
 		before = uint64(*params.BeforeLevel)
 	}
-	bs, err := service.BlockList(before, limiter)
+	bs, count, err := service.BlockList(before, limiter)
 	if err != nil {
 		logrus.Errorf("failed to get blocks: %s", err.Error())
 		return blocks.NewGetBlocksListNotFound()
 	}
-	return blocks.NewGetBlocksListOK().WithPayload(render.Blocks(bs))
+
+	return blocks.NewGetBlocksListOK().WithPayload(render.Blocks(bs)).WithXTotalCount(count)
 }

@@ -208,6 +208,12 @@ func init() {
               "items": {
                 "$ref": "#/definitions/AccountsRow"
               }
+            },
+            "headers": {
+              "X-Total-Count": {
+                "type": "integer",
+                "description": "The total number of data entries."
+              }
             }
           },
           "404": {
@@ -321,7 +327,7 @@ func init() {
             "headers": {
               "X-Total-Count": {
                 "type": "integer",
-                "description": "The total number of data entities"
+                "description": "The total number of data entries."
               }
             }
           },
@@ -378,6 +384,12 @@ func init() {
               "type": "array",
               "items": {
                 "$ref": "#/definitions/BakersRow"
+              }
+            },
+            "headers": {
+              "X-Total-Count": {
+                "type": "integer",
+                "description": "The total number of data entries."
               }
             }
           },
@@ -572,6 +584,12 @@ func init() {
               "items": {
                 "$ref": "#/definitions/BlocksRow"
               }
+            },
+            "headers": {
+              "X-Total-Count": {
+                "type": "integer",
+                "description": "The total number of data entries."
+              }
             }
           },
           "404": {
@@ -691,21 +709,6 @@ func init() {
             "name": "hash",
             "in": "path",
             "required": true
-          },
-          {
-            "maximum": 500,
-            "minimum": 1,
-            "type": "integer",
-            "default": 20,
-            "name": "limit",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "default": 0,
-            "description": "Offset",
-            "name": "offset",
-            "in": "query"
           }
         ],
         "responses": {
@@ -715,6 +718,12 @@ func init() {
               "type": "array",
               "items": {
                 "$ref": "#/definitions/OperationsRow"
+              }
+            },
+            "headers": {
+              "X-Total-Count": {
+                "type": "integer",
+                "description": "The total number of data entries."
               }
             }
           },
@@ -1182,6 +1191,12 @@ func init() {
               "type": "array",
               "items": {
                 "$ref": "#/definitions/OperationsRow"
+              }
+            },
+            "headers": {
+              "X-Total-Count": {
+                "type": "integer",
+                "description": "The total number of data entries."
               }
             }
           },
@@ -2686,6 +2701,12 @@ func init() {
               "items": {
                 "$ref": "#/definitions/AccountsRow"
               }
+            },
+            "headers": {
+              "X-Total-Count": {
+                "type": "integer",
+                "description": "The total number of data entries."
+              }
             }
           },
           "404": {
@@ -2800,7 +2821,7 @@ func init() {
             "headers": {
               "X-Total-Count": {
                 "type": "integer",
-                "description": "The total number of data entities"
+                "description": "The total number of data entries."
               }
             }
           },
@@ -2858,6 +2879,12 @@ func init() {
               "type": "array",
               "items": {
                 "$ref": "#/definitions/BakersRow"
+              }
+            },
+            "headers": {
+              "X-Total-Count": {
+                "type": "integer",
+                "description": "The total number of data entries."
               }
             }
           },
@@ -3053,6 +3080,12 @@ func init() {
               "items": {
                 "$ref": "#/definitions/BlocksRow"
               }
+            },
+            "headers": {
+              "X-Total-Count": {
+                "type": "integer",
+                "description": "The total number of data entries."
+              }
             }
           },
           "404": {
@@ -3172,22 +3205,6 @@ func init() {
             "name": "hash",
             "in": "path",
             "required": true
-          },
-          {
-            "maximum": 500,
-            "minimum": 1,
-            "type": "integer",
-            "default": 20,
-            "name": "limit",
-            "in": "query"
-          },
-          {
-            "minimum": 0,
-            "type": "integer",
-            "default": 0,
-            "description": "Offset",
-            "name": "offset",
-            "in": "query"
           }
         ],
         "responses": {
@@ -3197,6 +3214,12 @@ func init() {
               "type": "array",
               "items": {
                 "$ref": "#/definitions/OperationsRow"
+              }
+            },
+            "headers": {
+              "X-Total-Count": {
+                "type": "integer",
+                "description": "The total number of data entries."
               }
             }
           },
@@ -3666,6 +3689,12 @@ func init() {
               "type": "array",
               "items": {
                 "$ref": "#/definitions/OperationsRow"
+              }
+            },
+            "headers": {
+              "X-Total-Count": {
+                "type": "integer",
+                "description": "The total number of data entries."
               }
             }
           },
