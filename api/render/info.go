@@ -5,7 +5,7 @@ import (
 	"github.com/bullblock-io/tezTracker/models"
 )
 
-const annualYield = 7.45
+const annualYield = 7.12
 
 // Info renders price info into OpenAPI model.
 func Info(mi models.MarketInfo, ratio float64) *genModels.Info {
