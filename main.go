@@ -47,7 +47,7 @@ func main() {
 		}
 	}()
 
-	server.Port = 8080
+	server.Port = cfg.Port
 	if err := server.Serve(); err != nil {
 		log.Fatalln(err)
 	}
