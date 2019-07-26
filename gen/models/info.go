@@ -17,6 +17,9 @@ import (
 // swagger:model Info
 type Info struct {
 
+	// Expected annual return in percents.
+	AnnualYield float64 `json:"annual_yield,omitempty"`
+
 	// price
 	// Required: true
 	Price *float64 `json:"price"`
@@ -25,8 +28,10 @@ type Info struct {
 	// Required: true
 	Price24hChange *float64 `json:"price_24h_change"`
 
-	// staking ratio
-	StakingRatio float64 `json:"staking_ratio,omitempty"`
+	// Staking ratio in percents (0-100).
+	// Maximum: 100
+	// Minimum: 0
+	StakingRatio *float64 `json:"staking_ratio,omitempty"`
 }
 
 // Validate validates this info
@@ -38,6 +43,10 @@ func (m *Info) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validatePrice24hChange(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateStakingRatio(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -59,6 +68,23 @@ func (m *Info) validatePrice(formats strfmt.Registry) error {
 func (m *Info) validatePrice24hChange(formats strfmt.Registry) error {
 
 	if err := validate.Required("price_24h_change", "body", m.Price24hChange); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *Info) validateStakingRatio(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.StakingRatio) { // not required
+		return nil
+	}
+
+	if err := validate.Minimum("staking_ratio", "body", float64(*m.StakingRatio), 0, false); err != nil {
+		return err
+	}
+
+	if err := validate.Maximum("staking_ratio", "body", float64(*m.StakingRatio), 100, false); err != nil {
 		return err
 	}
 

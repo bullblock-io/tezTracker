@@ -1379,7 +1379,13 @@ definitions:
       price_24h_change:
         type: number
       staking_ratio:
+        description: Staking ratio in percents (0-100).
         type: number
+        minimum: 0
+        maximum: 100
+      annual_yield:
+        type: number
+        description: Expected annual return in percents.
     required:
       - price
       - price_24h_change
