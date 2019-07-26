@@ -165,6 +165,7 @@ func setupGlobalMiddleware(handler http.Handler) http.Handler {
 		AllowedHeaders: []string{"*"},
 		AllowedOrigins: []string{"*"},
 		AllowedMethods: []string{},
+		ExposedHeaders: []string{"X-Total-Count"},
 		MaxAge:         60,
 	})
 	return corsHandler.Handler(handler)
