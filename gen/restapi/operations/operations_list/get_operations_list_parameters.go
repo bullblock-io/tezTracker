@@ -108,7 +108,7 @@ type GetOperationsListParams struct {
 	  Collection Format: multi
 	*/
 	OperationDestination []string
-	/*Not used
+	/*Operation hash
 	  In: query
 	  Collection Format: multi
 	*/

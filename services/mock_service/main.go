@@ -6,6 +6,7 @@ package mock_services
 
 import (
 	account "github.com/bullblock-io/tezTracker/repos/account"
+	baker "github.com/bullblock-io/tezTracker/repos/baker"
 	block "github.com/bullblock-io/tezTracker/repos/block"
 	operation "github.com/bullblock-io/tezTracker/repos/operation"
 	operation_groups "github.com/bullblock-io/tezTracker/repos/operation_groups"
@@ -90,6 +91,20 @@ func (m *MockProvider) GetAccount() account.Repo {
 func (mr *MockProviderMockRecorder) GetAccount() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAccount", reflect.TypeOf((*MockProvider)(nil).GetAccount))
+}
+
+// GetBaker mocks base method
+func (m *MockProvider) GetBaker() baker.Repo {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetBaker")
+	ret0, _ := ret[0].(baker.Repo)
+	return ret0
+}
+
+// GetBaker indicates an expected call of GetBaker
+func (mr *MockProviderMockRecorder) GetBaker() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBaker", reflect.TypeOf((*MockProvider)(nil).GetBaker))
 }
 
 // MockLimiter is a mock of Limiter interface

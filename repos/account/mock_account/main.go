@@ -48,6 +48,36 @@ func (mr *MockRepoMockRecorder) List(limit, offset, after interface{}) *gomock.C
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockRepo)(nil).List), limit, offset, after)
 }
 
+// Filter mocks base method
+func (m *MockRepo) Filter(filter models.Account, limit, offset uint) ([]models.Account, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Filter", filter, limit, offset)
+	ret0, _ := ret[0].([]models.Account)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Filter indicates an expected call of Filter
+func (mr *MockRepoMockRecorder) Filter(filter, limit, offset interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Filter", reflect.TypeOf((*MockRepo)(nil).Filter), filter, limit, offset)
+}
+
+// Count mocks base method
+func (m *MockRepo) Count(filter models.Account) (int64, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Count", filter)
+	ret0, _ := ret[0].(int64)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Count indicates an expected call of Count
+func (mr *MockRepoMockRecorder) Count(filter interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Count", reflect.TypeOf((*MockRepo)(nil).Count), filter)
+}
+
 // Find mocks base method
 func (m *MockRepo) Find(filter models.Account) (bool, models.Account, error) {
 	m.ctrl.T.Helper()
@@ -62,4 +92,19 @@ func (m *MockRepo) Find(filter models.Account) (bool, models.Account, error) {
 func (mr *MockRepoMockRecorder) Find(filter interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Find", reflect.TypeOf((*MockRepo)(nil).Find), filter)
+}
+
+// TotalBalance mocks base method
+func (m *MockRepo) TotalBalance() (int64, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "TotalBalance")
+	ret0, _ := ret[0].(int64)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// TotalBalance indicates an expected call of TotalBalance
+func (mr *MockRepoMockRecorder) TotalBalance() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "TotalBalance", reflect.TypeOf((*MockRepo)(nil).TotalBalance))
 }

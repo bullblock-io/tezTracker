@@ -8,13 +8,13 @@ import (
 )
 
 // GetOperations gets the operations filtering by operation kinds and blocks wiht pagination.
-func (t *TezTracker) GetOperations(kinds, inBlocks, accountIDs []string, limits Limiter, before int64) (operations []models.Operation, count int64, err error) {
+func (t *TezTracker) GetOperations(ids, kinds, inBlocks, accountIDs []string, limits Limiter, before int64) (operations []models.Operation, count int64, err error) {
 	r := t.repoProvider.GetOperation()
-	count, err = r.Count(kinds, inBlocks, accountIDs)
+	count, err = r.Count(ids, kinds, inBlocks, accountIDs)
 	if err != nil {
 		return nil, 0, err
 	}
-	operations, err = r.List(kinds, inBlocks, accountIDs, limits.Limit(), limits.Offset(), before)
+	operations, err = r.List(ids, kinds, inBlocks, accountIDs, limits.Limit(), limits.Offset(), before)
 	return operations, count, err
 }
 

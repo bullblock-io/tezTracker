@@ -1083,7 +1083,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
-            "description": "Not used",
+            "description": "Operation hash",
             "name": "operation_id",
             "in": "query"
           },
@@ -3587,7 +3587,7 @@ func init() {
               "type": "string"
             },
             "collectionFormat": "multi",
-            "description": "Not used",
+            "description": "Operation hash",
             "name": "operation_id",
             "in": "query"
           },

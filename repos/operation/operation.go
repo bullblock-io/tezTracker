@@ -13,8 +13,8 @@ type (
 	}
 
 	Repo interface {
-		List(kinds []string, inBlocks, accountIDs []string, limit, offset uint, since int64) (operations []models.Operation, err error)
-		Count(kinds, inBlocks, accountIDs []string) (count int64, err error)
+		List(ids, kinds []string, inBlocks, accountIDs []string, limit, offset uint, since int64) (operations []models.Operation, err error)
+		Count(ids, kinds, inBlocks, accountIDs []string) (count int64, err error)
 		EndorsementsFor(blockLevel int64) (operations []models.Operation, err error)
 	}
 )
@@ -29,14 +29,17 @@ func New(db *gorm.DB) *Repository {
 }
 
 // Count counts a number of operations sutisfying the filter.
-func (r *Repository) Count(kinds, inBlocks, accountIDs []string) (count int64, err error) {
-	db := r.getFilteredDB(kinds, inBlocks, accountIDs)
+func (r *Repository) Count(ids, kinds, inBlocks, accountIDs []string) (count int64, err error) {
+	db := r.getFilteredDB(ids, kinds, inBlocks, accountIDs)
 	err = db.Count(&count).Error
 	return count, err
 }
 
-func (r *Repository) getFilteredDB(kinds []string, inBlocks, accountIDs []string) *gorm.DB {
+func (r *Repository) getFilteredDB(ids, kinds []string, inBlocks, accountIDs []string) *gorm.DB {
 	db := r.db.Model(&models.Operation{})
+	if len(ids) > 0 {
+		db = db.Where("operation_group_hash IN (?)", ids)
+	}
 	if len(kinds) > 0 {
 		db = db.Where("kind IN (?)", kinds)
 	}
@@ -53,8 +56,8 @@ func (r *Repository) getFilteredDB(kinds []string, inBlocks, accountIDs []string
 // limit defines the limit for the maximum number of operations returned.
 // since is used to paginate results based on the operation id.
 // As the result is ordered descendingly the operations with operation_id < since will be returned.
-func (r *Repository) List(kinds []string, inBlocks, accountIDs []string, limit, offset uint, since int64) (operations []models.Operation, err error) {
-	db := r.getFilteredDB(kinds, inBlocks, accountIDs)
+func (r *Repository) List(ids, kinds []string, inBlocks, accountIDs []string, limit, offset uint, since int64) (operations []models.Operation, err error) {
+	db := r.getFilteredDB(ids, kinds, inBlocks, accountIDs)
 
 	if since > 0 {
 		db = db.Where("operation_id < ?", since)

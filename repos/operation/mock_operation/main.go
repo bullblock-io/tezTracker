@@ -33,32 +33,63 @@ func (m *MockRepo) EXPECT() *MockRepoMockRecorder {
 	return m.recorder
 }
 
-// List mocks base method
-func (m *MockRepo) List(kinds, inBlocks, accountIDs []string, limit, offset uint, since int64) ([]models.Operation, error) {
+// Find mocks base method
+func (m *MockRepo) Find(filter models.Operation) (bool, models.Operation, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "List", kinds, inBlocks, accountIDs, limit, offset, since)
+	ret := m.ctrl.Call(m, "Find", filter)
+	ret0, _ := ret[0].(bool)
+	ret1, _ := ret[1].(models.Operation)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// Find indicates an expected call of Find
+func (mr *MockRepoMockRecorder) Find(filter interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Find", reflect.TypeOf((*MockRepo)(nil).Find), filter)
+}
+
+// List mocks base method
+func (m *MockRepo) List(ids, kinds, inBlocks, accountIDs []string, limit, offset uint, since int64) ([]models.Operation, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "List", ids, kinds, inBlocks, accountIDs, limit, offset, since)
 	ret0, _ := ret[0].([]models.Operation)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // List indicates an expected call of List
-func (mr *MockRepoMockRecorder) List(kinds, inBlocks, accountIDs, limit, offset, since interface{}) *gomock.Call {
+func (mr *MockRepoMockRecorder) List(ids, kinds, inBlocks, accountIDs, limit, offset, since interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockRepo)(nil).List), kinds, inBlocks, accountIDs, limit, offset, since)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockRepo)(nil).List), ids, kinds, inBlocks, accountIDs, limit, offset, since)
+}
+
+// Count mocks base method
+func (m *MockRepo) Count(ids, kinds, inBlocks, accountIDs []string) (int64, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Count", ids, kinds, inBlocks, accountIDs)
+	ret0, _ := ret[0].(int64)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Count indicates an expected call of Count
+func (mr *MockRepoMockRecorder) Count(ids, kinds, inBlocks, accountIDs interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Count", reflect.TypeOf((*MockRepo)(nil).Count), ids, kinds, inBlocks, accountIDs)
 }
 
 // EndorsementsFor mocks base method
-func (m *MockRepo) EndorsementsFor(blockLevel int64, limit, offset uint) ([]models.Operation, error) {
+func (m *MockRepo) EndorsementsFor(blockLevel int64) ([]models.Operation, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "EndorsementsFor", blockLevel, limit, offset)
+	ret := m.ctrl.Call(m, "EndorsementsFor", blockLevel)
 	ret0, _ := ret[0].([]models.Operation)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // EndorsementsFor indicates an expected call of EndorsementsFor
-func (mr *MockRepoMockRecorder) EndorsementsFor(blockLevel, limit, offset interface{}) *gomock.Call {
+func (mr *MockRepoMockRecorder) EndorsementsFor(blockLevel interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "EndorsementsFor", reflect.TypeOf((*MockRepo)(nil).EndorsementsFor), blockLevel, limit, offset)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "EndorsementsFor", reflect.TypeOf((*MockRepo)(nil).EndorsementsFor), blockLevel)
 }
