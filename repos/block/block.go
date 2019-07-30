@@ -73,7 +73,7 @@ func (r *Repository) Find(filter models.Block) (found bool, block models.Block, 
 		if res.RecordNotFound() {
 			return false, block, nil
 		}
-		return false, block, err
+		return false, block, res.Error
 	}
 	return true, block, nil
 }

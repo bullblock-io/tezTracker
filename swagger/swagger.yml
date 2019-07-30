@@ -725,7 +725,7 @@ paths:
           items:
             type: string
           name: operation_id
-          description: Not used
+          description: Operation hash
           type: array
         - collectionFormat: multi
           in: query

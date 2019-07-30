@@ -5,7 +5,7 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-//go:generate mockgen -source ./account.go -destination ./mock_account/main.go Repo
+//go:generate mockgen -source ./baker.go -destination ./mock_baker/main.go Repo
 type (
 	// Repository is the baker repo implementation.
 	Repository struct {
@@ -49,7 +49,7 @@ func (r *Repository) Find(accountID string) (found bool, delegate models.Delegat
 		if res.RecordNotFound() {
 			return false, delegate, nil
 		}
-		return false, delegate, err
+		return false, delegate, res.Error
 	}
 	return true, delegate, nil
 }

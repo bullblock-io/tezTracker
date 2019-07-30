@@ -67,7 +67,7 @@ func (r *Repository) Find(filter models.Account) (found bool, acc models.Account
 		if res.RecordNotFound() {
 			return false, acc, nil
 		}
-		return false, acc, err
+		return false, acc, res.Error
 	}
 	return true, acc, nil
 }
