@@ -85,7 +85,6 @@ CREATE INDEX endorsing_rights_level_idx ON endorsing_rights USING btree (level);
 CREATE INDEX fki_fk_block_hash ON baking_rights USING btree (block_hash);
 CREATE INDEX fki_fk_block_hash2 ON endorsing_rights USING btree (block_hash);
 CREATE INDEX ix_operation_groups_block_level ON operation_groups USING btree (block_level);
-CREATE INDEX ix_operations_delegate ON operations USING btree (delegate);
 CREATE INDEX ix_rolls_block_id ON rolls USING btree (block_id);
 CREATE INDEX ix_rolls_block_level ON rolls USING btree (block_level);
 
