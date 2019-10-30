@@ -77,7 +77,7 @@ func (r *Repository) TotalBalance() (b int64, err error) {
 	bal := struct {
 		Balance int64 `json:"balance"`
 	}{}
-	err = r.db.Table("accounts").Select("SUM(balance) balance").First(&bal).Error
+	err = r.db.Table("tezos.accounts").Select("SUM(balance) balance").First(&bal).Error
 	if err != nil {
 		return 0, err
 	}
