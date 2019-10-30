@@ -25,7 +25,9 @@ func main() {
 	}
 	defer db.Close()
 	db.SetLogger(&config.DbLogger{})
-
+	gorm.DefaultTableNameHandler = func(db *gorm.DB, defaultTableName string) string {
+		return "tezos." + defaultTableName
+	}
 	// Enable log mode only on trace level. It's safe to set it to true always, but that'll be a little slower.
 	db.LogMode(strings.EqualFold(cfg.LogLevel, log.TraceLevel.String()))
 
