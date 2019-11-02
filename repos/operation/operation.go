@@ -47,7 +47,11 @@ func (r *Repository) getFilteredDB(ids, kinds []string, inBlocks, accountIDs []s
 		db = db.Where("block_hash IN (?)", inBlocks)
 	}
 	if len(accountIDs) > 0 {
-		db = db.Where("delegate IN (?) OR pkh IN (?) OR source IN (?) OR public_key IN (?) OR destination IN (?)", accountIDs, accountIDs, accountIDs, accountIDs, accountIDs)
+		if len(kinds) == 1 && kinds[0] == "transaction" {
+			db = db.Where("source IN (?) OR destination IN (?)", accountIDs, accountIDs)
+		} else {
+			db = db.Where("delegate IN (?) OR pkh IN (?) OR source IN (?) OR public_key IN (?) OR destination IN (?)", accountIDs, accountIDs, accountIDs, accountIDs, accountIDs)
+		}
 	}
 	return db
 }
