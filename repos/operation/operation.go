@@ -14,8 +14,9 @@ type (
 
 	Repo interface {
 		List(ids, kinds []string, inBlocks, accountIDs []string, limit, offset uint, since int64) (operations []models.Operation, err error)
-		Count(ids, kinds, inBlocks, accountIDs []string) (count int64, err error)
+		Count(ids, kinds, inBlocks, accountIDs []string, maxOperationID int64) (count int64, err error)
 		EndorsementsFor(blockLevel int64) (operations []models.Operation, err error)
+		Last() (operation models.Operation, err error)
 	}
 )
 
@@ -29,10 +30,23 @@ func New(db *gorm.DB) *Repository {
 }
 
 // Count counts a number of operations sutisfying the filter.
-func (r *Repository) Count(ids, kinds, inBlocks, accountIDs []string) (count int64, err error) {
+func (r *Repository) Count(ids, kinds, inBlocks, accountIDs []string, maxOperationID int64) (count int64, err error) {
 	db := r.getFilteredDB(ids, kinds, inBlocks, accountIDs)
+	if maxOperationID > 0 {
+		db = db.Where("operation_id <= ?", maxOperationID)
+	}
+	snapshotCount := int64(0)
+	if len(ids) == 0 && len(inBlocks) == 0 && len(accountIDs) == 0 && len(kinds) == 1 {
+		counter := models.OperationCounter{}
+		lastCounterDb := r.db.Model(&counter).Where("cnt_operation_type = ?", kinds[0])
+		if err := lastCounterDb.Last(&counter).Error; err == nil {
+			db = db.Where("operation_id > ?", counter.LastOperationID)
+			snapshotCount = counter.Count
+		}
+
+	}
 	err = db.Count(&count).Error
-	return count, err
+	return count + snapshotCount, err
 }
 
 func (r *Repository) getFilteredDB(ids, kinds []string, inBlocks, accountIDs []string) *gorm.DB {
@@ -82,4 +96,11 @@ func (r *Repository) EndorsementsFor(blockLevel int64) (operations []models.Oper
 		Order("operation_id DESC").
 		Find(&operations).Error
 	return operations, err
+}
+
+// Last returns the last known operation.
+func (r *Repository) Last() (operation models.Operation, err error) {
+	db := r.db.Model(&operation)
+	err = db.Last(&operation).Error
+	return operation, err
 }

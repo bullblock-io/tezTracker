@@ -5,6 +5,7 @@ import (
 	"github.com/bullblock-io/tezTracker/repos/baker"
 	"github.com/bullblock-io/tezTracker/repos/block"
 	"github.com/bullblock-io/tezTracker/repos/operation"
+	"github.com/bullblock-io/tezTracker/repos/operation_counter"
 	"github.com/bullblock-io/tezTracker/repos/operation_groups"
 	"github.com/jinzhu/gorm"
 )
@@ -44,4 +45,8 @@ func (u *Provider) GetAccount() account.Repo {
 // GetBaker returns a new baker repository.
 func (u *Provider) GetBaker() baker.Repo {
 	return baker.New(u.db)
+}
+
+func (u *Provider) GetOperationCounter() operation_counter.Repo {
+	return operation_counter.New(u.db)
 }

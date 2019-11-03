@@ -8,6 +8,7 @@ import (
 	"github.com/bullblock-io/tezTracker/config"
 	"github.com/bullblock-io/tezTracker/gen/restapi"
 	"github.com/bullblock-io/tezTracker/gen/restapi/operations"
+	"github.com/bullblock-io/tezTracker/services"
 	"github.com/go-openapi/loads"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
@@ -48,6 +49,9 @@ func main() {
 			log.Fatalln(err)
 		}
 	}()
+	cron := services.InitCron(cfg, db)
+	cron.Start()
+	defer cron.Stop()
 
 	server.Port = cfg.Port
 	if err := server.Serve(); err != nil {
