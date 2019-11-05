@@ -752,7 +752,7 @@ paths:
           in: query
           items:
             type: string
-            enum: [endorsement, proposals, seed_nonce_revelation, delegation, transaction, activate_account, ballot, origination, reveal, double_baking_evidence]
+            enum: [endorsement, proposals, seed_nonce_revelation, delegation, transaction, activate_account, ballot, origination, reveal, double_baking_evidence, double_endorsement_evidence]
           name: operation_kind
           type: array
         - collectionFormat: multi

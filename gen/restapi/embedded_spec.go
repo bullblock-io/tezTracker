@@ -1130,7 +1130,8 @@ func init() {
                 "ballot",
                 "origination",
                 "reveal",
-                "double_baking_evidence"
+                "double_baking_evidence",
+                "double_endorsement_evidence"
               ],
               "type": "string"
             },
@@ -3634,7 +3635,8 @@ func init() {
                 "ballot",
                 "origination",
                 "reveal",
-                "double_baking_evidence"
+                "double_baking_evidence",
+                "double_endorsement_evidence"
               ],
               "type": "string"
             },
