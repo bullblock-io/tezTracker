@@ -16,7 +16,7 @@ func InitCron(cfg config.Config, db *gorm.DB) *gron.Cron {
 
 	if cfg.CounterIntervalHours > 0 {
 		dur := time.Duration(cfg.CounterIntervalHours) * time.Hour
-		log.Tracef("Sheduling counter saver every %s", dur)
+		log.Infof("Sheduling counter saver every %s", dur)
 		cron.AddFunc(gron.Every(dur), func() {
 			unitOfWork := repos.New(db)
 
@@ -28,7 +28,7 @@ func InitCron(cfg config.Config, db *gorm.DB) *gron.Cron {
 
 		})
 	} else {
-		log.Tracef(" no Sheduling counter saver every")
+		log.Infof("no sheduling counter due to missing CounterIntervalHours in config")
 	}
 
 	return cron
