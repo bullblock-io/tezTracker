@@ -99,6 +99,9 @@ func NewTezTrackerAPI(spec *loads.Document) *TezTrackerAPI {
 		BlocksGetBlocksListHandler: blocks.GetBlocksListHandlerFunc(func(params blocks.GetBlocksListParams) middleware.Responder {
 			return middleware.NotImplemented("operation BlocksGetBlocksList has not yet been implemented")
 		}),
+		AccountsGetContractsListHandler: accounts.GetContractsListHandlerFunc(func(params accounts.GetContractsListParams) middleware.Responder {
+			return middleware.NotImplemented("operation AccountsGetContractsList has not yet been implemented")
+		}),
 		AppInfoGetInfoHandler: app_info.GetInfoHandlerFunc(func(params app_info.GetInfoParams) middleware.Responder {
 			return middleware.NotImplemented("operation AppInfoGetInfo has not yet been implemented")
 		}),
@@ -178,6 +181,8 @@ type TezTrackerAPI struct {
 	BlocksGetBlocksHeadHandler blocks.GetBlocksHeadHandler
 	// BlocksGetBlocksListHandler sets the operation handler for the get blocks list operation
 	BlocksGetBlocksListHandler blocks.GetBlocksListHandler
+	// AccountsGetContractsListHandler sets the operation handler for the get contracts list operation
+	AccountsGetContractsListHandler accounts.GetContractsListHandler
 	// AppInfoGetInfoHandler sets the operation handler for the get info operation
 	AppInfoGetInfoHandler app_info.GetInfoHandler
 	// OperationGroupsGetOperationGroupHandler sets the operation handler for the get operation group operation
@@ -319,6 +324,10 @@ func (o *TezTrackerAPI) Validate() error {
 
 	if o.BlocksGetBlocksListHandler == nil {
 		unregistered = append(unregistered, "blocks.GetBlocksListHandler")
+	}
+
+	if o.AccountsGetContractsListHandler == nil {
+		unregistered = append(unregistered, "accounts.GetContractsListHandler")
 	}
 
 	if o.AppInfoGetInfoHandler == nil {
@@ -520,6 +529,11 @@ func (o *TezTrackerAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/v2/data/{platform}/{network}/blocks"] = blocks.NewGetBlocksList(o.context, o.BlocksGetBlocksListHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/v2/data/{platform}/{network}/contracts"] = accounts.NewGetContractsList(o.context, o.AccountsGetContractsListHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
