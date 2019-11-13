@@ -1,0 +1,51 @@
+swagger: '2.0'
+info:
+  title: Conseil API
+  version: 0.0.1
+paths:
+  /chains/{network}/blocks/{block}/helpers/baking_rights:
+    get:
+      operationId: getBakingRights
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: network
+          required: true
+          type: string
+        - in: path
+          name: block
+          required: true
+          type: string
+        - in: query
+          type: array
+          items:
+            type: string
+          name: level
+          collectionFormat: multi
+      responses:
+        '200':
+          description: Query compatibility endpoint for account
+          schema:
+            items:
+              $ref: '#/definitions/BakingRight'
+            type: array
+        '500':
+          description: Internal error
+      tags:
+        - BakingRights
+
+definitions:
+  BakingRight:
+    properties:
+      level:
+        type: integer
+        format: int64
+      delegate:
+        type: string
+      priority:
+        type: integer
+        format: int
+      estimated_time:
+        type: string
+        format: date-time

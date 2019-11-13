@@ -21,6 +21,7 @@ require (
 	github.com/rs/cors v1.6.0
 	github.com/sirupsen/logrus v1.2.0
 	github.com/superoo7/go-gecko v0.0.0-20190607060444-a448b0c99969
+	github.com/t-tiger/gorm-bulk-insert v0.0.0-20191014134946-beb77b81825f
 	golang.org/x/net v0.0.0-20190628185345-da137c7871d7
 	gopkg.in/h2non/gock.v1 v1.0.15 // indirect
 )

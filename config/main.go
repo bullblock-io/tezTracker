@@ -1,6 +1,7 @@
 package config
 
 import (
+	"github.com/bullblock-io/tezTracker/services/rpc_client/client"
 	log "github.com/sirupsen/logrus"
 
 	"github.com/joho/godotenv"
@@ -9,10 +10,12 @@ import (
 
 // Config stores the required configuration.
 type Config struct {
-	Port                 int
-	SqlConnectionString  string `envconfig:"SQL_CONNECTION_STRING"`
-	LogLevel             string `envconfig:"LOG_LEVEL"`
-	CounterIntervalHours int
+	Port                        int
+	SqlConnectionString         string `envconfig:"SQL_CONNECTION_STRING"`
+	LogLevel                    string `envconfig:"LOG_LEVEL"`
+	CounterIntervalHours        int
+	FutureRightsIntervalMinutes int
+	NodeRpc                     client.TransportConfig
 }
 
 // Parse initializes the configuration from .env file or from environment.
