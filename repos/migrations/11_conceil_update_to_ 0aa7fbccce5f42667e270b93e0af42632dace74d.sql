@@ -32,6 +32,14 @@ CREATE TABLE endorsing_rights (
     PRIMARY KEY (level, delegate, slot),
     CONSTRAINT fk_block_hash FOREIGN KEY (block_hash) REFERENCES blocks(hash) NOT VALID
 );
+ALTER TABLE accounts
+ALTER COLUMN manager DROP NOT NULL,
+ALTER COLUMN spendable DROP NOT NULL,
+ALTER COLUMN delegate_setable DROP NOT NULL,
+ALTER COLUMN counter DROP NOT NULL,
+ALTER COLUMN balance DROP NOT NULL,
+ALTER COLUMN block_level DROP NOT NULL;
+
 
 ALTER TABLE accounts_checkpoint 
     ADD COLUMN  asof timestamp with time zone;
@@ -46,23 +54,10 @@ ALTER TABLE balance_updates
     ADD COLUMN operation_group_hash character varying;
 
 
-ALTER TABLE blocks
-    ADD COLUMN priority integer;
-
-
 
 ALTER TABLE fees
     ADD COLUMN cycle integer,
     ADD COLUMN level integer;
-
-
-ALTER TABLE operation_groups
-    ADD COLUMN  block_level integer ; 
-
-UPDATE operation_groups SET block_level = (SELECT block.level from blocks where block.hash=operation_groups.block_id);
-
-ALTER TABLE operation_groups
-    ALTER COLUMN block_level SET  NOT NULL;
 
 
 ALTER TABLE operations 

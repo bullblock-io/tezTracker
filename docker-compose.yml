@@ -37,6 +37,10 @@ services:
       TEZTRACKER_SQL_CONNECTION_STRING: ${TEZTRACKER_SQL_CONNECTION_STRING}
       TEZTRACKER_LOG_LEVEL: ${TEZTRACKER_LOG_LEVEL}
       TEZTRACKER_COUNTERINTERVALHOURS: ${TEZTRACKER_COUNTERINTERVALHOURS}
+      TEZTRACKER_FUTURERIGHTSINTERVALMINUTES: ${TEZTRACKER_FUTURERIGHTSINTERVALMINUTES}
+      #todo: if the scheme is not http or host/port are different then for lorry - pass it through
+      TEZTRACKER_NODERPC_HOST: "${XTZ_HOST}:8732"
+      TEZTRACKER_NODERPC_SCHEMES: "http"
     # If using localhost db you may want to use the host network
     network_mode: "host"
     restart: on-failure

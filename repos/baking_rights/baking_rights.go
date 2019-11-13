@@ -1,0 +1,65 @@
+package baking_rights
+
+import (
+	"github.com/bullblock-io/tezTracker/models"
+	"github.com/jinzhu/gorm"
+)
+
+type (
+	// Repository is the baking rights repo implementation.
+	Repository struct {
+		db *gorm.DB
+	}
+
+	Repo interface {
+		List(limit, offset uint, filter models.BakingRightFilter) (rights []models.BakingRight, err error)
+		Find(filter models.BakingRightFilter) (found bool, right models.BakingRight, err error)
+	}
+)
+
+// New creates an instance of repository using the provided db.
+func New(db *gorm.DB) *Repository {
+	return &Repository{
+		db: db.Model(&models.BakingRight{}),
+	}
+}
+
+func (r *Repository) getDb(filter models.BakingRightFilter) *gorm.DB {
+	db := r.db.Model(&models.BakingRight{})
+	if len(filter.BlockLevel) != 0 {
+		db = db.Where("level IN (?)", filter.BlockLevel)
+	}
+	if len(filter.Delegates) != 0 {
+		db = db.Where("delegate IN (?)", filter.Delegates)
+	}
+	if filter.PriorityFrom != 0 {
+		db = db.Where("priority >= ?", filter.PriorityFrom)
+	}
+	if filter.PriorityTo != 0 {
+		db = db.Where("priority <= ?", filter.PriorityTo)
+	}
+	return db
+}
+
+// List returns a list of rights from the newest to oldest.
+// limit defines the limit for the maximum number of rights returned.
+// since is used to paginate results based on the level. As the result is ordered descendingly the rights with level < since will be returned.
+func (r *Repository) List(limit, offset uint, filter models.BakingRightFilter) (rights []models.BakingRight, err error) {
+	db := r.getDb(filter)
+	err = db.Order("level desc, priority asc").
+		Limit(limit).
+		Offset(offset).
+		Find(&rights).Error
+	return rights, err
+}
+
+// Find looks up for rights with filter.
+func (r *Repository) Find(filter models.BakingRightFilter) (found bool, right models.BakingRight, err error) {
+	if res := r.getDb(filter).Find(&right); res.Error != nil {
+		if res.RecordNotFound() {
+			return false, right, nil
+		}
+		return false, right, res.Error
+	}
+	return true, right, nil
+}
