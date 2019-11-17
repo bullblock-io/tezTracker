@@ -13,6 +13,7 @@ import (
 	"github.com/bullblock-io/tezTracker/repos/operation"
 	"github.com/bullblock-io/tezTracker/repos/operation_counter"
 	"github.com/bullblock-io/tezTracker/repos/operation_groups"
+	"github.com/bullblock-io/tezTracker/repos/snapshots"
 	"github.com/jinzhu/gorm"
 	"github.com/sirupsen/logrus"
 )
@@ -71,6 +72,10 @@ func (u *Provider) GetBakingRight() baking_rights.Repo {
 
 func (u *Provider) GetFutureBakingRight() future_baking_rights.Repo {
 	return future_baking_rights.New(u.getDB())
+}
+
+func (u *Provider) GetSnapshots() snapshots.Repo {
+	return snapshots.New(u.getDB())
 }
 
 func (u *Provider) Start(ctx context.Context) {

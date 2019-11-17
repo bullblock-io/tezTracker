@@ -12,6 +12,7 @@ import (
 	strfmt "github.com/go-openapi/strfmt"
 
 	"github.com/bullblock-io/tezTracker/services/rpc_client/client/baking_rights"
+	"github.com/bullblock-io/tezTracker/services/rpc_client/client/snapshots"
 )
 
 // Default tezosrpc HTTP client.
@@ -59,6 +60,8 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *Tezosrpc {
 
 	cli.BakingRights = baking_rights.New(transport, formats)
 
+	cli.Snapshots = snapshots.New(transport, formats)
+
 	return cli
 }
 
@@ -105,6 +108,8 @@ func (cfg *TransportConfig) WithSchemes(schemes []string) *TransportConfig {
 type Tezosrpc struct {
 	BakingRights *baking_rights.Client
 
+	Snapshots *snapshots.Client
+
 	Transport runtime.ClientTransport
 }
 
@@ -113,5 +118,7 @@ func (c *Tezosrpc) SetTransport(transport runtime.ClientTransport) {
 	c.Transport = transport
 
 	c.BakingRights.SetTransport(transport)
+
+	c.Snapshots.SetTransport(transport)
 
 }

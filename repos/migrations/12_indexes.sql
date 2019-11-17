@@ -54,3 +54,12 @@ CREATE TABLE tezos.future_baking_rights (
 
 CREATE INDEX future_baking_rights_delegate_idx 
     ON tezos.future_baking_rights USING btree (delegate);
+
+alter table tezos.blocks ADD UNIQUE (level);
+
+CREATE TABLE tezos.snapshots (
+    snp_cycle integer PRIMARY KEY ,
+    snp_block_level integer NOT NULL,
+    snp_rolls integer NOT NULL,
+    CONSTRAINT snapshots_block_foreign FOREIGN KEY (snp_block_level) REFERENCES tezos.blocks (level)
+);

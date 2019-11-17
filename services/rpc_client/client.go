@@ -8,10 +8,12 @@ import (
 	"github.com/bullblock-io/tezTracker/models"
 	"github.com/bullblock-io/tezTracker/services/rpc_client/client"
 	"github.com/bullblock-io/tezTracker/services/rpc_client/client/baking_rights"
+	"github.com/bullblock-io/tezTracker/services/rpc_client/client/snapshots"
 	genmodels "github.com/bullblock-io/tezTracker/services/rpc_client/models"
 )
 
 const headBlock = "head"
+const BlocksInCycle = 4096
 
 type Tezos struct {
 	client  *client.Tezosrpc
@@ -54,4 +56,23 @@ func genRightToModel(m genmodels.BakingRight) models.FutureBakingRight {
 		Delegate:      m.Delegate,
 		EstimatedTime: time.Time(m.EstimatedTime),
 	}
+}
+
+func (t *Tezos) SnapshotBlockForCycle(ctx context.Context, cycle int64, useHead bool) (int64, error) {
+	params := snapshots.NewGetRollSnapshotParamsWithContext(ctx).WithCycle(cycle).WithNetwork(t.network)
+	if useHead {
+		params.SetBlock(headBlock)
+	} else {
+		level := cycle*BlocksInCycle + 1
+
+		params.SetBlock(strconv.FormatInt(level, 10))
+	}
+
+	resp, err := t.client.Snapshots.GetRollSnapshot(params)
+	if err != nil {
+		return 0, err
+	}
+	snapshot := resp.Payload
+	snapBlock := ((cycle-7)*4096 + 1) + (snapshot+1)*256 - 1
+	return snapBlock, nil
 }
