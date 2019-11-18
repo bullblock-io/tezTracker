@@ -399,6 +399,84 @@ func init() {
         }
       }
     },
+    "/v2/data/{platform}/{network}/baking_rights": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Blocks"
+        ],
+        "operationId": "getBakingRights",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Not used",
+            "name": "platform",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Not used",
+            "name": "network",
+            "in": "path",
+            "required": true
+          },
+          {
+            "maximum": 64,
+            "type": "integer",
+            "default": 10,
+            "name": "priorities_to",
+            "in": "query"
+          },
+          {
+            "maximum": 50,
+            "minimum": 1,
+            "type": "integer",
+            "default": 20,
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "default": 0,
+            "description": "Offset",
+            "name": "offset",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi",
+            "name": "block_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Endpoint for baking rights",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/BakingRightsPerBlock"
+              }
+            },
+            "headers": {
+              "X-Total-Count": {
+                "type": "integer",
+                "description": "The total number of data entries."
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
     "/v2/data/{platform}/{network}/blocks": {
       "get": {
         "produces": [
@@ -830,6 +908,77 @@ func init() {
               "type": "array",
               "items": {
                 "$ref": "#/definitions/AccountsRow"
+              }
+            },
+            "headers": {
+              "X-Total-Count": {
+                "type": "integer",
+                "description": "The total number of data entries."
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/v2/data/{platform}/{network}/future_baking_rights": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Blocks"
+        ],
+        "operationId": "getFutureBakingRights",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Not used",
+            "name": "platform",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Not used",
+            "name": "network",
+            "in": "path",
+            "required": true
+          },
+          {
+            "maximum": 500,
+            "minimum": 1,
+            "type": "integer",
+            "default": 20,
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "default": 0,
+            "description": "Offset",
+            "name": "offset",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi",
+            "name": "block_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Endpoint for baking rights",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/FutureBakingRightsPerBlock"
               }
             },
             "headers": {
@@ -1930,6 +2079,44 @@ func init() {
         }
       }
     },
+    "BakingRightsPerBlock": {
+      "properties": {
+        "baker": {
+          "type": "string"
+        },
+        "block_hash": {
+          "type": "string"
+        },
+        "level": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "rights": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BakingRightsRow"
+          }
+        }
+      }
+    },
+    "BakingRightsRow": {
+      "required": [
+        "priority"
+      ],
+      "properties": {
+        "delegate": {
+          "type": "string"
+        },
+        "estimated_time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "priority": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
     "BlockResult": {
       "type": "object",
       "required": [
@@ -2261,6 +2448,20 @@ func init() {
         },
         "field": {
           "type": "string"
+        }
+      }
+    },
+    "FutureBakingRightsPerBlock": {
+      "properties": {
+        "level": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "rights": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BakingRightsRow"
+          }
         }
       }
     },
@@ -3010,6 +3211,86 @@ func init() {
         }
       }
     },
+    "/v2/data/{platform}/{network}/baking_rights": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Blocks"
+        ],
+        "operationId": "getBakingRights",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Not used",
+            "name": "platform",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Not used",
+            "name": "network",
+            "in": "path",
+            "required": true
+          },
+          {
+            "maximum": 64,
+            "minimum": 0,
+            "type": "integer",
+            "default": 10,
+            "name": "priorities_to",
+            "in": "query"
+          },
+          {
+            "maximum": 50,
+            "minimum": 1,
+            "type": "integer",
+            "default": 20,
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "minimum": 0,
+            "type": "integer",
+            "default": 0,
+            "description": "Offset",
+            "name": "offset",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi",
+            "name": "block_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Endpoint for baking rights",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/BakingRightsPerBlock"
+              }
+            },
+            "headers": {
+              "X-Total-Count": {
+                "type": "integer",
+                "description": "The total number of data entries."
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
     "/v2/data/{platform}/{network}/blocks": {
       "get": {
         "produces": [
@@ -3443,6 +3724,78 @@ func init() {
               "type": "array",
               "items": {
                 "$ref": "#/definitions/AccountsRow"
+              }
+            },
+            "headers": {
+              "X-Total-Count": {
+                "type": "integer",
+                "description": "The total number of data entries."
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/v2/data/{platform}/{network}/future_baking_rights": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Blocks"
+        ],
+        "operationId": "getFutureBakingRights",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Not used",
+            "name": "platform",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Not used",
+            "name": "network",
+            "in": "path",
+            "required": true
+          },
+          {
+            "maximum": 500,
+            "minimum": 1,
+            "type": "integer",
+            "default": 20,
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "minimum": 0,
+            "type": "integer",
+            "default": 0,
+            "description": "Offset",
+            "name": "offset",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi",
+            "name": "block_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Endpoint for baking rights",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/FutureBakingRightsPerBlock"
               }
             },
             "headers": {
@@ -4546,6 +4899,44 @@ func init() {
         }
       }
     },
+    "BakingRightsPerBlock": {
+      "properties": {
+        "baker": {
+          "type": "string"
+        },
+        "block_hash": {
+          "type": "string"
+        },
+        "level": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "rights": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BakingRightsRow"
+          }
+        }
+      }
+    },
+    "BakingRightsRow": {
+      "required": [
+        "priority"
+      ],
+      "properties": {
+        "delegate": {
+          "type": "string"
+        },
+        "estimated_time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "priority": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
     "BlockResult": {
       "type": "object",
       "required": [
@@ -4877,6 +5268,20 @@ func init() {
         },
         "field": {
           "type": "string"
+        }
+      }
+    },
+    "FutureBakingRightsPerBlock": {
+      "properties": {
+        "level": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "rights": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BakingRightsRow"
+          }
         }
       }
     },

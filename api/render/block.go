@@ -3,6 +3,7 @@ package render
 import (
 	genModels "github.com/bullblock-io/tezTracker/gen/models"
 	"github.com/bullblock-io/tezTracker/models"
+	"github.com/go-openapi/strfmt"
 )
 
 // Block renders an app level model to a gennerated OpenAPI model.
@@ -76,4 +77,33 @@ func BlockResult(b models.Block) *genModels.BlockResult {
 
 	br := genModels.BlockResult{Block: Block(b), OperationGroups: groups}
 	return &br
+}
+
+// Blocks renders a slice of app level Blocks into a slice of OpenAPI models.
+func BlocksBakingRights(bs []models.Block) []*genModels.BakingRightsPerBlock {
+	blocks := make([]*genModels.BakingRightsPerBlock, len(bs))
+	for i := range bs {
+		blocks[i] = BlockBakingRights(bs[i])
+	}
+	return blocks
+}
+
+// BlockBakingRights renders an app level block model into a OpenAPI model.
+func BlockBakingRights(b models.Block) *genModels.BakingRightsPerBlock {
+	br := genModels.BakingRightsPerBlock{Baker: b.Baker, Level: b.Level.Int64, BlockHash: b.Hash.String}
+	br.Rights = make([]*genModels.BakingRightsRow, len(b.BakingRights))
+	for i, r := range b.BakingRights {
+		br.Rights[i] = BakingRight(r)
+	}
+
+	return &br
+}
+
+func BakingRight(r models.BakingRight) *genModels.BakingRightsRow {
+	priority := int64(r.Priority)
+	return &genModels.BakingRightsRow{
+		Delegate:      r.Delegate,
+		Priority:      &priority,
+		EstimatedTime: strfmt.DateTime(r.EstimatedTime),
+	}
 }

@@ -29,8 +29,8 @@ func New(db *gorm.DB) *Repository {
 
 func (r *Repository) getDb(filter models.BakingRightFilter) *gorm.DB {
 	db := r.db.Model(&models.FutureBakingRight{})
-	if len(filter.BlockLevel) != 0 {
-		db = db.Where("level IN (?)", filter.BlockLevel)
+	if len(filter.BlockLevels) != 0 {
+		db = db.Where("level IN (?)", filter.BlockLevels)
 	}
 	if len(filter.Delegates) != 0 {
 		db = db.Where("delegate IN (?)", filter.Delegates)

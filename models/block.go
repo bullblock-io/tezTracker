@@ -42,5 +42,10 @@ type Block struct {
 	OperationGroups          []*OperationGroup      `json:"operation_groups"`     // This line is infered from other tables.
 	DelegatesCheckpoint      []*DelegatesCheckpoint `json:"delegates_checkpoint"` // This line is infered from other tables.
 	Accounts                 []*Account             `json:"accounts"`             // This line is infered from other tables.
+	BakingRights             []BakingRight          `json:"baking_rights,omitempty"`
+}
 
+type BlockFilter struct {
+	BlockLevels []int64
+	BlockHashes []string
 }

@@ -12,7 +12,7 @@ type (
 	}
 
 	Repo interface {
-		List(limit, offset uint, filter models.BakingRightFilter) (rights []models.BakingRight, err error)
+		List(filter models.BakingRightFilter) (rights []models.BakingRight, err error)
 		Find(filter models.BakingRightFilter) (found bool, right models.BakingRight, err error)
 	}
 )
@@ -26,8 +26,8 @@ func New(db *gorm.DB) *Repository {
 
 func (r *Repository) getDb(filter models.BakingRightFilter) *gorm.DB {
 	db := r.db.Model(&models.BakingRight{})
-	if len(filter.BlockLevel) != 0 {
-		db = db.Where("level IN (?)", filter.BlockLevel)
+	if len(filter.BlockLevels) != 0 {
+		db = db.Where("level IN (?)", filter.BlockLevels)
 	}
 	if len(filter.Delegates) != 0 {
 		db = db.Where("delegate IN (?)", filter.Delegates)
@@ -44,11 +44,9 @@ func (r *Repository) getDb(filter models.BakingRightFilter) *gorm.DB {
 // List returns a list of rights from the newest to oldest.
 // limit defines the limit for the maximum number of rights returned.
 // since is used to paginate results based on the level. As the result is ordered descendingly the rights with level < since will be returned.
-func (r *Repository) List(limit, offset uint, filter models.BakingRightFilter) (rights []models.BakingRight, err error) {
+func (r *Repository) List(filter models.BakingRightFilter) (rights []models.BakingRight, err error) {
 	db := r.getDb(filter)
 	err = db.Order("level desc, priority asc").
-		Limit(limit).
-		Offset(offset).
 		Find(&rights).Error
 	return rights, err
 }

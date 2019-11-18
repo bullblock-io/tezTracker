@@ -87,6 +87,9 @@ func NewTezTrackerAPI(spec *loads.Document) *TezTrackerAPI {
 		AccountsGetBakersListHandler: accounts.GetBakersListHandlerFunc(func(params accounts.GetBakersListParams) middleware.Responder {
 			return middleware.NotImplemented("operation AccountsGetBakersList has not yet been implemented")
 		}),
+		BlocksGetBakingRightsHandler: blocks.GetBakingRightsHandlerFunc(func(params blocks.GetBakingRightsParams) middleware.Responder {
+			return middleware.NotImplemented("operation BlocksGetBakingRights has not yet been implemented")
+		}),
 		BlocksGetBlockHandler: blocks.GetBlockHandlerFunc(func(params blocks.GetBlockParams) middleware.Responder {
 			return middleware.NotImplemented("operation BlocksGetBlock has not yet been implemented")
 		}),
@@ -101,6 +104,9 @@ func NewTezTrackerAPI(spec *loads.Document) *TezTrackerAPI {
 		}),
 		AccountsGetContractsListHandler: accounts.GetContractsListHandlerFunc(func(params accounts.GetContractsListParams) middleware.Responder {
 			return middleware.NotImplemented("operation AccountsGetContractsList has not yet been implemented")
+		}),
+		BlocksGetFutureBakingRightsHandler: blocks.GetFutureBakingRightsHandlerFunc(func(params blocks.GetFutureBakingRightsParams) middleware.Responder {
+			return middleware.NotImplemented("operation BlocksGetFutureBakingRights has not yet been implemented")
 		}),
 		AppInfoGetInfoHandler: app_info.GetInfoHandlerFunc(func(params app_info.GetInfoParams) middleware.Responder {
 			return middleware.NotImplemented("operation AppInfoGetInfo has not yet been implemented")
@@ -173,6 +179,8 @@ type TezTrackerAPI struct {
 	FeesGetAvgFeesHandler fees.GetAvgFeesHandler
 	// AccountsGetBakersListHandler sets the operation handler for the get bakers list operation
 	AccountsGetBakersListHandler accounts.GetBakersListHandler
+	// BlocksGetBakingRightsHandler sets the operation handler for the get baking rights operation
+	BlocksGetBakingRightsHandler blocks.GetBakingRightsHandler
 	// BlocksGetBlockHandler sets the operation handler for the get block operation
 	BlocksGetBlockHandler blocks.GetBlockHandler
 	// BlocksGetBlockEndorsementsHandler sets the operation handler for the get block endorsements operation
@@ -183,6 +191,8 @@ type TezTrackerAPI struct {
 	BlocksGetBlocksListHandler blocks.GetBlocksListHandler
 	// AccountsGetContractsListHandler sets the operation handler for the get contracts list operation
 	AccountsGetContractsListHandler accounts.GetContractsListHandler
+	// BlocksGetFutureBakingRightsHandler sets the operation handler for the get future baking rights operation
+	BlocksGetFutureBakingRightsHandler blocks.GetFutureBakingRightsHandler
 	// AppInfoGetInfoHandler sets the operation handler for the get info operation
 	AppInfoGetInfoHandler app_info.GetInfoHandler
 	// OperationGroupsGetOperationGroupHandler sets the operation handler for the get operation group operation
@@ -310,6 +320,10 @@ func (o *TezTrackerAPI) Validate() error {
 		unregistered = append(unregistered, "accounts.GetBakersListHandler")
 	}
 
+	if o.BlocksGetBakingRightsHandler == nil {
+		unregistered = append(unregistered, "blocks.GetBakingRightsHandler")
+	}
+
 	if o.BlocksGetBlockHandler == nil {
 		unregistered = append(unregistered, "blocks.GetBlockHandler")
 	}
@@ -328,6 +342,10 @@ func (o *TezTrackerAPI) Validate() error {
 
 	if o.AccountsGetContractsListHandler == nil {
 		unregistered = append(unregistered, "accounts.GetContractsListHandler")
+	}
+
+	if o.BlocksGetFutureBakingRightsHandler == nil {
+		unregistered = append(unregistered, "blocks.GetFutureBakingRightsHandler")
 	}
 
 	if o.AppInfoGetInfoHandler == nil {
@@ -513,6 +531,11 @@ func (o *TezTrackerAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
+	o.handlers["GET"]["/v2/data/{platform}/{network}/baking_rights"] = blocks.NewGetBakingRights(o.context, o.BlocksGetBakingRightsHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
 	o.handlers["GET"]["/v2/data/{platform}/{network}/blocks/{hash}"] = blocks.NewGetBlock(o.context, o.BlocksGetBlockHandler)
 
 	if o.handlers["GET"] == nil {
@@ -534,6 +557,11 @@ func (o *TezTrackerAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/v2/data/{platform}/{network}/contracts"] = accounts.NewGetContractsList(o.context, o.AccountsGetContractsListHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/v2/data/{platform}/{network}/future_baking_rights"] = blocks.NewGetFutureBakingRights(o.context, o.BlocksGetFutureBakingRightsHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
