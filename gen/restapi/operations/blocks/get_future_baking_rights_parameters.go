@@ -27,12 +27,16 @@ func NewGetFutureBakingRightsParams() GetFutureBakingRightsParams {
 		limitDefault = int64(20)
 
 		offsetDefault = int64(0)
+
+		prioritiesToDefault = int64(10)
 	)
 
 	return GetFutureBakingRightsParams{
 		Limit: &limitDefault,
 
 		Offset: &offsetDefault,
+
+		PrioritiesTo: &prioritiesToDefault,
 	}
 }
 
@@ -46,12 +50,7 @@ type GetFutureBakingRightsParams struct {
 	HTTPRequest *http.Request `json:"-"`
 
 	/*
-	  In: query
-	  Collection Format: multi
-	*/
-	BlockID []string
-	/*
-	  Maximum: 500
+	  Maximum: 50
 	  Minimum: 1
 	  In: query
 	  Default: 20
@@ -73,6 +72,13 @@ type GetFutureBakingRightsParams struct {
 	  In: path
 	*/
 	Platform string
+	/*
+	  Maximum: 64
+	  Minimum: 1
+	  In: query
+	  Default: 10
+	*/
+	PrioritiesTo *int64
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
@@ -85,11 +91,6 @@ func (o *GetFutureBakingRightsParams) BindRequest(r *http.Request, route *middle
 	o.HTTPRequest = r
 
 	qs := runtime.Values(r.URL.Query())
-
-	qBlockID, qhkBlockID, _ := qs.GetOK("block_id")
-	if err := o.bindBlockID(qBlockID, qhkBlockID, route.Formats); err != nil {
-		res = append(res, err)
-	}
 
 	qLimit, qhkLimit, _ := qs.GetOK("limit")
 	if err := o.bindLimit(qLimit, qhkLimit, route.Formats); err != nil {
@@ -111,33 +112,14 @@ func (o *GetFutureBakingRightsParams) BindRequest(r *http.Request, route *middle
 		res = append(res, err)
 	}
 
+	qPrioritiesTo, qhkPrioritiesTo, _ := qs.GetOK("priorities_to")
+	if err := o.bindPrioritiesTo(qPrioritiesTo, qhkPrioritiesTo, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-// bindBlockID binds and validates array parameter BlockID from query.
-//
-// Arrays are parsed according to CollectionFormat: "multi" (defaults to "csv" when empty).
-func (o *GetFutureBakingRightsParams) bindBlockID(rawData []string, hasKey bool, formats strfmt.Registry) error {
-
-	// CollectionFormat: multi
-	blockIDIC := rawData
-
-	if len(blockIDIC) == 0 {
-		return nil
-	}
-
-	var blockIDIR []string
-	for _, blockIDIV := range blockIDIC {
-		blockIDI := blockIDIV
-
-		blockIDIR = append(blockIDIR, blockIDI)
-	}
-
-	o.BlockID = blockIDIR
-
 	return nil
 }
 
@@ -175,7 +157,7 @@ func (o *GetFutureBakingRightsParams) validateLimit(formats strfmt.Registry) err
 		return err
 	}
 
-	if err := validate.MaximumInt("limit", "query", int64(*o.Limit), 500, false); err != nil {
+	if err := validate.MaximumInt("limit", "query", int64(*o.Limit), 50, false); err != nil {
 		return err
 	}
 
@@ -245,6 +227,47 @@ func (o *GetFutureBakingRightsParams) bindPlatform(rawData []string, hasKey bool
 	// Parameter is provided by construction from the route
 
 	o.Platform = raw
+
+	return nil
+}
+
+// bindPrioritiesTo binds and validates parameter PrioritiesTo from query.
+func (o *GetFutureBakingRightsParams) bindPrioritiesTo(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+	if raw == "" { // empty values pass all other validations
+		// Default values have been previously initialized by NewGetFutureBakingRightsParams()
+		return nil
+	}
+
+	value, err := swag.ConvertInt64(raw)
+	if err != nil {
+		return errors.InvalidType("priorities_to", "query", "int64", raw)
+	}
+	o.PrioritiesTo = &value
+
+	if err := o.validatePrioritiesTo(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validatePrioritiesTo carries on validations for parameter PrioritiesTo
+func (o *GetFutureBakingRightsParams) validatePrioritiesTo(formats strfmt.Registry) error {
+
+	if err := validate.MinimumInt("priorities_to", "query", int64(*o.PrioritiesTo), 1, false); err != nil {
+		return err
+	}
+
+	if err := validate.MaximumInt("priorities_to", "query", int64(*o.PrioritiesTo), 64, false); err != nil {
+		return err
+	}
 
 	return nil
 }

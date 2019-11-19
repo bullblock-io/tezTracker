@@ -17,7 +17,7 @@ import (
 // GetFutureBakingRightsOKCode is the HTTP code returned for type GetFutureBakingRightsOK
 const GetFutureBakingRightsOKCode int = 200
 
-/*GetFutureBakingRightsOK Endpoint for baking rights
+/*GetFutureBakingRightsOK Endpoint for future baking rights
 
 swagger:response getFutureBakingRightsOK
 */

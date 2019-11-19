@@ -13,7 +13,8 @@ type (
 	}
 
 	Repo interface {
-		List(limit, offset uint, filter models.BakingRightFilter) (rights []models.FutureBakingRight, err error)
+		List(filter models.BakingRightFilter) (rights []models.FutureBakingRight, err error)
+		Last() (found bool, right models.FutureBakingRight, err error)
 		Find(filter models.BakingRightFilter) (found bool, right models.FutureBakingRight, err error)
 		Create(right models.FutureBakingRight) error
 		CreateBulk(rights []models.FutureBakingRight) error
@@ -47,13 +48,22 @@ func (r *Repository) getDb(filter models.BakingRightFilter) *gorm.DB {
 // List returns a list of rights from the newest to oldest.
 // limit defines the limit for the maximum number of rights returned.
 // since is used to paginate results based on the level. As the result is ordered descendingly the rights with level < since will be returned.
-func (r *Repository) List(limit, offset uint, filter models.BakingRightFilter) (rights []models.FutureBakingRight, err error) {
+func (r *Repository) List(filter models.BakingRightFilter) (rights []models.FutureBakingRight, err error) {
 	db := r.getDb(filter)
-	err = db.Order("level desc, priority asc").
-		Limit(limit).
-		Offset(offset).
+	err = db.Order("level asc, priority asc").
 		Find(&rights).Error
 	return rights, err
+}
+
+func (r *Repository) Last() (found bool, right models.FutureBakingRight, err error) {
+	db := r.getDb(models.BakingRightFilter{})
+	if res := db.Order("level desc, priority asc").Find(&right); res.Error != nil {
+		if res.RecordNotFound() {
+			return false, right, nil
+		}
+		return false, right, res.Error
+	}
+	return true, right, nil
 }
 
 // Find looks up for rights with filter.

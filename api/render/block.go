@@ -107,3 +107,23 @@ func BakingRight(r models.BakingRight) *genModels.BakingRightsRow {
 		EstimatedTime: strfmt.DateTime(r.EstimatedTime),
 	}
 }
+
+func BlocksFutureBakingRights(r []models.FutureBlockBakingRight) []*genModels.FutureBakingRightsPerBlock {
+	blocks := make([]*genModels.FutureBakingRightsPerBlock, len(r))
+	for i := range r {
+		blocks[i] = FutureBlockBakingRights(r[i])
+	}
+	return blocks
+}
+func FutureBlockBakingRights(r models.FutureBlockBakingRight) *genModels.FutureBakingRightsPerBlock {
+	resp := genModels.FutureBakingRightsPerBlock{Level: r.Level, Rights: make([]*genModels.BakingRightsRow, len(r.Rights))}
+	for i := range r.Rights {
+		priority := int64(r.Rights[i].Priority)
+		resp.Rights[i] = &genModels.BakingRightsRow{
+			Delegate:      r.Rights[i].Delegate,
+			Priority:      &priority,
+			EstimatedTime: strfmt.DateTime(r.Rights[i].EstimatedTime),
+		}
+	}
+	return &resp
+}

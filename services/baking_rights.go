@@ -66,3 +66,49 @@ func (t *TezTracker) BakingRightsList(blockLevelOrHash []string, priorityTo int,
 	}
 	return count, blocks, nil
 }
+
+func (t *TezTracker) FutureBakingRightsList(priorityTo int, limiter Limiter) (count int64, blocksWithRights []models.FutureBlockBakingRight, err error) {
+	blockRepo := t.repoProvider.GetBlock()
+	lastBlock, err := blockRepo.Last()
+	if err != nil {
+		return 0, nil, err
+	}
+	lastCycle := lastBlock.MetaCycle
+	lastLevel := lastBlock.Level.Int64
+	lastKnownRightsBlock := (lastCycle + 6) * BlocksInCycle
+	count = lastKnownRightsBlock - lastLevel
+
+	rangeStart := lastLevel + int64(limiter.Offset())
+	if rangeStart > lastKnownRightsBlock {
+		return 0, nil, fmt.Errorf("out of range")
+	}
+	rangeEnd := rangeStart + int64(limiter.Limit())
+	if rangeEnd > lastKnownRightsBlock {
+		rangeEnd = lastKnownRightsBlock
+	}
+	filter := models.BakingRightFilter{
+		PriorityTo: priorityTo,
+	}
+	for ; rangeStart <= rangeEnd; rangeStart++ {
+		filter.BlockLevels = append(filter.BlockLevels, rangeStart)
+	}
+	r := t.repoProvider.GetFutureBakingRight()
+	rights, err := r.List(filter)
+	if err != nil {
+		return count, nil, err
+	}
+	curBlock := int64(-1)
+	for i := range rights {
+		if curBlock < rights[i].Level {
+			curBlock = rights[i].Level
+			blockRights := models.FutureBlockBakingRight{
+				Level: curBlock,
+			}
+			blocksWithRights = append(blocksWithRights, blockRights)
+		}
+		blocksWithRights[len(blocksWithRights)-1].Rights = append(blocksWithRights[len(blocksWithRights)-1].Rights, rights[i])
+
+	}
+	return count, blocksWithRights, nil
+
+}

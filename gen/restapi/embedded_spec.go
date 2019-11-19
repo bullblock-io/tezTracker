@@ -948,7 +948,15 @@ func init() {
             "required": true
           },
           {
-            "maximum": 500,
+            "maximum": 64,
+            "minimum": 1,
+            "type": "integer",
+            "default": 10,
+            "name": "priorities_to",
+            "in": "query"
+          },
+          {
+            "maximum": 50,
             "minimum": 1,
             "type": "integer",
             "default": 20,
@@ -961,20 +969,11 @@ func init() {
             "description": "Offset",
             "name": "offset",
             "in": "query"
-          },
-          {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "collectionFormat": "multi",
-            "name": "block_id",
-            "in": "query"
           }
         ],
         "responses": {
           "200": {
-            "description": "Endpoint for baking rights",
+            "description": "Endpoint for future baking rights",
             "schema": {
               "type": "array",
               "items": {
@@ -3770,7 +3769,15 @@ func init() {
             "required": true
           },
           {
-            "maximum": 500,
+            "maximum": 64,
+            "minimum": 1,
+            "type": "integer",
+            "default": 10,
+            "name": "priorities_to",
+            "in": "query"
+          },
+          {
+            "maximum": 50,
             "minimum": 1,
             "type": "integer",
             "default": 20,
@@ -3784,20 +3791,11 @@ func init() {
             "description": "Offset",
             "name": "offset",
             "in": "query"
-          },
-          {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "collectionFormat": "multi",
-            "name": "block_id",
-            "in": "query"
           }
         ],
         "responses": {
           "200": {
-            "description": "Endpoint for baking rights",
+            "description": "Endpoint for future baking rights",
             "schema": {
               "type": "array",
               "items": {

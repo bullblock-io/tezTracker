@@ -13,7 +13,7 @@ type BakingRight struct {
 }
 
 type BakingRightFilter struct {
-	BlockLevel   []int64
+	BlockFilter
 	Delegates    []string
 	PriorityFrom int
 	PriorityTo   int
@@ -24,6 +24,11 @@ type FutureBakingRight struct {
 	Delegate      string    `json:"delegate"`
 	Priority      int       `json:"priority"`
 	EstimatedTime time.Time `json:"estimated_time"`
+}
+
+type FutureBlockBakingRight struct {
+	Level  int64               `json:"level"`
+	Rights []FutureBakingRight `json:"rights"`
 }
 
 type EndorsingRight struct {

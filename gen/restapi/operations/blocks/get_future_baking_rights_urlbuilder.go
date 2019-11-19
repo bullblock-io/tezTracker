@@ -19,9 +19,9 @@ type GetFutureBakingRightsURL struct {
 	Network  string
 	Platform string
 
-	BlockID []string
-	Limit   *int64
-	Offset  *int64
+	Limit        *int64
+	Offset       *int64
+	PrioritiesTo *int64
 
 	_basePath string
 	// avoid unkeyed usage
@@ -68,20 +68,6 @@ func (o *GetFutureBakingRightsURL) Build() (*url.URL, error) {
 
 	qs := make(url.Values)
 
-	var blockIDIR []string
-	for _, blockIDI := range o.BlockID {
-		blockIDIS := blockIDI
-		if blockIDIS != "" {
-			blockIDIR = append(blockIDIR, blockIDIS)
-		}
-	}
-
-	blockID := swag.JoinByFormat(blockIDIR, "multi")
-
-	for _, qsv := range blockID {
-		qs.Add("block_id", qsv)
-	}
-
 	var limitQ string
 	if o.Limit != nil {
 		limitQ = swag.FormatInt64(*o.Limit)
@@ -96,6 +82,14 @@ func (o *GetFutureBakingRightsURL) Build() (*url.URL, error) {
 	}
 	if offsetQ != "" {
 		qs.Set("offset", offsetQ)
+	}
+
+	var prioritiesToQ string
+	if o.PrioritiesTo != nil {
+		prioritiesToQ = swag.FormatInt64(*o.PrioritiesTo)
+	}
+	if prioritiesToQ != "" {
+		qs.Set("priorities_to", prioritiesToQ)
 	}
 
 	_result.RawQuery = qs.Encode()

@@ -43,16 +43,18 @@ func SaveNewBakingRights(ctx context.Context, unit UnitOfWork, provider RightsPr
 	lastKnownRightsBlock := (lastCycle + 6) * BlocksInCycle
 
 	rightsRepo := unit.GetFutureBakingRight()
-	list, err := rightsRepo.List(1, 0, models.BakingRightFilter{})
+	found, lastRight, err := rightsRepo.Last()
 	if err != nil {
 		return 0, err
 	}
-	nextBlockToScan := lastBlock.Level.Int64 + 1
-	if len(list) > 0 {
-		if list[0].Level >= lastKnownRightsBlock {
+	var nextBlockToScan int64
+	if !found {
+		nextBlockToScan = lastBlock.Level.Int64 + 1
+	} else {
+		if lastRight.Level >= lastKnownRightsBlock {
 			return 0, nil
 		}
-		nextBlockToScan = list[0].Level + 1
+		nextBlockToScan = lastRight.Level + 1
 	}
 	for nextBlockToScan <= lastKnownRightsBlock {
 		endRange := nextBlockToScan + BlocksRangeSize - 1
