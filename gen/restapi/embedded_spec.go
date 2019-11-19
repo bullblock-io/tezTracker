@@ -2476,6 +2476,9 @@ func init() {
           "description": "Expected annual return in percents.",
           "type": "number"
         },
+        "market_cap": {
+          "type": "number"
+        },
         "price": {
           "type": "number"
         },
@@ -2486,6 +2489,9 @@ func init() {
           "description": "Staking ratio in percents (0-100).",
           "type": "number",
           "maximum": 100
+        },
+        "volume_24h": {
+          "type": "number"
         }
       }
     },
@@ -5296,6 +5302,9 @@ func init() {
           "description": "Expected annual return in percents.",
           "type": "number"
         },
+        "market_cap": {
+          "type": "number"
+        },
         "price": {
           "type": "number"
         },
@@ -5307,6 +5316,9 @@ func init() {
           "type": "number",
           "maximum": 100,
           "minimum": 0
+        },
+        "volume_24h": {
+          "type": "number"
         }
       }
     },

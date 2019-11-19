@@ -1565,6 +1565,10 @@ definitions:
       annual_yield:
         type: number
         description: Expected annual return in percents.
+      market_cap:
+        type: number
+      volume_24h:
+        type: number
     required:
       - price
       - price_24h_change
