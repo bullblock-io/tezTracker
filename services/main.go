@@ -8,6 +8,7 @@ import (
 	"github.com/bullblock-io/tezTracker/repos/future_baking_rights"
 	"github.com/bullblock-io/tezTracker/repos/operation"
 	"github.com/bullblock-io/tezTracker/repos/operation_groups"
+	"github.com/bullblock-io/tezTracker/repos/snapshots"
 )
 
 //go:generate mockgen -source ./main.go -destination ./mock_service/main.go Provider
@@ -26,6 +27,7 @@ type (
 		GetBaker() baker.Repo
 		GetBakingRight() baking_rights.Repo
 		GetFutureBakingRight() future_baking_rights.Repo
+		GetSnapshots() snapshots.Repo
 	}
 
 	Limiter interface {

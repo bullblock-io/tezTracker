@@ -120,6 +120,9 @@ func NewTezTrackerAPI(spec *loads.Document) *TezTrackerAPI {
 		OperationsListGetOperationsListHandler: operations_list.GetOperationsListHandlerFunc(func(params operations_list.GetOperationsListParams) middleware.Responder {
 			return middleware.NotImplemented("operation OperationsListGetOperationsList has not yet been implemented")
 		}),
+		GetSnapshotsHandler: GetSnapshotsHandlerFunc(func(params GetSnapshotsParams) middleware.Responder {
+			return middleware.NotImplemented("operation GetSnapshots has not yet been implemented")
+		}),
 	}
 }
 
@@ -201,6 +204,8 @@ type TezTrackerAPI struct {
 	OperationGroupsGetOperationGroupsHandler operation_groups.GetOperationGroupsHandler
 	// OperationsListGetOperationsListHandler sets the operation handler for the get operations list operation
 	OperationsListGetOperationsListHandler operations_list.GetOperationsListHandler
+	// GetSnapshotsHandler sets the operation handler for the get snapshots operation
+	GetSnapshotsHandler GetSnapshotsHandler
 
 	// ServeError is called when an error is received, there is a default handler
 	// but you can set your own with this
@@ -362,6 +367,10 @@ func (o *TezTrackerAPI) Validate() error {
 
 	if o.OperationsListGetOperationsListHandler == nil {
 		unregistered = append(unregistered, "operations_list.GetOperationsListHandler")
+	}
+
+	if o.GetSnapshotsHandler == nil {
+		unregistered = append(unregistered, "GetSnapshotsHandler")
 	}
 
 	if len(unregistered) > 0 {
@@ -582,6 +591,11 @@ func (o *TezTrackerAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/v2/data/{platform}/{network}/operations"] = operations_list.NewGetOperationsList(o.context, o.OperationsListGetOperationsListHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/v2/data/{platform}/{network}/snapshots"] = NewGetSnapshots(o.context, o.GetSnapshotsHandler)
 
 }
 
