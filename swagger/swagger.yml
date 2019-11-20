@@ -54,6 +54,8 @@ paths:
             X-Total-Count:
               description: The total number of data entries.
               type: integer
+        '400':
+          description: Bad request
         '404':
           description: Not Found
       tags:
@@ -103,6 +105,8 @@ paths:
             X-Total-Count:
               description: The total number of data entries.
               type: integer
+        '400':
+          description: Bad request
         '404':
           description: Not Found
       tags:
@@ -146,6 +150,8 @@ paths:
             X-Total-Count:
               description: The total number of data entries.
               type: integer
+        '400':
+          description: Bad request
         '404':
           description: Not Found
   '/v2/data/{platform}/{network}/info':
@@ -171,6 +177,8 @@ paths:
           description: Application info endpoint
           schema:
             $ref: '#/definitions/Info'
+        '400':
+          description: Bad request
         '500':
           description: Internal error
       tags:
@@ -308,6 +316,8 @@ paths:
             X-Total-Count:
               description: The total number of data entries.
               type: integer
+        '400':
+          description: Bad request
         '404':
           description: Not Found
       tags:
@@ -383,6 +393,8 @@ paths:
             X-Total-Count:
               description: The total number of data entries.
               type: integer
+        '400':
+          description: Bad request
         '404':
           description: Not Found
       tags:
@@ -426,6 +438,8 @@ paths:
             X-Total-Count:
               description: The total number of data entries.
               type: integer
+        '400':
+          description: Bad request
         '404':
           description: Not Found
       tags:
@@ -456,6 +470,8 @@ paths:
           schema:
             $ref: >-
               #/definitions/AccountsRow
+        '400':
+          description: Bad request
         '404':
           description: Not Found
         '500':
@@ -505,6 +521,8 @@ paths:
             X-Total-Count:
               description: The total number of data entries.
               type: integer
+        '400':
+          description: Bad request
         '500':
           description: Internal error
       tags:
@@ -643,6 +661,8 @@ paths:
             X-Total-Count:
               description: The total number of data entries.
               type: integer
+        '400':
+          description: Bad request
         '404':
           description: Not Found
       tags:
@@ -668,6 +688,8 @@ paths:
           description: Query compatibility endpoint for blocks head
           schema:
             $ref: '#/definitions/BlocksRow'
+        '400':
+          description: Bad request
         '500':
           description: Not initialized
       tags:
@@ -698,6 +720,8 @@ paths:
           schema:
             $ref: >-
               #/definitions/BlockResult
+        '400':
+          description: Bad request
         '404':
           description: Not Found
         '500':
@@ -733,6 +757,8 @@ paths:
             X-Total-Count:
               description: The total number of data entries.
               type: integer
+        '400':
+          description: Bad request
         '404':
           description: Not Found
         '500':
@@ -768,6 +794,8 @@ paths:
             X-Total-Count:
               description: The total number of data entries.
               type: integer
+        '400':
+          description: Bad request
         '404':
           description: Not Found
         '500':
@@ -886,6 +914,8 @@ paths:
             items:
               type: string # Any - not yet supported
             type: array
+        '400':
+          description: Bad request
         '404':
           description: Not Found
       tags:
@@ -914,6 +944,8 @@ paths:
           schema:
             $ref: >-
               #/definitions/OperationGroupResult
+        '400':
+          description: Bad request
         '404':
           description: Not Found
       tags:
@@ -1052,6 +1084,8 @@ paths:
             X-Total-Count:
               description: The total number of data entries.
               type: integer
+        '400':
+          description: Bad request
         '404':
           description: Not Found
       tags:
@@ -1169,465 +1203,7 @@ paths:
           description: Not Found
       tags:
         - Fees
-  '/v2/data/{platform}/{network}/{entity}':
-    post:
-      consumes:
-        - application/json
-      produces:
-        - application/json
-        - text/csv
-        - text/plain
-      parameters:
-        - in: path
-          name: platform
-          required: true
-          type: string
-        - in: path
-          name: network
-          required: true
-          type: string
-        - in: path
-          name: entity
-          required: true
-          type: string
-        - in: body
-          name: body
-          schema:
-            $ref: >-
-              #/definitions/DataTypes.ApiQuery
-      responses:
-        '200':
-          description: Can't query - invalid entity!
-        '400':
-          description: Can't query - invalid entity!
-          schema:
-            items:
-              type: string
-            type: array
-        '404':
-          description: Not found
-      tags:
-        - Query
-  /v2/metadata/platforms:
-    get:
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: Metadata endpoint for listing available platforms
-          schema:
-            items:
-              $ref: >-
-                #/definitions/PlatformDiscoveryTypes.Platform
-            type: array
-      tags:
-        - Metadata
-  '/v2/metadata/{platform}/networks':
-    get:
-      produces:
-        - application/json
-      parameters:
-        - in: path
-          name: platform
-          required: true
-          type: string
-      responses:
-        '200':
-          description: Metadata endpoint for listing available networks
-          schema:
-            items:
-              $ref: >-
-                #/definitions/PlatformDiscoveryTypes.Network
-            type: array
-        '404':
-          description: Not found
-      tags:
-        - Metadata
-  '/v2/metadata/{platform}/{network}/entities':
-    get:
-      produces:
-        - application/json
-      parameters:
-        - in: path
-          name: platform
-          required: true
-          type: string
-        - in: path
-          name: network
-          required: true
-          type: string
-      responses:
-        '200':
-          description: Metadata endpoint for listing available entities
-          schema:
-            items:
-              $ref: >-
-                #/definitions/PlatformDiscoveryTypes.Entity
-            type: array
-        '404':
-          description: Not found
-      tags:
-        - Metadata
-  '/v2/metadata/{platform}/{network}/{entity}/attributes':
-    get:
-      produces:
-        - application/json
-      parameters:
-        - in: path
-          name: platform
-          required: true
-          type: string
-        - in: path
-          name: network
-          required: true
-          type: string
-        - in: path
-          name: entity
-          required: true
-          type: string
-      responses:
-        '200':
-          description: Metadata endpoint for listing available attributes
-          schema:
-            items:
-              $ref: >-
-                #/definitions/PlatformDiscoveryTypes.Attribute
-            type: array
-        '404':
-          description: Not found
-      tags:
-        - Metadata
-  '/v2/metadata/{platform}/{network}/{entity}/{attribute}':
-    get:
-      produces:
-        - application/json
-      parameters:
-        - in: path
-          name: platform
-          required: true
-          type: string
-        - in: path
-          name: network
-          required: true
-          type: string
-        - in: path
-          name: entity
-          required: true
-          type: string
-        - in: path
-          name: attribute
-          required: true
-          type: string
-      responses:
-        '200':
-          description: >-
-            Metadata endpoint for listing available distinct values for given
-            attribute
-          schema:
-            items:
-              type: string
-            type: array
-        '400':
-          description: Cannot get the attributes!
-          schema:
-            items:
-              type: string
-            type: array
-        '404':
-          description: Not found
-      tags:
-        - Metadata
-  '/v2/metadata/{platform}/{network}/{entity}/{attribute}/{filter}':
-    get:
-      produces:
-        - application/json
-      parameters:
-        - in: path
-          name: platform
-          required: true
-          type: string
-        - in: path
-          name: network
-          required: true
-          type: string
-        - in: path
-          name: entity
-          required: true
-          type: string
-        - in: path
-          name: attribute
-          required: true
-          type: string
-        - in: path
-          name: filter
-          required: true
-          type: string
-      responses:
-        '200':
-          description: >-
-            Metadata endpoint for listing available distinct values for given
-            attribute filtered
-          schema:
-            items:
-              type: string
-            type: array
-        '400':
-          description: Cannot get the attributes!
-          schema:
-            items:
-              type: string
-            type: array
-        '404':
-          description: Not found
-      tags:
-        - Metadata
 definitions:
-  DataTypes.ApiAggregation:
-    properties:
-      field:
-        type: string
-      function:
-        enum:
-          - sum
-          - count
-          - max
-          - min
-          - avg
-        type: string
-      predicate:
-        $ref: >-
-          #/definitions/DataTypes.ApiAggregationPredicate
-    required:
-      - field
-      - function
-    type: object
-  DataTypes.ApiAggregationPredicate:
-    properties:
-      inverse:
-        type: boolean
-      operation:
-        enum:
-          - in
-          - between
-          - like
-          - lt
-          - gt
-          - eq
-          - startsWith
-          - endsWith
-          - before
-          - after
-          - isnull
-        type: string
-      precision:
-        format: int64
-        type: integer
-      set:
-        items:
-          type: string # Any - not yet supported
-        type: array
-    required:
-      - operation
-    type: object
-  DataTypes.ApiPredicate:
-    properties:
-      field:
-        type: string
-      inverse:
-        type: boolean
-      operation:
-        enum:
-          - in
-          - between
-          - like
-          - lt
-          - gt
-          - eq
-          - startsWith
-          - endsWith
-          - before
-          - after
-          - isnull
-        type: string
-      precision:
-        format: int64
-        type: integer
-      set:
-        items:
-          type: string # Any - not yet supported
-        type: array
-    required:
-      - field
-      - operation
-    type: object
-  DataTypes.ApiQuery:
-    properties:
-      aggregation:
-        items:
-          $ref: >-
-            #/definitions/DataTypes.ApiAggregation
-        type: array
-      fields:
-        items:
-          type: string
-        type: array
-      limit:
-        format: int64
-        type: integer
-        default: 20
-        minimum: 1
-        maximum: 500
-      orderBy:
-        items:
-          $ref: >-
-            #/definitions/DataTypes.QueryOrdering
-        type: array
-      output:
-        enum:
-          - json
-          - csv
-          - sql
-        type: string
-      predicates:
-        items:
-          $ref: >-
-            #/definitions/DataTypes.ApiPredicate
-        type: array
-    type: object
-  DataTypes.QueryOrdering:
-    properties:
-      direction:
-        enum:
-          - asc
-          - desc
-        type: string
-      field:
-        type: string
-    required:
-      - field
-      - direction
-    type: object
-  PlatformDiscoveryTypes.Attribute:
-    properties:
-      cardinality:
-        format: int64
-        type: integer
-      currencySymbol:
-        type: string
-      currencySymbolCode:
-        format: int64
-        type: integer
-      dataFormat:
-        type: string
-      dataType:
-        enum:
-          - Enum
-          - Hex
-          - Binary
-          - Date
-          - DateTime
-          - String
-          - Hash
-          - AccountAddress
-          - Int
-          - LargeInt
-          - Decimal
-          - Currency
-          - Boolean
-        type: string
-      description:
-        type: string
-      displayName:
-        type: string
-      displayOrder:
-        format: int64
-        type: integer
-      displayPriority:
-        format: int64
-        type: integer
-      entity:
-        type: string
-      keyType:
-        enum:
-          - NonKey
-          - UniqueKey
-        type: string
-      name:
-        type: string
-      placeholder:
-        type: string
-      reference:
-        additionalProperties:
-          type: string
-        properties: {}
-        type: object
-      scale:
-        format: int64
-        type: integer
-      sufficientForQuery:
-        type: boolean
-      valueMap:
-        additionalProperties:
-          type: string
-        properties: {}
-        type: object
-    required:
-      - displayName
-      - keyType
-      - name
-      - entity
-      - dataType
-    type: object
-  PlatformDiscoveryTypes.Entity:
-    properties:
-      count:
-        format: int64
-        type: integer
-      description:
-        type: string
-      displayName:
-        type: string
-      displayNamePlural:
-        type: string
-      limitedQuery:
-        type: boolean
-      name:
-        type: string
-    required:
-      - name
-      - displayName
-      - count
-    type: object
-  PlatformDiscoveryTypes.Network:
-    properties:
-      description:
-        type: string
-      displayName:
-        type: string
-      name:
-        type: string
-      network:
-        type: string
-      platform:
-        type: string
-    required:
-      - name
-      - displayName
-      - platform
-      - network
-    type: object
-  PlatformDiscoveryTypes.Platform:
-    properties:
-      description:
-        type: string
-      displayName:
-        type: string
-      name:
-        type: string
-    required:
-      - name
-      - displayName
-    type: object
   Info:
     properties:
       price:
