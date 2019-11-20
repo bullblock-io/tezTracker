@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/bullblock-io/tezTracker/models"
+	"github.com/guregu/null"
 )
 
 func (t *TezTracker) BakingRightsList(blockLevelOrHash []string, priorityTo int, limiter Limiter) (count int64, blocksWithRights []models.Block, err error) {
@@ -111,4 +112,29 @@ func (t *TezTracker) FutureBakingRightsList(priorityTo int, limiter Limiter) (co
 	}
 	return count, blocksWithRights, nil
 
+}
+
+// GetBlockEndorsements finds a block and returns endorsements for it.
+func (t *TezTracker) GetBlockBakingRights(hashOrLevel string) (rights []models.BakingRight, count int64, err error) {
+	var level int64
+	if i, e := strconv.ParseInt(hashOrLevel, 10, 64); e == nil {
+		level = i
+	} else {
+		r := t.repoProvider.GetBlock()
+		var filter models.Block
+		filter.Hash = null.StringFrom(hashOrLevel)
+		found, block, err := r.Find(filter)
+		if err != nil {
+			return nil, 0, err
+		}
+		if !found {
+			return nil, 0, ErrNotFound
+		}
+		level = block.Level.Int64
+	}
+	filter := models.BakingRightFilter{}
+	filter.BlockLevels = []int64{level}
+	repo := t.repoProvider.GetBakingRight()
+	rights, err = repo.List(filter)
+	return rights, int64(len(rights)), err
 }

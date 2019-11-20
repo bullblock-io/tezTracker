@@ -761,6 +761,59 @@ func init() {
         }
       }
     },
+    "/v2/data/{platform}/{network}/blocks/{hash}/baking_rights": {
+      "get": {
+        "tags": [
+          "Blocks"
+        ],
+        "operationId": "getBlockBakingRights",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Not used",
+            "name": "platform",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Not used",
+            "name": "network",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "name": "hash",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Endpoint for baking rights of a block by hash or level",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/BakingRightsRow"
+              }
+            },
+            "headers": {
+              "X-Total-Count": {
+                "type": "integer",
+                "description": "The total number of data entries."
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        }
+      }
+    },
     "/v2/data/{platform}/{network}/blocks/{hash}/endorsements": {
       "get": {
         "tags": [
@@ -3642,6 +3695,59 @@ func init() {
             "description": "Query compatibility endpoint for block by hash",
             "schema": {
               "$ref": "#/definitions/BlockResult"
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        }
+      }
+    },
+    "/v2/data/{platform}/{network}/blocks/{hash}/baking_rights": {
+      "get": {
+        "tags": [
+          "Blocks"
+        ],
+        "operationId": "getBlockBakingRights",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Not used",
+            "name": "platform",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Not used",
+            "name": "network",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "name": "hash",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Endpoint for baking rights of a block by hash or level",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/BakingRightsRow"
+              }
+            },
+            "headers": {
+              "X-Total-Count": {
+                "type": "integer",
+                "description": "The total number of data entries."
+              }
             }
           },
           "404": {

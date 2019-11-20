@@ -93,6 +93,9 @@ func NewTezTrackerAPI(spec *loads.Document) *TezTrackerAPI {
 		BlocksGetBlockHandler: blocks.GetBlockHandlerFunc(func(params blocks.GetBlockParams) middleware.Responder {
 			return middleware.NotImplemented("operation BlocksGetBlock has not yet been implemented")
 		}),
+		BlocksGetBlockBakingRightsHandler: blocks.GetBlockBakingRightsHandlerFunc(func(params blocks.GetBlockBakingRightsParams) middleware.Responder {
+			return middleware.NotImplemented("operation BlocksGetBlockBakingRights has not yet been implemented")
+		}),
 		BlocksGetBlockEndorsementsHandler: blocks.GetBlockEndorsementsHandlerFunc(func(params blocks.GetBlockEndorsementsParams) middleware.Responder {
 			return middleware.NotImplemented("operation BlocksGetBlockEndorsements has not yet been implemented")
 		}),
@@ -186,6 +189,8 @@ type TezTrackerAPI struct {
 	BlocksGetBakingRightsHandler blocks.GetBakingRightsHandler
 	// BlocksGetBlockHandler sets the operation handler for the get block operation
 	BlocksGetBlockHandler blocks.GetBlockHandler
+	// BlocksGetBlockBakingRightsHandler sets the operation handler for the get block baking rights operation
+	BlocksGetBlockBakingRightsHandler blocks.GetBlockBakingRightsHandler
 	// BlocksGetBlockEndorsementsHandler sets the operation handler for the get block endorsements operation
 	BlocksGetBlockEndorsementsHandler blocks.GetBlockEndorsementsHandler
 	// BlocksGetBlocksHeadHandler sets the operation handler for the get blocks head operation
@@ -331,6 +336,10 @@ func (o *TezTrackerAPI) Validate() error {
 
 	if o.BlocksGetBlockHandler == nil {
 		unregistered = append(unregistered, "blocks.GetBlockHandler")
+	}
+
+	if o.BlocksGetBlockBakingRightsHandler == nil {
+		unregistered = append(unregistered, "blocks.GetBlockBakingRightsHandler")
 	}
 
 	if o.BlocksGetBlockEndorsementsHandler == nil {
@@ -546,6 +555,11 @@ func (o *TezTrackerAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/v2/data/{platform}/{network}/blocks/{hash}"] = blocks.NewGetBlock(o.context, o.BlocksGetBlockHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/v2/data/{platform}/{network}/blocks/{hash}/baking_rights"] = blocks.NewGetBlockBakingRights(o.context, o.BlocksGetBlockBakingRightsHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)

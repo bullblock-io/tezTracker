@@ -91,12 +91,16 @@ func BlocksBakingRights(bs []models.Block) []*genModels.BakingRightsPerBlock {
 // BlockBakingRights renders an app level block model into a OpenAPI model.
 func BlockBakingRights(b models.Block) *genModels.BakingRightsPerBlock {
 	br := genModels.BakingRightsPerBlock{Baker: b.Baker, Level: b.Level.Int64, BlockHash: b.Hash.String}
-	br.Rights = make([]*genModels.BakingRightsRow, len(b.BakingRights))
-	for i, r := range b.BakingRights {
-		br.Rights[i] = BakingRight(r)
-	}
-
+	br.Rights = BakingRights(b.BakingRights)
 	return &br
+}
+
+func BakingRights(br []models.BakingRight) []*genModels.BakingRightsRow {
+	rights := make([]*genModels.BakingRightsRow, len(br))
+	for i, r := range br {
+		rights[i] = BakingRight(r)
+	}
+	return rights
 }
 
 func BakingRight(r models.BakingRight) *genModels.BakingRightsRow {

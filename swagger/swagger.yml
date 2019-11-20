@@ -739,6 +739,42 @@ paths:
           description: Internal error
       tags:
         - Blocks
+  '/v2/data/{platform}/{network}/blocks/{hash}/baking_rights':
+    get:
+      operationId: getBlockBakingRights
+      parameters:
+        - in: path
+          name: platform
+          description: Not used
+          required: true
+          type: string
+        - in: path
+          name: network
+          description: Not used
+          required: true
+          type: string
+        - in: path
+          name: hash
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Endpoint for baking rights of a block by hash or level
+          schema:
+            items:
+              $ref: '#/definitions/BakingRightsRow'
+            type: array
+          headers:
+            X-Total-Count:
+              description: The total number of data entries.
+              type: integer
+        '404':
+          description: Not Found
+        '500':
+          description: Internal error
+      tags:
+        - Blocks
+  
   '/v2/data/{platform}/{network}/operation_groups':
     get:
       operationId: getOperationGroups
