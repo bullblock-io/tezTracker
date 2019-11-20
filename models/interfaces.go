@@ -6,4 +6,5 @@ type MarketInfo interface {
 	GetPriceChange() float64
 	GetMarketCap() float64
 	GetVolume() float64
+	GetSupply() float64
 }
