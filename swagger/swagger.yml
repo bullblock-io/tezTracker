@@ -163,7 +163,7 @@ paths:
           description: Not used
           required: true
           type: string
-          enum: [mainnet]
+          enum: [mainnet, babylonnet]
       produces:
         - application/json
       responses:
@@ -1645,6 +1645,8 @@ definitions:
       market_cap:
         type: number
       volume_24h:
+        type: number
+      circulating_supply:
         type: number
     required:
       - price

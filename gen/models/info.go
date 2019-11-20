@@ -20,6 +20,9 @@ type Info struct {
 	// Expected annual return in percents.
 	AnnualYield float64 `json:"annual_yield,omitempty"`
 
+	// circulating supply
+	CirculatingSupply float64 `json:"circulating_supply,omitempty"`
+
 	// market cap
 	MarketCap float64 `json:"market_cap,omitempty"`
 

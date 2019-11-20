@@ -6,6 +6,7 @@ type USDMarketData struct {
 	Price24hChange float64 `json:"price_change_24h"`
 	MarketCap      float64 `json:"market_cap"`
 	Volume         float64 `json:"total_volume"`
+	Supply         float64 `json:"circulating_supply"`
 }
 
 // GetPrice returns the price in USD.
@@ -22,4 +23,7 @@ func (md *USDMarketData) GetMarketCap() float64 {
 }
 func (md *USDMarketData) GetVolume() float64 {
 	return md.Volume
+}
+func (md *USDMarketData) GetSupply() float64 {
+	return md.Supply
 }

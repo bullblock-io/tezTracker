@@ -15,10 +15,12 @@ func Info(mi models.MarketInfo, ratio float64) *genModels.Info {
 	vol := mi.GetVolume()
 	mc := mi.GetMarketCap()
 	return &genModels.Info{
-		Price: &p, Price24hChange: &p24,
-		StakingRatio: &ratioInPercent,
-		AnnualYield:  annualYield,
-		MarketCap:    mc,
-		Volume24h:    vol,
+		Price:             &p,
+		Price24hChange:    &p24,
+		StakingRatio:      &ratioInPercent,
+		AnnualYield:       annualYield,
+		MarketCap:         mc,
+		Volume24h:         vol,
+		CirculatingSupply: mi.GetSupply(),
 	}
 }

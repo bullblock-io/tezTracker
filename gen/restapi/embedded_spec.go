@@ -2587,6 +2587,9 @@ func init() {
           "description": "Expected annual return in percents.",
           "type": "number"
         },
+        "circulating_supply": {
+          "type": "number"
+        },
         "market_cap": {
           "type": "number"
         },
@@ -5536,6 +5539,9 @@ func init() {
       "properties": {
         "annual_yield": {
           "description": "Expected annual return in percents.",
+          "type": "number"
+        },
+        "circulating_supply": {
           "type": "number"
         },
         "market_cap": {
