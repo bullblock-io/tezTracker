@@ -83,6 +83,30 @@ func (o *GetBlockBakingRightsOK) WriteResponse(rw http.ResponseWriter, producer 
 	}
 }
 
+// GetBlockBakingRightsBadRequestCode is the HTTP code returned for type GetBlockBakingRightsBadRequest
+const GetBlockBakingRightsBadRequestCode int = 400
+
+/*GetBlockBakingRightsBadRequest Bad request
+
+swagger:response getBlockBakingRightsBadRequest
+*/
+type GetBlockBakingRightsBadRequest struct {
+}
+
+// NewGetBlockBakingRightsBadRequest creates GetBlockBakingRightsBadRequest with default headers values
+func NewGetBlockBakingRightsBadRequest() *GetBlockBakingRightsBadRequest {
+
+	return &GetBlockBakingRightsBadRequest{}
+}
+
+// WriteResponse to the client
+func (o *GetBlockBakingRightsBadRequest) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
+
+	rw.WriteHeader(400)
+}
+
 // GetBlockBakingRightsNotFoundCode is the HTTP code returned for type GetBlockBakingRightsNotFound
 const GetBlockBakingRightsNotFoundCode int = 404
 

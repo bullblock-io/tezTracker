@@ -83,6 +83,30 @@ func (o *GetContractsListOK) WriteResponse(rw http.ResponseWriter, producer runt
 	}
 }
 
+// GetContractsListBadRequestCode is the HTTP code returned for type GetContractsListBadRequest
+const GetContractsListBadRequestCode int = 400
+
+/*GetContractsListBadRequest Bad request
+
+swagger:response getContractsListBadRequest
+*/
+type GetContractsListBadRequest struct {
+}
+
+// NewGetContractsListBadRequest creates GetContractsListBadRequest with default headers values
+func NewGetContractsListBadRequest() *GetContractsListBadRequest {
+
+	return &GetContractsListBadRequest{}
+}
+
+// WriteResponse to the client
+func (o *GetContractsListBadRequest) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
+
+	rw.WriteHeader(400)
+}
+
 // GetContractsListNotFoundCode is the HTTP code returned for type GetContractsListNotFound
 const GetContractsListNotFoundCode int = 404
 

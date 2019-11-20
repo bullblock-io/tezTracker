@@ -6,17 +6,24 @@ import (
 	"github.com/bullblock-io/tezTracker/repos"
 	"github.com/bullblock-io/tezTracker/services"
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/jinzhu/gorm"
 	"github.com/sirupsen/logrus"
 )
 
 type getBakingRightsHandler struct {
-	db *gorm.DB
+	provider DbProvider
 }
 
 // Handle serves the Get Block List request.
 func (h *getBakingRightsHandler) Handle(params blocks.GetBakingRightsParams) middleware.Responder {
-	service := services.New(repos.New(h.db))
+	net, err := ToNetwork(params.Network)
+	if err != nil {
+		return blocks.NewGetBakingRightsBadRequest()
+	}
+	db, err := h.provider.GetDb(net)
+	if err != nil {
+		return blocks.NewGetBakingRightsNotFound()
+	}
+	service := services.New(repos.New(db))
 	limiter := NewLimiter(params.Limit, params.Offset)
 	priorityTo := 0
 	if params.PrioritiesTo != nil {

@@ -6,18 +6,19 @@ import (
 	"time"
 
 	"github.com/bullblock-io/tezTracker/config"
+	"github.com/bullblock-io/tezTracker/models"
 	"github.com/bullblock-io/tezTracker/repos"
 	"github.com/bullblock-io/tezTracker/services/counter"
 	"github.com/bullblock-io/tezTracker/services/future_rights"
 	"github.com/bullblock-io/tezTracker/services/rpc_client"
+	"github.com/bullblock-io/tezTracker/services/rpc_client/client"
 	"github.com/bullblock-io/tezTracker/services/snapshots"
 	"github.com/jinzhu/gorm"
 	"github.com/roylee0704/gron"
 	log "github.com/sirupsen/logrus"
 )
 
-func InitCron(cfg config.Config, db *gorm.DB) *gron.Cron {
-	cron := gron.New()
+func AddToCron(cron *gron.Cron, cfg config.Config, db *gorm.DB, rpcConfig client.TransportConfig, network models.Network) {
 
 	if cfg.CounterIntervalHours > 0 {
 		dur := time.Duration(cfg.CounterIntervalHours) * time.Hour
@@ -46,7 +47,7 @@ func InitCron(cfg config.Config, db *gorm.DB) *gron.Cron {
 				defer atomic.StoreUint32(&jobIsRunning, 0)
 				unitOfWork := repos.New(db)
 
-				rpc := rpc_client.New(cfg.NodeRpc, "main")
+				rpc := rpc_client.New(rpcConfig, string(network))
 				count, err := future_rights.SaveNewBakingRights(context.TODO(), unitOfWork, rpc)
 				if err != nil {
 					log.Errorf("BakingRights saver failed: %s", err.Error())
@@ -71,7 +72,7 @@ func InitCron(cfg config.Config, db *gorm.DB) *gron.Cron {
 				defer atomic.StoreUint32(&jobIsRunning, 0)
 				unitOfWork := repos.New(db)
 
-				rpc := rpc_client.New(cfg.NodeRpc, "main")
+				rpc := rpc_client.New(rpcConfig, string(network))
 				count, err := snapshots.SaveNewSnapshots(context.TODO(), unitOfWork, rpc)
 				if err != nil {
 					log.Errorf("Snapshots saver failed: %s", err.Error())
@@ -86,7 +87,6 @@ func InitCron(cfg config.Config, db *gorm.DB) *gron.Cron {
 		log.Infof("no sheduling snapshots parser due to missing FutureRightsIntervalMinutes in config")
 	}
 
-	return cron
 }
 
 // cycle = 160

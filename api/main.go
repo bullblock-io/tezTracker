@@ -2,13 +2,18 @@ package api
 
 import (
 	"github.com/bullblock-io/tezTracker/gen/restapi/operations"
+	"github.com/bullblock-io/tezTracker/models"
 	"github.com/bullblock-io/tezTracker/services/cmc"
 	"github.com/jinzhu/gorm"
 	"github.com/sirupsen/logrus"
 )
 
+type DbProvider interface {
+	GetDb(models.Network) (*gorm.DB, error)
+}
+
 // SetHandlers initializes the API handlers with underlying services.
-func SetHandlers(serv *operations.TezTrackerAPI, db *gorm.DB) {
+func SetHandlers(serv *operations.TezTrackerAPI, db DbProvider) {
 	serv.Logger = logrus.Infof
 	serv.BlocksGetBlocksHeadHandler = &getHeadBlockHandler{db}
 	serv.BlocksGetBlocksListHandler = &getBlockListHandler{db}

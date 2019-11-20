@@ -64,7 +64,6 @@ func (t *Tezos) SnapshotBlockForCycle(ctx context.Context, cycle int64, useHead 
 		params.SetBlock(headBlock)
 	} else {
 		level := cycle*BlocksInCycle + 1
-
 		params.SetBlock(strconv.FormatInt(level, 10))
 	}
 
