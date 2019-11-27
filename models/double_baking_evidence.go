@@ -16,5 +16,9 @@ type DoubleBakingEvidence struct {
 }
 
 type DoubleBakingEvidenceQueryOptions struct {
-	LoadOperation bool
+	BlockIDs        []string
+	OperationHashes []string
+	LoadOperation   bool
+	Limit           uint
+	Offset          uint
 }

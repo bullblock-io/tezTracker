@@ -57,7 +57,7 @@ func (r *Repository) List(filter models.BakingRightFilter) (rights []models.Futu
 
 func (r *Repository) Last() (found bool, right models.FutureBakingRight, err error) {
 	db := r.getDb(models.BakingRightFilter{})
-	if res := db.Order("level desc, priority asc").Find(&right); res.Error != nil {
+	if res := db.Order("level desc, priority asc").Take(&right); res.Error != nil {
 		if res.RecordNotFound() {
 			return false, right, nil
 		}

@@ -30,4 +30,5 @@ func SetHandlers(serv *operations.TezTrackerAPI, db DbProvider) {
 	serv.BlocksGetFutureBakingRightsHandler = &getFutureBakingRightsHandler{db}
 	serv.GetSnapshotsHandler = &getSnapshotsHandler{db}
 	serv.BlocksGetBlockBakingRightsHandler = &getBlockBakingRightsHandler{db}
+	serv.OperationsListGetDoubleBakingsListHandler = &getDoubleBakingsListHandler{db}
 }

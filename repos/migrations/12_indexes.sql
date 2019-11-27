@@ -95,11 +95,12 @@ CREATE TABLE tezos.double_baking_evidences (
     dbe_offender character varying NOT NULL,
     dbe_priority integer NOT NULL,
     dbe_evidence_baker character varying NOT NULL,
-    dbe_baker_reward integer NOT NULL,
-    dbe_lost_deposits integer NOT NULL,
-    dbe_lost_rewards integer NOT NULL,
-    dbe_lost_fees integer NOT NULL,
+    dbe_baker_reward numeric NOT NULL,
+    dbe_lost_deposits numeric NOT NULL,
+    dbe_lost_rewards numeric NOT NULL,
+    dbe_lost_fees numeric NOT NULL,
     CONSTRAINT double_baking_evidences_block_foreign FOREIGN KEY (dbe_block_level) REFERENCES tezos.blocks (level),
-    CONSTRAINT double_baking_evidences_denounced_block_foreign FOREIGN KEY (dbe_denounced_level) REFERENCES tezos.blocks (level)
+    CONSTRAINT double_baking_evidences_denounced_block_foreign FOREIGN KEY (dbe_denounced_level) REFERENCES tezos.blocks (level),
+    CONSTRAINT double_baking_evidences_operation_foreign FOREIGN KEY (operation_id) REFERENCES tezos.operations (operation_id)
 );
 

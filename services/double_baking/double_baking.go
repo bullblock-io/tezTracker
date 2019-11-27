@@ -18,14 +18,14 @@ type BakesProvider interface {
 }
 
 type UnitOfWork interface {
-	GetDoubleBakeEvidence() double_baking.Repo
+	GetDoubleBaking() double_baking.Repo
 	GetOperation() operation.Repo
 }
 
 const limit = 100
 
 func SaveUnprocessedDoubleBakingEvidences(ctx context.Context, unit UnitOfWork, provider BakesProvider) (err error) {
-	repo := unit.GetDoubleBakeEvidence()
+	repo := unit.GetDoubleBaking()
 	found, lastEvidence, err := repo.Last()
 	if err != nil {
 		return err
@@ -41,7 +41,7 @@ func SaveUnprocessedDoubleBakingEvidences(ctx context.Context, unit UnitOfWork, 
 	}
 
 	for i := range newDoubleBakes {
-		err = SaveDoubleBakingEvidenceFor(ctx, newDoubleBakes[i], unit.GetDoubleBakeEvidence(), provider)
+		err = SaveDoubleBakingEvidenceFor(ctx, newDoubleBakes[i], unit.GetDoubleBaking(), provider)
 		if err != nil {
 			return err
 		}

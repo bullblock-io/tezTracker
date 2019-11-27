@@ -14,30 +14,26 @@ type getDoubleBakingsListHandler struct {
 }
 
 // Handle serves the Get Operations List request.
-func (h *getDoubleBakingsListHandler) Handle(params ops.GetOperationsListParams) middleware.Responder {
+func (h *getDoubleBakingsListHandler) Handle(params ops.GetDoubleBakingsListParams) middleware.Responder {
 	net, err := ToNetwork(params.Network)
 	if err != nil {
-		return ops.NewGetOperationsListBadRequest()
+		return ops.NewGetDoubleBakingsListBadRequest()
 	}
 	db, err := h.provider.GetDb(net)
 	if err != nil {
-		return ops.NewGetOperationsListNotFound()
+		return ops.NewGetDoubleBakingsListNotFound()
 	}
 	service := services.New(repos.New(db))
 
 	limiter := NewLimiter(params.Limit, params.Offset)
-	before := int64(0)
-	if params.BeforeID != nil {
-		before = *params.BeforeID
-	}
 
-	operations, count, err := service.GetOperations(params.OperationID, params.OperationKind, params.BlockID, params.AccountID, limiter, before)
+	operations, count, err := service.GetDoubleBakings(params.OperationID, params.BlockID, limiter)
 
 	if err != nil {
 		logrus.Errorf("failed to get operations: %s", err.Error())
-		return ops.NewGetOperationsListNotFound()
+		return ops.NewGetDoubleBakingsListNotFound()
 
 	}
 
-	return ops.NewGetOperationsListOK().WithPayload(render.Operations(operations)).WithXTotalCount(count)
+	return ops.NewGetDoubleBakingsListOK().WithPayload(render.DoubleBakings(operations)).WithXTotalCount(count)
 }

@@ -3,7 +3,6 @@ package double_baking
 import (
 	"github.com/bullblock-io/tezTracker/models"
 	"github.com/jinzhu/gorm"
-	gormbulk "github.com/t-tiger/gorm-bulk-insert"
 )
 
 type (
@@ -13,11 +12,9 @@ type (
 	}
 
 	Repo interface {
-		List(filter models.DoubleBakingEvidenceQueryOptions) (count int64, evidences []models.DoubleBakingEvidence, err error)
+		List(options models.DoubleBakingEvidenceQueryOptions) (count int64, evidences []models.DoubleBakingEvidence, err error)
 		Last() (found bool, evidence models.DoubleBakingEvidence, err error)
-		Find(filter models.BakingRightFilter) (found bool, evidence models.DoubleBakingEvidence, err error)
 		Create(evidence models.DoubleBakingEvidence) error
-		CreateBulk(evidences []models.DoubleBakingEvidence) error
 	}
 )
 
@@ -28,47 +25,43 @@ func New(db *gorm.DB) *Repository {
 	}
 }
 
-func (r *Repository) getDb(filter models.BakingRightFilter) *gorm.DB {
+func (r *Repository) getDb(options models.DoubleBakingEvidenceQueryOptions) *gorm.DB {
 	db := r.db.Model(&models.DoubleBakingEvidence{})
-	if len(filter.BlockLevels) != 0 {
-		db = db.Where("level IN (?)", filter.BlockLevels)
+	if options.LoadOperation {
+		db = db.Preload("Operation")
 	}
-	if len(filter.Delegates) != 0 {
-		db = db.Where("delegate IN (?)", filter.Delegates)
+
+	if len(options.BlockIDs) != 0 {
+		db = db.Where("dbe_block_hash IN (?)", options.BlockIDs)
 	}
-	if filter.PriorityFrom != 0 {
-		db = db.Where("priority >= ?", filter.PriorityFrom)
+	if len(options.OperationHashes) != 0 {
+		db = db.Joins("natural join operations")
+		db = db.Where("operations.operation_group_hash in (?)", options.OperationHashes)
 	}
-	if filter.PriorityTo != 0 {
-		db = db.Where("priority <= ?", filter.PriorityTo)
+
+	if options.Limit > 0 {
+		db = db.Limit(options.Limit)
+	}
+	if options.Offset > 0 {
+		db = db.Offset(options.Offset)
 	}
 	return db
 }
 
 // List returns a list of evidences from the newest to oldest.
-// limit defines the limit for the maximum number of evidences returned.
-// since is used to paginate results based on the level. As the result is ordered descendingly the evidences with level < since will be returned.
-func (r *Repository) List(filter models.DoubleBakingEvidenceQueryOptions) (evidences []models.DoubleBakingEvidence, err error) {
-	db := r.getDb(filter)
-	err = db.Order("level asc, priority asc").
+func (r *Repository) List(options models.DoubleBakingEvidenceQueryOptions) (count int64, evidences []models.DoubleBakingEvidence, err error) {
+	db := r.getDb(options)
+	if err := db.Count(&count).Error; err != nil {
+		return 0, nil, err
+	}
+	err = db.Order("operation_id desc").
 		Find(&evidences).Error
-	return evidences, err
+	return count, evidences, err
 }
 
 func (r *Repository) Last() (found bool, evidence models.DoubleBakingEvidence, err error) {
 	db := r.db.Model(&evidence)
-	if res := db.Order("operation_id asc").Last(&evidence); res.Error != nil {
-		if res.RecordNotFound() {
-			return false, evidence, nil
-		}
-		return false, evidence, res.Error
-	}
-	return true, evidence, nil
-}
-
-// Find looks up for evidences with filter.
-func (r *Repository) Find(filter models.BakingRightFilter) (found bool, evidence models.DoubleBakingEvidence, err error) {
-	if res := r.getDb(filter).Find(&evidence); res.Error != nil {
+	if res := db.Order("operation_id desc").Take(&evidence); res.Error != nil {
 		if res.RecordNotFound() {
 			return false, evidence, nil
 		}
@@ -80,12 +73,4 @@ func (r *Repository) Find(filter models.BakingRightFilter) (found bool, evidence
 // Create creates a DoubleBakingEvidence.
 func (r *Repository) Create(evidence models.DoubleBakingEvidence) error {
 	return r.db.Model(&evidence).Create(&evidence).Error
-}
-
-func (r *Repository) CreateBulk(evidences []models.DoubleBakingEvidence) error {
-	insertRecords := make([]interface{}, len(evidences))
-	for i := range evidences {
-		insertRecords[i] = evidences[i]
-	}
-	return gormbulk.BulkInsert(r.db, insertRecords, 2000)
 }

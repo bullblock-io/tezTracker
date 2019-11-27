@@ -40,9 +40,15 @@ func (t *TezTracker) GetBlockEndorsements(hashOrLevel string) (operations []mode
 }
 
 // GetOperations gets the operations filtering by operation kinds and blocks wiht pagination.
-func (t *TezTracker) GetDoubleBakings(ids, inBlocks, limits Limiter, before int64) (operations []models.DoubleBakingEvidence, count int64, err error) {
+func (t *TezTracker) GetDoubleBakings(ids, inBlocks []string, limits Limiter) (operations []models.DoubleBakingEvidence, count int64, err error) {
 	r := t.repoProvider.GetDoubleBaking()
-	options := models.DoubleBakingEvidenceQueryOptions{}
-	count, operations, err = r.List(ids, kinds, inBlocks, accountIDs, limits.Limit(), limits.Offset(), before)
+	options := models.DoubleBakingEvidenceQueryOptions{
+		BlockIDs:        inBlocks,
+		OperationHashes: ids,
+		LoadOperation:   true,
+		Limit:           limits.Limit(),
+		Offset:          limits.Offset(),
+	}
+	count, operations, err = r.List(options)
 	return operations, count, err
 }
