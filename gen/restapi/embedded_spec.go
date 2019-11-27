@@ -1009,6 +1009,109 @@ func init() {
         }
       }
     },
+    "/v2/data/{platform}/{network}/double_bakings": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "OperationsList"
+        ],
+        "operationId": "getDoubleBakingsList",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Not used",
+            "name": "platform",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Not used",
+            "name": "network",
+            "in": "path",
+            "required": true
+          },
+          {
+            "maximum": 500,
+            "minimum": 1,
+            "type": "integer",
+            "default": 20,
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "default": 0,
+            "description": "Offset",
+            "name": "offset",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi",
+            "name": "block_id",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "collectionFormat": "multi",
+            "description": "Not used",
+            "name": "block_level",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi",
+            "description": "Operation hash",
+            "name": "operation_id",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi",
+            "name": "account_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Query compatibility endpoint for operations",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/OperationsRow"
+              }
+            },
+            "headers": {
+              "X-Total-Count": {
+                "type": "integer",
+                "description": "The total number of data entries."
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
     "/v2/data/{platform}/{network}/future_baking_rights": {
       "get": {
         "produces": [
@@ -2130,6 +2233,40 @@ func init() {
         }
       }
     },
+    "DoubleBakingDetails": {
+      "properties": {
+        "baker_reward": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "denounced_level": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "evidence_baker": {
+          "type": "string"
+        },
+        "lost_deposits": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "lost_fees": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "lost_rewards": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "offender": {
+          "type": "string"
+        },
+        "priority": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
     "FutureBakingRightsPerBlock": {
       "properties": {
         "level": {
@@ -2266,6 +2403,9 @@ func init() {
         },
         "destination": {
           "type": "string"
+        },
+        "doubleBake": {
+          "$ref": "#/definitions/DoubleBakingDetails"
         },
         "fee": {
           "type": "integer",
@@ -3360,6 +3500,110 @@ func init() {
         }
       }
     },
+    "/v2/data/{platform}/{network}/double_bakings": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "OperationsList"
+        ],
+        "operationId": "getDoubleBakingsList",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Not used",
+            "name": "platform",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Not used",
+            "name": "network",
+            "in": "path",
+            "required": true
+          },
+          {
+            "maximum": 500,
+            "minimum": 1,
+            "type": "integer",
+            "default": 20,
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "minimum": 0,
+            "type": "integer",
+            "default": 0,
+            "description": "Offset",
+            "name": "offset",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi",
+            "name": "block_id",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "collectionFormat": "multi",
+            "description": "Not used",
+            "name": "block_level",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi",
+            "description": "Operation hash",
+            "name": "operation_id",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi",
+            "name": "account_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Query compatibility endpoint for operations",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/OperationsRow"
+              }
+            },
+            "headers": {
+              "X-Total-Count": {
+                "type": "integer",
+                "description": "The total number of data entries."
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
     "/v2/data/{platform}/{network}/future_baking_rights": {
       "get": {
         "produces": [
@@ -4486,6 +4730,40 @@ func init() {
         }
       }
     },
+    "DoubleBakingDetails": {
+      "properties": {
+        "baker_reward": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "denounced_level": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "evidence_baker": {
+          "type": "string"
+        },
+        "lost_deposits": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "lost_fees": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "lost_rewards": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "offender": {
+          "type": "string"
+        },
+        "priority": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
     "FutureBakingRightsPerBlock": {
       "properties": {
         "level": {
@@ -4623,6 +4901,9 @@ func init() {
         },
         "destination": {
           "type": "string"
+        },
+        "doubleBake": {
+          "$ref": "#/definitions/DoubleBakingDetails"
         },
         "fee": {
           "type": "integer",

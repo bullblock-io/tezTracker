@@ -14,6 +14,7 @@ type (
 
 	Repo interface {
 		List(ids, kinds []string, inBlocks, accountIDs []string, limit, offset uint, since int64) (operations []models.Operation, err error)
+		ListAsc(kinds []string, limit, offset uint, after int64) (operations []models.Operation, err error)
 		Count(ids, kinds, inBlocks, accountIDs []string, maxOperationID int64) (count int64, err error)
 		EndorsementsFor(blockLevel int64) (operations []models.Operation, err error)
 		Last() (operation models.Operation, err error)
@@ -81,6 +82,19 @@ func (r *Repository) List(ids, kinds []string, inBlocks, accountIDs []string, li
 		db = db.Where("operation_id < ?", since)
 	}
 	err = db.Order("operation_id desc").
+		Limit(limit).
+		Offset(offset).
+		Find(&operations).Error
+	return operations, err
+}
+
+func (r *Repository) ListAsc( kinds []string, limit, offset uint, after int64) (operations []models.Operation, err error) {
+	db := r.getFilteredDB(nil, kinds, nil, nil)
+
+	if after > 0 {
+		db = db.Where("operation_id > ?", after)
+	}
+	err = db.Order("operation_id asc").
 		Limit(limit).
 		Offset(offset).
 		Find(&operations).Error

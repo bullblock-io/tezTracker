@@ -5,6 +5,7 @@ import (
 	"github.com/bullblock-io/tezTracker/repos/baker"
 	"github.com/bullblock-io/tezTracker/repos/baking_rights"
 	"github.com/bullblock-io/tezTracker/repos/block"
+	"github.com/bullblock-io/tezTracker/repos/double_baking"
 	"github.com/bullblock-io/tezTracker/repos/future_baking_rights"
 	"github.com/bullblock-io/tezTracker/repos/operation"
 	"github.com/bullblock-io/tezTracker/repos/operation_groups"
@@ -28,6 +29,7 @@ type (
 		GetBakingRight() baking_rights.Repo
 		GetFutureBakingRight() future_baking_rights.Repo
 		GetSnapshots() snapshots.Repo
+		GetDoubleBaking() double_baking.Repo
 	}
 
 	Limiter interface {

@@ -9,4 +9,5 @@ type AccountsCheckpoint struct {
 	Block      *Block    `json:"block"` // This line is infered from column name "block_id".
 	BlockLevel uint      `json:"block_level" sql:"DEFAULT:'-1'::integer"`
 	AsOf       time.Time `json:"asof" gorm:"column:asof"`
+	IsBaker    bool      `json:"is_baker"`
 }

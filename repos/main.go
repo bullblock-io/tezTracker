@@ -9,6 +9,7 @@ import (
 	"github.com/bullblock-io/tezTracker/repos/baker"
 	"github.com/bullblock-io/tezTracker/repos/baking_rights"
 	"github.com/bullblock-io/tezTracker/repos/block"
+	"github.com/bullblock-io/tezTracker/repos/double_baking"
 	"github.com/bullblock-io/tezTracker/repos/future_baking_rights"
 	"github.com/bullblock-io/tezTracker/repos/operation"
 	"github.com/bullblock-io/tezTracker/repos/operation_counter"
@@ -76,6 +77,10 @@ func (u *Provider) GetFutureBakingRight() future_baking_rights.Repo {
 
 func (u *Provider) GetSnapshots() snapshots.Repo {
 	return snapshots.New(u.getDB())
+}
+
+func (u *Provider) GetDoubleBaking() double_baking.Repo {
+	return double_baking.New(u.getDB())
 }
 
 func (u *Provider) Start(ctx context.Context) {

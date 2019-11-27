@@ -3,6 +3,7 @@ module github.com/bullblock-io/tezTracker
 go 1.12
 
 require (
+	github.com/bullblock-io/go-tezos/v2 v2.0.4
 	github.com/go-openapi/errors v0.19.2
 	github.com/go-openapi/loads v0.19.2
 	github.com/go-openapi/runtime v0.19.3
@@ -24,4 +25,5 @@ require (
 	github.com/t-tiger/gorm-bulk-insert v0.0.0-20191014134946-beb77b81825f
 	golang.org/x/net v0.0.0-20190628185345-da137c7871d7
 	gopkg.in/h2non/gock.v1 v1.0.15 // indirect
+	gotest.tools v2.2.0+incompatible // indirect
 )
