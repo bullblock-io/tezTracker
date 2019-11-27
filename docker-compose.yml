@@ -25,11 +25,11 @@ services:
       dockerfile: Dockerfile-conseil
     command: lorre
     environment:
-      DB_Host: "${DB_HOST}"
-      DB_User: "${DB_USER}"
-      DB_Password: "${DB_PASSWORD}"
-      DB_Database: "${BABYLONNET_DB_DATABASE}"
-      XTZ_Host: "${BABYLONNET_XTZ_HOST}"
+      DB_Host: ${DB_HOST}
+      DB_User: ${DB_USER}
+      DB_Password: ${DB_PASSWORD}
+      DB_Database: ${BABYLONNET_DB_DATABASE}
+      XTZ_Host: ${BABYLONNET_XTZ_HOST}
     # If using localhost db you may want to use the host network
     network_mode: "host"
     restart: on-failure
@@ -58,6 +58,7 @@ services:
       TEZTRACKER_COUNTERINTERVALHOURS: ${TEZTRACKER_COUNTERINTERVALHOURS}
       TEZTRACKER_FUTURERIGHTSINTERVALMINUTES: ${TEZTRACKER_FUTURERIGHTSINTERVALMINUTES}
       TEZTRACKER_SNAPSHOTCHECKINTERVALMINUTES: ${TEZTRACKER_SNAPSHOTCHECKINTERVALMINUTES}
+      TEZTRACKER_DOUBLEBAKINGCHECKINTERVALMINUTES: ${TEZTRACKER_DOUBLEBAKINGCHECKINTERVALMINUTES}
       #todo: if the scheme is not http or host/port are different then for lorry - pass it through
       TEZTRACKER_MAINNET_NODERPC_HOST: "${XTZ_HOST}:8732"
       TEZTRACKER_MAINNET_NODERPC_SCHEMES: "http"
