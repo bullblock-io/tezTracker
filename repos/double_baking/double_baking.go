@@ -38,13 +38,6 @@ func (r *Repository) getDb(options models.DoubleBakingEvidenceQueryOptions) *gor
 		db = db.Joins("natural join operations")
 		db = db.Where("operations.operation_group_hash in (?)", options.OperationHashes)
 	}
-
-	if options.Limit > 0 {
-		db = db.Limit(options.Limit)
-	}
-	if options.Offset > 0 {
-		db = db.Offset(options.Offset)
-	}
 	return db
 }
 
@@ -54,6 +47,14 @@ func (r *Repository) List(options models.DoubleBakingEvidenceQueryOptions) (coun
 	if err := db.Count(&count).Error; err != nil {
 		return 0, nil, err
 	}
+
+	if options.Limit > 0 {
+		db = db.Limit(options.Limit)
+	}
+	if options.Offset > 0 {
+		db = db.Offset(options.Offset)
+	}
+
 	err = db.Order("operation_id desc").
 		Find(&evidences).Error
 	return count, evidences, err
