@@ -168,3 +168,27 @@ func ToDoubleBakingEvidence(op tzblock.Operations) (dee models.DoubleBakingEvide
 	return dee, fmt.Errorf("not a double baking evidence")
 
 }
+
+func (t *Tezos) DoubleEndrsementEvidenceLevel(ctx context.Context, blockLevel int, operationHash string) (int64, error) {
+	block, err := t.tzcClient.Get(blockLevel)
+	if err != nil {
+		return 0, err
+	}
+	for i := range block.Operations {
+		for _, op := range block.Operations[i] {
+			if strings.EqualFold(op.Hash, operationHash) {
+				return GetDoubleEndrsementEvidenceLevel(op)
+			}
+		}
+	}
+	return 0, fmt.Errorf("not found")
+}
+
+func GetDoubleEndrsementEvidenceLevel(op tzblock.Operations) (int64, error) {
+	for i := range op.Contents {
+		if op.Contents[i].Op1 != nil {
+			return int64(op.Contents[i].Op1.Operations.Level), nil
+		}
+	}
+	return 0, fmt.Errorf("not a double endorsement evidence")
+}

@@ -10,14 +10,15 @@ import (
 
 // Config stores the required configuration.
 type Config struct {
-	Port                             int
-	Mainnet                          NetworkConfig
-	Babylonnet                       NetworkConfig
-	LogLevel                         string `envconfig:"LOG_LEVEL"`
-	CounterIntervalHours             int
-	FutureRightsIntervalMinutes      int
-	SnapshotCheckIntervalMinutes     int
-	DoubleBakingCheckIntervalMinutes int
+	Port                                  int
+	Mainnet                               NetworkConfig
+	Babylonnet                            NetworkConfig
+	LogLevel                              string `envconfig:"LOG_LEVEL"`
+	CounterIntervalHours                  int
+	FutureRightsIntervalMinutes           int
+	SnapshotCheckIntervalMinutes          int
+	DoubleBakingCheckIntervalMinutes      int
+	DoubleEndorsementCheckIntervalMinutes int
 }
 type NetworkConfig struct {
 	SqlConnectionString string

@@ -9,8 +9,9 @@ import (
 	"github.com/bullblock-io/tezTracker/models"
 	"github.com/bullblock-io/tezTracker/repos"
 	"github.com/bullblock-io/tezTracker/services/counter"
-	"github.com/bullblock-io/tezTracker/services/future_rights"
 	"github.com/bullblock-io/tezTracker/services/double_baking"
+	"github.com/bullblock-io/tezTracker/services/double_endorsement"
+	"github.com/bullblock-io/tezTracker/services/future_rights"
 	"github.com/bullblock-io/tezTracker/services/rpc_client"
 	"github.com/bullblock-io/tezTracker/services/rpc_client/client"
 	"github.com/bullblock-io/tezTracker/services/snapshots"
@@ -111,12 +112,29 @@ func AddToCron(cron *gron.Cron, cfg config.Config, db *gorm.DB, rpcConfig client
 	} else {
 		log.Infof("no sheduling double baking parser due to missing DoubleBakingCheckIntervalMinutes in config")
 	}
+	if cfg.DoubleEndorsementCheckIntervalMinutes > 0 {
+		var jobIsRunning uint32
+
+		dur := time.Duration(cfg.DoubleEndorsementCheckIntervalMinutes) * time.Minute
+		log.Infof("Sheduling double endorsement parser saver every %s", dur)
+		cron.AddFunc(gron.Every(dur), func() {
+			// Ensure jobs are not stacking up. If the previous job is still running - skip this run.
+			if atomic.CompareAndSwapUint32(&jobIsRunning, 0, 1) {
+				defer atomic.StoreUint32(&jobIsRunning, 0)
+				unitOfWork := repos.New(db)
+
+				rpc := rpc_client.New(rpcConfig, string(network))
+				err := double_endorsement.SaveUnprocessedDoubleEndorsementEvidences(context.TODO(), unitOfWork, rpc)
+				if err != nil {
+					log.Errorf("double endorsement saver failed: %s", err.Error())
+					return
+				}
+			} else {
+				log.Tracef("skipping double endorsement saver as the previous job is still running")
+			}
+		})
+	} else {
+		log.Infof("no sheduling double endorsement parser due to missing DoubleEndorsementCheckIntervalMinutes in config")
+	}
 
 }
-
-// cycle = 160
-// level = 160*4096+1=655361
-
-// snapshot=12
-
-// snapshot_block = 153*4096+1+(12+1)*256-1=630016

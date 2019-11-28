@@ -18,6 +18,8 @@ type (
 		Count(ids, kinds, inBlocks, accountIDs []string, maxOperationID int64) (count int64, err error)
 		EndorsementsFor(blockLevel int64) (operations []models.Operation, err error)
 		Last() (operation models.Operation, err error)
+		ListDoubleEndorsementsWithoutLevel(limit, offset uint) (operations []models.Operation, err error)
+		UpdateLevel(operation models.Operation) error
 	}
 )
 
@@ -88,7 +90,20 @@ func (r *Repository) List(ids, kinds []string, inBlocks, accountIDs []string, li
 	return operations, err
 }
 
-func (r *Repository) ListAsc( kinds []string, limit, offset uint, after int64) (operations []models.Operation, err error) {
+func (r *Repository) ListDoubleEndorsementsWithoutLevel(limit, offset uint) (operations []models.Operation, err error) {
+	db := r.db.Model(&models.Operation{}).Where("kind IN (?)", []string{"double_endorsement_evidence"}).Where("level is null")
+	err = db.Order("operation_id asc").
+		Limit(limit).
+		Offset(offset).
+		Find(&operations).Error
+	return operations, err
+}
+
+func (r *Repository) UpdateLevel(operation models.Operation) error {
+	return r.db.Select("level").Save(&operation).Error
+}
+
+func (r *Repository) ListAsc(kinds []string, limit, offset uint, after int64) (operations []models.Operation, err error) {
 	db := r.getFilteredDB(nil, kinds, nil, nil)
 
 	if after > 0 {

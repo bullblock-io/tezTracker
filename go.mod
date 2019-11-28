@@ -3,7 +3,7 @@ module github.com/bullblock-io/tezTracker
 go 1.12
 
 require (
-	github.com/bullblock-io/go-tezos/v2 v2.0.4
+	github.com/bullblock-io/go-tezos/v2 v2.0.5
 	github.com/go-openapi/errors v0.19.2
 	github.com/go-openapi/loads v0.19.2
 	github.com/go-openapi/runtime v0.19.3
@@ -18,6 +18,7 @@ require (
 	github.com/jinzhu/gorm v1.9.10
 	github.com/joho/godotenv v1.3.0
 	github.com/kelseyhightower/envconfig v1.4.0
+	github.com/pkg/errors v0.8.1 // indirect
 	github.com/roylee0704/gron v0.0.0-20160621042432-e78485adab46
 	github.com/rs/cors v1.6.0
 	github.com/sirupsen/logrus v1.2.0

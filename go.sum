@@ -20,6 +20,8 @@ github.com/beorn7/perks v0.0.0-20180321164747-3a771d992973/go.mod h1:Dwedo/Wpr24
 github.com/bullblock-io/go-tezos v1.0.9 h1:4wi5JmlPiN7Ks+/uC8Lt2xZQ2/QkIUpC5V/y18zND3g=
 github.com/bullblock-io/go-tezos/v2 v2.0.4 h1:6iYY0p9VSCgb5rmV7mnaCsxTrzmSIwO8srZV4FyMh7I=
 github.com/bullblock-io/go-tezos/v2 v2.0.4/go.mod h1:9z99LPUZ/Cy1vAKsDM7tSawGqpKYg7+oPFMjIvw1nC8=
+github.com/bullblock-io/go-tezos/v2 v2.0.5 h1:2MNjPtysk+PrNwj6i70U03rnhFtuhzxPaWY7V/zF6lI=
+github.com/bullblock-io/go-tezos/v2 v2.0.5/go.mod h1:9z99LPUZ/Cy1vAKsDM7tSawGqpKYg7+oPFMjIvw1nC8=
 github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDkc90ppPyw=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
@@ -159,6 +161,8 @@ github.com/pborman/uuid v1.2.0/go.mod h1:X/NO0urCmaxf9VXbdlT7C2Yzkj2IKimNn4k+gtP
 github.com/pierrec/lz4 v2.0.5+incompatible/go.mod h1:pdkljMzZIN41W+lC3N2tnIh5sFi+IEE17M5jbnwPHcY=
 github.com/pkg/errors v0.8.0 h1:WdK/asTD0HN+q6hsWO3/vpuAkAr+tw6aNJNDFFf0+qw=
 github.com/pkg/errors v0.8.0/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
+github.com/pkg/errors v0.8.1 h1:iURUrRGxPUNPdy5/HRSm+Yj6okJ6UtLINN0Q9M4+h3I=
+github.com/pkg/errors v0.8.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/prometheus/client_golang v0.9.1/go.mod h1:7SWBe2y4D6OKWSNQJUaRYU/AaXPKyh/dDVn+NZz0KFw=
