@@ -117,7 +117,7 @@ func (t *Tezos) SnapshotForCycle(ctx context.Context, cycle int64, useHead bool)
 	}
 	snapshot := resp.Payload
 	snap.Cycle = cycle
-	snap.BlockLevel = ((cycle-7)*4096 + 1) + (snapshot+1)*256 - 1
+	snap.BlockLevel = ((cycle-7)*t.BlocksInCycle() + 1) + (snapshot+1)*256 - 1
 	rollParams := snapshots.NewGetRollsParamsWithContext(ctx).
 		WithCycle(cycle).
 		WithNetwork(t.network).
