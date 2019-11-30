@@ -2292,6 +2292,9 @@ func init() {
           "description": "Expected annual return in percents.",
           "type": "number"
         },
+        "blocks_in_cycle": {
+          "type": "integer"
+        },
         "circulating_supply": {
           "type": "number"
         },
@@ -4788,6 +4791,9 @@ func init() {
         "annual_yield": {
           "description": "Expected annual return in percents.",
           "type": "number"
+        },
+        "blocks_in_cycle": {
+          "type": "integer"
         },
         "circulating_supply": {
           "type": "number"

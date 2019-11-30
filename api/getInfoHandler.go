@@ -41,5 +41,5 @@ func (h *getInfoHandler) Handle(params info.GetInfoParams) middleware.Responder 
 	if err != nil {
 		logrus.Errorf("failed to get staking ratio: %s", err.Error())
 	}
-	return info.NewGetInfoOK().WithPayload(render.Info(md, ratio))
+	return info.NewGetInfoOK().WithPayload(render.Info(md, ratio, service.BlocksInCycle()))
 }

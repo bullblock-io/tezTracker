@@ -8,7 +8,7 @@ import (
 const annualYield = 7.12
 
 // Info renders price info into OpenAPI model.
-func Info(mi models.MarketInfo, ratio float64) *genModels.Info {
+func Info(mi models.MarketInfo, ratio float64, blocks int64) *genModels.Info {
 	p := mi.GetPrice()
 	p24 := mi.GetPriceChange()
 	ratioInPercent := ratio * 100
@@ -22,5 +22,6 @@ func Info(mi models.MarketInfo, ratio float64) *genModels.Info {
 		MarketCap:         mc,
 		Volume24h:         vol,
 		CirculatingSupply: mi.GetSupply(),
+		BlocksInCycle:     blocks,
 	}
 }

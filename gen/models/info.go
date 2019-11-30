@@ -20,6 +20,9 @@ type Info struct {
 	// Expected annual return in percents.
 	AnnualYield float64 `json:"annual_yield,omitempty"`
 
+	// blocks in cycle
+	BlocksInCycle int64 `json:"blocks_in_cycle,omitempty"`
+
 	// circulating supply
 	CirculatingSupply float64 `json:"circulating_supply,omitempty"`
 
