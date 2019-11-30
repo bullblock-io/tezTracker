@@ -1295,6 +1295,8 @@ definitions:
         type: number
       circulating_supply:
         type: number
+      blocks_in_cycle:
+        type: integer
     required:
       - price
       - price_24h_change

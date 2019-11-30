@@ -42,7 +42,7 @@ type (
 
 // New creates a new TexTracker service using the repository provider.
 func New(rp Provider, net models.Network) *TezTracker {
-	return &TezTracker{repoProvider: rp}
+	return &TezTracker{repoProvider: rp, net: net}
 }
 
 const BlocksInMainnetCycle = 4096
