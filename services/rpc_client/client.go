@@ -91,22 +91,38 @@ func genRightToModel(m genmodels.BakingRight) models.FutureBakingRight {
 	}
 }
 
-func (t *Tezos) SnapshotBlockForCycle(ctx context.Context, cycle int64, useHead bool) (int64, error) {
-	params := snapshots.NewGetRollSnapshotParamsWithContext(ctx).WithCycle(cycle).WithNetwork(t.network)
-	if useHead {
-		params.SetBlock(headBlock)
-	} else {
+func (t *Tezos) SnapshotForCycle(ctx context.Context, cycle int64, useHead bool) (snap models.Snapshot, err error) {
+	blockToUse := headBlock
+	if !useHead {
 		level := cycle*BlocksInCycle + 1
-		params.SetBlock(strconv.FormatInt(level, 10))
+		blockToUse = strconv.FormatInt(level, 10)
 	}
-
+	params := snapshots.NewGetRollSnapshotParamsWithContext(ctx).
+		WithCycle(cycle).
+		WithNetwork(t.network).
+		WithBlock(blockToUse)
 	resp, err := t.client.Snapshots.GetRollSnapshot(params)
 	if err != nil {
-		return 0, err
+		return snap, err
 	}
 	snapshot := resp.Payload
-	snapBlock := ((cycle-7)*4096 + 1) + (snapshot+1)*256 - 1
-	return snapBlock, nil
+	snap.Cycle = cycle
+	snap.BlockLevel = ((cycle-7)*4096 + 1) + (snapshot+1)*256 - 1
+	rollParams := snapshots.NewGetRollsParamsWithContext(ctx).
+		WithCycle(cycle).
+		WithNetwork(t.network).
+		WithSnap(snapshot).
+		WithBlock(blockToUse)
+	rollsResp, err := t.client.Snapshots.GetRolls(rollParams)
+	if err != nil {
+		return snap, err
+	}
+	if rollsResp == nil {
+		return snap, fmt.Errorf("nil resp")
+	}
+
+	snap.Rolls = int64(len(rollsResp.Payload))
+	return snap, nil
 }
 
 func (t *Tezos) DoubleBakingEvidence(ctx context.Context, blockLevel int, operationHash string) (dee models.DoubleBakingEvidence, err error) {

@@ -18,7 +18,7 @@ type RightsRepo interface {
 }
 
 type SnapshotProvider interface {
-	SnapshotBlockForCycle(ctx context.Context, cycle int64, useHead bool) (int64, error)
+	SnapshotForCycle(ctx context.Context, cycle int64, useHead bool) (snap models.Snapshot, err error)
 }
 
 type UnitOfWork interface {
@@ -66,22 +66,20 @@ func SaveNewSnapshots(ctx context.Context, unit UnitOfWork, provider SnapshotPro
 }
 
 func SaveSnapshotForCycle(ctx context.Context, cycle int64, unit UnitOfWork, provider SnapshotProvider, isFromFuture bool) error {
-	blockNumber, err := provider.SnapshotBlockForCycle(ctx, cycle, isFromFuture)
+	snap, err := provider.SnapshotForCycle(ctx, cycle, isFromFuture)
 	if err != nil {
 		return err
 	}
 
 	snapRepo := unit.GetSnapshots()
-	rolls, err := snapRepo.RollsInBlock(blockNumber)
-	if err != nil {
-		return err
-	}
-	snap := models.Snapshot{
-		Cycle:      cycle,
-		BlockLevel: blockNumber,
-		Rolls:      rolls,
-	}
+	if snap.Rolls == 0 {
 
+		rolls, err := snapRepo.RollsInBlock(snap.BlockLevel)
+		if err != nil {
+			return err
+		}
+		snap.Rolls = rolls
+	}
 	err = snapRepo.Create(snap)
 	if err != nil {
 		return err

@@ -61,7 +61,39 @@ paths:
           description: Internal error
       tags:
         - Snapshots
-
+  /chains/{network}/blocks/{block}/context/raw/json/rolls/owner/snapshot/{cycle}/{snap}:
+    get:
+      operationId: getRolls
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: network
+          required: true
+          type: string
+        - in: path
+          name: block
+          required: true
+          type: string
+        - in: path
+          type: integer
+          name: cycle
+          required: true
+        - in: path
+          type: integer
+          name: snap
+          required: true
+      responses:
+        '200':
+          description: Endpoint for rolls 
+          schema:
+            type: array
+            items: 
+              type: integer
+        '500':
+          description: Internal error
+      tags:
+        - Snapshots
 definitions:
   BakingRight:
     properties:
