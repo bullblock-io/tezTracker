@@ -24,7 +24,7 @@ func (h *getAccountDelegatorsHandler) Handle(params accounts.GetAccountDelegator
 		return accounts.NewGetAccountDelegatorsInternalServerError()
 	}
 
-	service := services.New(repos.New(db))
+	service := services.New(repos.New(db), net)
 	limiter := NewLimiter(params.Limit, params.Offset)
 	accs, count, err := service.AccountDelegatorsList(params.AccountID, limiter)
 	if err != nil {

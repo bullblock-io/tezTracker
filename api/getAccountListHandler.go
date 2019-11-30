@@ -23,7 +23,7 @@ func (h *getAccountListHandler) Handle(params accounts.GetAccountsListParams) mi
 	if err != nil {
 		return accounts.NewGetAccountsListNotFound()
 	}
-	service := services.New(repos.New(db))
+	service := services.New(repos.New(db), net)
 	limiter := NewLimiter(params.Limit, params.Offset)
 	before := ""
 	if params.AfterID != nil {

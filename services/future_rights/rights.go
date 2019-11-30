@@ -20,6 +20,7 @@ type RightsRepo interface {
 
 type RightsProvider interface {
 	FutureRightsFor(ctx context.Context, blockFrom, blockTo int64) ([]models.FutureBakingRight, error)
+	BlocksInCycle() int64
 }
 
 type UnitOfWork interface {
@@ -30,7 +31,6 @@ type UnitOfWork interface {
 	GetFutureBakingRight() future_baking_rights.Repo
 }
 
-const BlocksInCycle = 4096
 const BlocksRangeSize = 256
 
 func SaveNewBakingRights(ctx context.Context, unit UnitOfWork, provider RightsProvider) (count int, err error) {
@@ -40,7 +40,7 @@ func SaveNewBakingRights(ctx context.Context, unit UnitOfWork, provider RightsPr
 		return 0, err
 	}
 	lastCycle := lastBlock.MetaCycle
-	lastKnownRightsBlock := (lastCycle + 6) * BlocksInCycle
+	lastKnownRightsBlock := (lastCycle + 6) * provider.BlocksInCycle()
 
 	rightsRepo := unit.GetFutureBakingRight()
 	found, lastRight, err := rightsRepo.Last()

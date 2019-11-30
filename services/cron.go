@@ -20,7 +20,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-func AddToCron(cron *gron.Cron, cfg config.Config, db *gorm.DB, rpcConfig client.TransportConfig, network models.Network) {
+func AddToCron(cron *gron.Cron, cfg config.Config, db *gorm.DB, rpcConfig client.TransportConfig, network models.Network, isTestNetwork bool) {
 
 	if cfg.CounterIntervalHours > 0 {
 		dur := time.Duration(cfg.CounterIntervalHours) * time.Hour
@@ -49,7 +49,7 @@ func AddToCron(cron *gron.Cron, cfg config.Config, db *gorm.DB, rpcConfig client
 				defer atomic.StoreUint32(&jobIsRunning, 0)
 				unitOfWork := repos.New(db)
 
-				rpc := rpc_client.New(rpcConfig, string(network))
+				rpc := rpc_client.New(rpcConfig, string(network), isTestNetwork)
 				count, err := future_rights.SaveNewBakingRights(context.TODO(), unitOfWork, rpc)
 				if err != nil {
 					log.Errorf("BakingRights saver failed: %s", err.Error())
@@ -74,7 +74,7 @@ func AddToCron(cron *gron.Cron, cfg config.Config, db *gorm.DB, rpcConfig client
 				defer atomic.StoreUint32(&jobIsRunning, 0)
 				unitOfWork := repos.New(db)
 
-				rpc := rpc_client.New(rpcConfig, string(network))
+				rpc := rpc_client.New(rpcConfig, string(network), isTestNetwork)
 				count, err := snapshots.SaveNewSnapshots(context.TODO(), unitOfWork, rpc)
 				if err != nil {
 					log.Errorf("Snapshots saver failed: %s", err.Error())
@@ -99,7 +99,7 @@ func AddToCron(cron *gron.Cron, cfg config.Config, db *gorm.DB, rpcConfig client
 				defer atomic.StoreUint32(&jobIsRunning, 0)
 				unitOfWork := repos.New(db)
 
-				rpc := rpc_client.New(rpcConfig, string(network))
+				rpc := rpc_client.New(rpcConfig, string(network), isTestNetwork)
 				err := double_baking.SaveUnprocessedDoubleBakingEvidences(context.TODO(), unitOfWork, rpc)
 				if err != nil {
 					log.Errorf("double baking saver failed: %s", err.Error())
@@ -123,7 +123,7 @@ func AddToCron(cron *gron.Cron, cfg config.Config, db *gorm.DB, rpcConfig client
 				defer atomic.StoreUint32(&jobIsRunning, 0)
 				unitOfWork := repos.New(db)
 
-				rpc := rpc_client.New(rpcConfig, string(network))
+				rpc := rpc_client.New(rpcConfig, string(network), isTestNetwork)
 				err := double_endorsement.SaveUnprocessedDoubleEndorsementEvidences(context.TODO(), unitOfWork, rpc)
 				if err != nil {
 					log.Errorf("double endorsement saver failed: %s", err.Error())

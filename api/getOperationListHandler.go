@@ -23,7 +23,7 @@ func (h *getOperationListHandler) Handle(params ops.GetOperationsListParams) mid
 	if err != nil {
 		return ops.NewGetOperationsListNotFound()
 	}
-	service := services.New(repos.New(db))
+	service := services.New(repos.New(db), net)
 
 	limiter := NewLimiter(params.Limit, params.Offset)
 	before := int64(0)

@@ -23,7 +23,7 @@ func (h *getBlockBakingRightsHandler) Handle(params blocks.GetBlockBakingRightsP
 	if err != nil {
 		return blocks.NewGetBlockBakingRightsInternalServerError()
 	}
-	service := services.New(repos.New(db))
+	service := services.New(repos.New(db), net)
 	rights, count, err := service.GetBlockBakingRights(params.Hash)
 
 	if err != nil {

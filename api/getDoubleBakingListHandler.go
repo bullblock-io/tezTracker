@@ -23,7 +23,7 @@ func (h *getDoubleBakingsListHandler) Handle(params ops.GetDoubleBakingsListPara
 	if err != nil {
 		return ops.NewGetDoubleBakingsListNotFound()
 	}
-	service := services.New(repos.New(db))
+	service := services.New(repos.New(db), net)
 
 	limiter := NewLimiter(params.Limit, params.Offset)
 

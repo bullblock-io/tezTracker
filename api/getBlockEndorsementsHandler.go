@@ -23,7 +23,7 @@ func (h *getBlockEndorsementsHandler) Handle(params blocks.GetBlockEndorsementsP
 	if err != nil {
 		return blocks.NewGetBlockEndorsementsInternalServerError()
 	}
-	service := services.New(repos.New(db))
+	service := services.New(repos.New(db), net)
 	operations, count, err := service.GetBlockEndorsements(params.Hash)
 
 	if err != nil {

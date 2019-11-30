@@ -20,17 +20,26 @@ const headBlock = "head"
 const BlocksInCycle = 4096
 
 type Tezos struct {
-	client    *client.Tezosrpc
-	network   string
-	tzcClient *tzblock.BlockService
+	client        *client.Tezosrpc
+	network       string
+	isTestNetwork bool //we have to use a separate flag due to stupid nodes configs...
+	tzcClient     *tzblock.BlockService
 }
 
-func New(cfg client.TransportConfig, network string) *Tezos {
+func (t *Tezos) BlocksInCycle() int64 {
+	if t.isTestNetwork {
+		return BlocksInCycle / 2
+	}
+	return BlocksInCycle
+}
 
+func New(cfg client.TransportConfig, network string, isTestNetwork bool) *Tezos {
+	cli := client.NewHTTPClientWithConfig(nil, &cfg)
 	return &Tezos{
-		client:    client.NewHTTPClientWithConfig(nil, &cfg),
-		network:   network,
-		tzcClient: tzblock.NewBlockService(tzc.NewClient(cfg.Host)),
+		client:        cli,
+		network:       network,
+		tzcClient:     tzblock.NewBlockService(tzc.NewClient(cfg.Host)),
+		isTestNetwork: isTestNetwork,
 	}
 }
 func (t *Tezos) RightsFor(ctx context.Context, blockFrom, blockTo int64) ([]models.BakingRight, error) {
@@ -69,6 +78,7 @@ func (t *Tezos) FutureRightsFor(ctx context.Context, blockFrom, blockTo int64) (
 		levels = append(levels, strconv.FormatInt(b, 10))
 	}
 	params.SetLevel(levels)
+
 	resp, err := t.client.BakingRights.GetBakingRights(params)
 	if err != nil {
 		return nil, err
@@ -94,7 +104,7 @@ func genRightToModel(m genmodels.BakingRight) models.FutureBakingRight {
 func (t *Tezos) SnapshotForCycle(ctx context.Context, cycle int64, useHead bool) (snap models.Snapshot, err error) {
 	blockToUse := headBlock
 	if !useHead {
-		level := cycle*BlocksInCycle + 1
+		level := cycle*t.BlocksInCycle() + 1
 		blockToUse = strconv.FormatInt(level, 10)
 	}
 	params := snapshots.NewGetRollSnapshotParamsWithContext(ctx).

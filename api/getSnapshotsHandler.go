@@ -23,7 +23,7 @@ func (h *getSnapshotsHandler) Handle(params operations.GetSnapshotsParams) middl
 	if err != nil {
 		return operations.NewGetSnapshotsNotFound()
 	}
-	service := services.New(repos.New(db))
+	service := services.New(repos.New(db), net)
 
 	limiter := NewLimiter(params.Limit, params.Offset)
 	count, bs, err := service.Snapshots(limiter)

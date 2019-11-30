@@ -23,7 +23,7 @@ func (h *getFutureBakingRightsHandler) Handle(params blocks.GetFutureBakingRight
 	if err != nil {
 		return blocks.NewGetFutureBakingRightsNotFound()
 	}
-	service := services.New(repos.New(db))
+	service := services.New(repos.New(db), net)
 
 	limiter := NewLimiter(params.Limit, params.Offset)
 	priorityTo := 0

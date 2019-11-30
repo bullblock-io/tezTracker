@@ -76,7 +76,7 @@ func (t *TezTracker) FutureBakingRightsList(priorityTo int, limiter Limiter) (co
 	}
 	lastCycle := lastBlock.MetaCycle
 	lastLevel := lastBlock.Level.Int64
-	lastKnownRightsBlock := (lastCycle + 6) * BlocksInCycle
+	lastKnownRightsBlock := (lastCycle + 6) * t.BlocksInCycle()
 	count = lastKnownRightsBlock - lastLevel
 
 	rangeStart := lastLevel + int64(limiter.Offset())

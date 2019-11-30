@@ -23,7 +23,7 @@ func (h *getAccountHandler) Handle(params accounts.GetAccountParams) middleware.
 	if err != nil {
 		return accounts.NewGetAccountInternalServerError()
 	}
-	service := services.New(repos.New(db))
+	service := services.New(repos.New(db), net)
 
 	acc, err := service.GetAccount(params.AccountID)
 

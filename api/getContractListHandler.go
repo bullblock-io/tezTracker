@@ -23,7 +23,7 @@ func (h *getContractListHandler) Handle(params accounts.GetContractsListParams) 
 	if err != nil {
 		return accounts.NewGetContractsListNotFound()
 	}
-	service := services.New(repos.New(db))
+	service := services.New(repos.New(db), net)
 
 	limiter := NewLimiter(params.Limit, params.Offset)
 	before := ""

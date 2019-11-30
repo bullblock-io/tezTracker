@@ -23,7 +23,7 @@ func (h *getBakerListHandler) Handle(params accounts.GetBakersListParams) middle
 	if err != nil {
 		return accounts.NewGetBakersListNotFound()
 	}
-	service := services.New(repos.New(db))
+	service := services.New(repos.New(db), net)
 	limiter := NewLimiter(params.Limit, params.Offset)
 
 	accs, count, err := service.BakerList(limiter)

@@ -26,7 +26,6 @@ type UnitOfWork interface {
 	GetBakingRight() baking_rights.Repo
 }
 
-const BlocksInCycle = 4096
 const BlocksRangeSize = 256
 
 func SaveOldBakingRights(ctx context.Context, unit UnitOfWork, provider RightsProvider) (count int, err error) {

@@ -24,7 +24,7 @@ func (h *getHeadBlockHandler) Handle(params blocks.GetBlocksHeadParams) middlewa
 		return blocks.NewGetBlocksHeadInternalServerError()
 	}
 
-	service := services.New(repos.New(db))
+	service := services.New(repos.New(db), net)
 	block, err := service.HeadBlock()
 	if err != nil {
 		logrus.Errorf("failed to get Head block: %s", err.Error())

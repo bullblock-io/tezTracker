@@ -23,7 +23,7 @@ func (h *getBlockListHandler) Handle(params blocks.GetBlocksListParams) middlewa
 	if err != nil {
 		return blocks.NewGetBlocksListNotFound()
 	}
-	service := services.New(repos.New(db))
+	service := services.New(repos.New(db), net)
 
 	limiter := NewLimiter(params.Limit, params.Offset)
 	before := uint64(0)

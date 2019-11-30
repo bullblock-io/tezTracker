@@ -1,6 +1,7 @@
 package services
 
 import (
+	"github.com/bullblock-io/tezTracker/models"
 	"github.com/bullblock-io/tezTracker/repos/account"
 	"github.com/bullblock-io/tezTracker/repos/baker"
 	"github.com/bullblock-io/tezTracker/repos/baking_rights"
@@ -17,6 +18,7 @@ type (
 	// TezTracker is the main service for tezos tracker. It has methods to process all the user's requests.
 	TezTracker struct {
 		repoProvider Provider
+		net          models.Network
 	}
 
 	// Provider is the abstract interface to get any repository.
@@ -39,6 +41,15 @@ type (
 )
 
 // New creates a new TexTracker service using the repository provider.
-func New(rp Provider) *TezTracker {
+func New(rp Provider, net models.Network) *TezTracker {
 	return &TezTracker{repoProvider: rp}
+}
+
+const BlocksInMainnetCycle = 4096
+
+func (t *TezTracker) BlocksInCycle() int64 {
+	if t.net == models.NetworkMain {
+		return BlocksInMainnetCycle
+	}
+	return BlocksInMainnetCycle / 2
 }

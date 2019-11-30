@@ -24,7 +24,7 @@ func (h *getBlockHandler) Handle(params blocks.GetBlockParams) middleware.Respon
 	if err != nil {
 		return blocks.NewGetBlockInternalServerError()
 	}
-	service := services.New(repos.New(db))
+	service := services.New(repos.New(db), net)
 	var block models.Block
 	if params.Hash == "head" {
 		block, err = service.HeadBlock()

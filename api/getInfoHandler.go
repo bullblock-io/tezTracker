@@ -35,7 +35,7 @@ func (h *getInfoHandler) Handle(params info.GetInfoParams) middleware.Responder 
 	if err != nil {
 		return info.NewGetInfoInternalServerError()
 	}
-	service := services.New(repos.New(db))
+	service := services.New(repos.New(db), net)
 
 	ratio, err := service.GetStakingRatio()
 	if err != nil {

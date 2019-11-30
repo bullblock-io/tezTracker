@@ -72,7 +72,7 @@ func main() {
 		}
 		// Using models.NetworkMain instead of k due to stupid nodes configuration for babylonnet.
 		// todo: if something is not workign for testnets, check this one.
-		services.AddToCron(cron, cfg, db, rpc, models.NetworkMain)
+		services.AddToCron(cron, cfg, db, rpc, models.NetworkMain, k == models.NetworkBabylon)
 	}
 
 	cron.Start()
