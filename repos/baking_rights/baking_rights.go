@@ -3,6 +3,7 @@ package baking_rights
 import (
 	"github.com/bullblock-io/tezTracker/models"
 	"github.com/jinzhu/gorm"
+	gormbulk "github.com/t-tiger/gorm-bulk-insert"
 )
 
 type (
@@ -14,6 +15,8 @@ type (
 	Repo interface {
 		List(filter models.BakingRightFilter) (rights []models.BakingRight, err error)
 		Find(filter models.BakingRightFilter) (found bool, right models.BakingRight, err error)
+		First() (found bool, right models.BakingRight, err error)
+		CreateBulk(rights []models.BakingRight) error
 	}
 )
 
@@ -50,6 +53,17 @@ func (r *Repository) List(filter models.BakingRightFilter) (rights []models.Baki
 		Find(&rights).Error
 	return rights, err
 }
+func (r *Repository) First() (found bool, right models.BakingRight, err error) {
+	if res := r.getDb(models.BakingRightFilter{}).
+		Order("level asc, priority asc").
+		Limit(1).Find(&right); res.Error != nil {
+		if res.RecordNotFound() {
+			return false, right, nil
+		}
+		return false, right, res.Error
+	}
+	return true, right, err
+}
 
 // Find looks up for rights with filter.
 func (r *Repository) Find(filter models.BakingRightFilter) (found bool, right models.BakingRight, err error) {
@@ -60,4 +74,11 @@ func (r *Repository) Find(filter models.BakingRightFilter) (found bool, right mo
 		return false, right, res.Error
 	}
 	return true, right, nil
+}
+func (r *Repository) CreateBulk(rights []models.BakingRight) error {
+	insertRecords := make([]interface{}, len(rights))
+	for i := range rights {
+		insertRecords[i] = rights[i]
+	}
+	return gormbulk.BulkInsert(r.db, insertRecords, 2000)
 }
