@@ -70,7 +70,9 @@ func main() {
 		if err != nil {
 			log.Fatalln(err)
 		}
-		services.AddToCron(cron, cfg, db, rpc, k)
+		// Using models.NetworkMain instead of k due to stupid nodes configuration for babylonnet.
+		// todo: if something is not workign for testnets, check this one.
+		services.AddToCron(cron, cfg, db, rpc, models.NetworkMain)
 	}
 
 	cron.Start()
