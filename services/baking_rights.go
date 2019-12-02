@@ -79,7 +79,7 @@ func (t *TezTracker) FutureBakingRightsList(priorityTo int, limiter Limiter) (co
 	lastKnownRightsBlock := (lastCycle + 6) * t.BlocksInCycle()
 	count = lastKnownRightsBlock - lastLevel
 
-	rangeStart := lastLevel + int64(limiter.Offset())
+	rangeStart := lastLevel + 1 + int64(limiter.Offset())
 	if rangeStart > lastKnownRightsBlock {
 		return 0, nil, fmt.Errorf("out of range")
 	}
