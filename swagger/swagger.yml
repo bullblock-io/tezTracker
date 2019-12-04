@@ -1668,10 +1668,14 @@ definitions:
         type: string
       baker:
         type: string
+      baker_priority:
+        type: integer
       rights:
         type: array
         items:
           $ref: '#/definitions/BakingRightsRow'
+    required:
+        - baker_priority
   FutureBakingRightsPerBlock:
     properties:
       level:

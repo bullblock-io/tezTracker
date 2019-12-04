@@ -12,6 +12,7 @@ import (
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // BakingRightsPerBlock baking rights per block
@@ -20,6 +21,10 @@ type BakingRightsPerBlock struct {
 
 	// baker
 	Baker string `json:"baker,omitempty"`
+
+	// baker priority
+	// Required: true
+	BakerPriority *int64 `json:"baker_priority"`
 
 	// block hash
 	BlockHash string `json:"block_hash,omitempty"`
@@ -35,6 +40,10 @@ type BakingRightsPerBlock struct {
 func (m *BakingRightsPerBlock) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.validateBakerPriority(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateRights(formats); err != nil {
 		res = append(res, err)
 	}
@@ -42,6 +51,15 @@ func (m *BakingRightsPerBlock) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *BakingRightsPerBlock) validateBakerPriority(formats strfmt.Registry) error {
+
+	if err := validate.Required("baker_priority", "body", m.BakerPriority); err != nil {
+		return err
+	}
+
 	return nil
 }
 

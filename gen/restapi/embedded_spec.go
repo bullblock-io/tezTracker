@@ -2028,9 +2028,15 @@ func init() {
       }
     },
     "BakingRightsPerBlock": {
+      "required": [
+        "baker_priority"
+      ],
       "properties": {
         "baker": {
           "type": "string"
+        },
+        "baker_priority": {
+          "type": "integer"
         },
         "block_hash": {
           "type": "string"
@@ -4528,9 +4534,15 @@ func init() {
       }
     },
     "BakingRightsPerBlock": {
+      "required": [
+        "baker_priority"
+      ],
       "properties": {
         "baker": {
           "type": "string"
+        },
+        "baker_priority": {
+          "type": "integer"
         },
         "block_hash": {
           "type": "string"
