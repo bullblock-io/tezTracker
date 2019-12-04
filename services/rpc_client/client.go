@@ -14,7 +14,6 @@ import (
 	"github.com/bullblock-io/tezTracker/services/rpc_client/client/baking_rights"
 	"github.com/bullblock-io/tezTracker/services/rpc_client/client/snapshots"
 	genmodels "github.com/bullblock-io/tezTracker/services/rpc_client/models"
-	runtimeClient "github.com/go-openapi/runtime/client"
 )
 
 const headBlock = "head"
