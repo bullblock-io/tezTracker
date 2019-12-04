@@ -62,6 +62,8 @@ for the get baking rights operation typically these are written to a http.Reques
 */
 type GetBakingRightsParams struct {
 
+	/*All*/
+	All *bool
 	/*Block*/
 	Block string
 	/*Level*/
@@ -107,6 +109,17 @@ func (o *GetBakingRightsParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithAll adds the all to the get baking rights params
+func (o *GetBakingRightsParams) WithAll(all *bool) *GetBakingRightsParams {
+	o.SetAll(all)
+	return o
+}
+
+// SetAll adds the all to the get baking rights params
+func (o *GetBakingRightsParams) SetAll(all *bool) {
+	o.All = all
+}
+
 // WithBlock adds the block to the get baking rights params
 func (o *GetBakingRightsParams) WithBlock(block string) *GetBakingRightsParams {
 	o.SetBlock(block)
@@ -147,6 +160,22 @@ func (o *GetBakingRightsParams) WriteToRequest(r runtime.ClientRequest, reg strf
 		return err
 	}
 	var res []error
+
+	if o.All != nil {
+
+		// query param all
+		var qrAll bool
+		if o.All != nil {
+			qrAll = *o.All
+		}
+		qAll := swag.FormatBool(qrAll)
+		if qAll != "" {
+			if err := r.SetQueryParam("all", qAll); err != nil {
+				return err
+			}
+		}
+
+	}
 
 	// path param block
 	if err := r.SetPathParam("block", o.Block); err != nil {

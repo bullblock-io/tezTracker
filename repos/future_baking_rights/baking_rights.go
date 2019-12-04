@@ -14,6 +14,7 @@ type (
 
 	Repo interface {
 		List(filter models.BakingRightFilter) (rights []models.FutureBakingRight, err error)
+		ListDesc(filter models.BakingRightFilter) (rights []models.FutureBakingRight, err error)
 		Last() (found bool, right models.FutureBakingRight, err error)
 		Find(filter models.BakingRightFilter) (found bool, right models.FutureBakingRight, err error)
 		Create(right models.FutureBakingRight) error
@@ -45,12 +46,22 @@ func (r *Repository) getDb(filter models.BakingRightFilter) *gorm.DB {
 	return db
 }
 
-// List returns a list of rights from the newest to oldest.
+// List returns a list of rights from the oldest to the newest.
 // limit defines the limit for the maximum number of rights returned.
 // since is used to paginate results based on the level. As the result is ordered descendingly the rights with level < since will be returned.
 func (r *Repository) List(filter models.BakingRightFilter) (rights []models.FutureBakingRight, err error) {
 	db := r.getDb(filter)
 	err = db.Order("level asc, priority asc").
+		Find(&rights).Error
+	return rights, err
+}
+
+// ListDesc returns a list of rights from the newest to the oldest.
+// limit defines the limit for the maximum number of rights returned.
+// since is used to paginate results based on the level. As the result is ordered descendingly the rights with level < since will be returned.
+func (r *Repository) ListDesc(filter models.BakingRightFilter) (rights []models.FutureBakingRight, err error) {
+	db := r.getDb(filter)
+	err = db.Order("level desc, priority asc").
 		Find(&rights).Error
 	return rights, err
 }

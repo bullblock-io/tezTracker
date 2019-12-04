@@ -53,8 +53,8 @@ func (t *TezTracker) BakingRightsList(blockLevelOrHash []string, priorityTo int,
 			filter.BlockLevels[i] = blocks[i].Level.Int64
 		}
 	}
-	r := t.repoProvider.GetBakingRight()
-	rights, err := r.List(filter)
+	r := t.repoProvider.GetFutureBakingRight()
+	rights, err := r.ListDesc(filter)
 	if err != nil {
 		return count, nil, err
 	}
@@ -115,7 +115,7 @@ func (t *TezTracker) FutureBakingRightsList(priorityTo int, limiter Limiter) (co
 }
 
 // GetBlockEndorsements finds a block and returns endorsements for it.
-func (t *TezTracker) GetBlockBakingRights(hashOrLevel string) (rights []models.BakingRight, count int64, err error) {
+func (t *TezTracker) GetBlockBakingRights(hashOrLevel string) (rights []models.FutureBakingRight, count int64, err error) {
 	var level int64
 	if i, e := strconv.ParseInt(hashOrLevel, 10, 64); e == nil {
 		level = i
@@ -134,7 +134,7 @@ func (t *TezTracker) GetBlockBakingRights(hashOrLevel string) (rights []models.B
 	}
 	filter := models.BakingRightFilter{}
 	filter.BlockLevels = []int64{level}
-	repo := t.repoProvider.GetBakingRight()
-	rights, err = repo.List(filter)
+	repo := t.repoProvider.GetFutureBakingRight()
+	rights, err = repo.ListDesc(filter)
 	return rights, int64(len(rights)), err
 }

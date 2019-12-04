@@ -95,7 +95,7 @@ func BlockBakingRights(b models.Block) *genModels.BakingRightsPerBlock {
 	return &br
 }
 
-func BakingRights(br []models.BakingRight) []*genModels.BakingRightsRow {
+func BakingRights(br []models.FutureBakingRight) []*genModels.BakingRightsRow {
 	rights := make([]*genModels.BakingRightsRow, len(br))
 	for i, r := range br {
 		rights[i] = BakingRight(r)
@@ -103,7 +103,7 @@ func BakingRights(br []models.BakingRight) []*genModels.BakingRightsRow {
 	return rights
 }
 
-func BakingRight(r models.BakingRight) *genModels.BakingRightsRow {
+func BakingRight(r models.FutureBakingRight) *genModels.BakingRightsRow {
 	priority := int64(r.Priority)
 	return &genModels.BakingRightsRow{
 		Delegate:      r.Delegate,

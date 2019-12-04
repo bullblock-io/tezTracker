@@ -4,7 +4,6 @@ import (
 	"github.com/bullblock-io/tezTracker/models"
 	"github.com/bullblock-io/tezTracker/repos/account"
 	"github.com/bullblock-io/tezTracker/repos/baker"
-	"github.com/bullblock-io/tezTracker/repos/baking_rights"
 	"github.com/bullblock-io/tezTracker/repos/block"
 	"github.com/bullblock-io/tezTracker/repos/double_baking"
 	"github.com/bullblock-io/tezTracker/repos/future_baking_rights"
@@ -28,7 +27,6 @@ type (
 		GetOperation() operation.Repo
 		GetAccount() account.Repo
 		GetBaker() baker.Repo
-		GetBakingRight() baking_rights.Repo
 		GetFutureBakingRight() future_baking_rights.Repo
 		GetSnapshots() snapshots.Repo
 		GetDoubleBaking() double_baking.Repo

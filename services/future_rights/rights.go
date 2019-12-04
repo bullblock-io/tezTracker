@@ -19,7 +19,7 @@ type RightsRepo interface {
 }
 
 type RightsProvider interface {
-	FutureRightsFor(ctx context.Context, blockFrom, blockTo int64) ([]models.FutureBakingRight, error)
+	RightsFor(ctx context.Context, blockFrom, blockTo, currentHead int64) ([]models.FutureBakingRight, error)
 	BlocksInCycle() int64
 }
 
@@ -49,7 +49,7 @@ func SaveNewBakingRights(ctx context.Context, unit UnitOfWork, provider RightsPr
 	}
 	var nextBlockToScan int64
 	if !found {
-		nextBlockToScan = lastBlock.Level.Int64 + 1
+		nextBlockToScan = 1
 	} else {
 		if lastRight.Level >= lastKnownRightsBlock {
 			return 0, nil
@@ -61,7 +61,7 @@ func SaveNewBakingRights(ctx context.Context, unit UnitOfWork, provider RightsPr
 		if endRange > lastKnownRightsBlock {
 			endRange = lastKnownRightsBlock
 		}
-		cnt, err := SaveFutureRightsForBlockRange(ctx, nextBlockToScan, endRange, unit, provider)
+		cnt, err := SaveFutureRightsForBlockRange(ctx, nextBlockToScan, endRange, lastBlock.MetaLevel, unit, provider)
 		if err != nil {
 			return 0, err
 		}
@@ -71,8 +71,8 @@ func SaveNewBakingRights(ctx context.Context, unit UnitOfWork, provider RightsPr
 	return count, nil
 }
 
-func SaveFutureRightsForBlockRange(ctx context.Context, blockFrom, blockTo int64, unit UnitOfWork, provider RightsProvider) (int, error) {
-	rights, err := provider.FutureRightsFor(ctx, blockFrom, blockTo)
+func SaveFutureRightsForBlockRange(ctx context.Context, blockFrom, blockTo, headLevel int64, unit UnitOfWork, provider RightsProvider) (int, error) {
+	rights, err := provider.RightsFor(ctx, blockFrom, blockTo, headLevel)
 	if err != nil {
 		return 0, err
 	}

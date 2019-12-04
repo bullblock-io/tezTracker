@@ -23,6 +23,9 @@ paths:
             type: string
           name: level
           collectionFormat: multi
+        - in: query
+          type: boolean
+          name: all
       responses:
         '200':
           description: Query compatibility endpoint for account

@@ -14,6 +14,7 @@ import (
 	"github.com/bullblock-io/tezTracker/services/rpc_client/client/baking_rights"
 	"github.com/bullblock-io/tezTracker/services/rpc_client/client/snapshots"
 	genmodels "github.com/bullblock-io/tezTracker/services/rpc_client/models"
+	runtimeClient "github.com/go-openapi/runtime/client"
 )
 
 const headBlock = "head"
@@ -35,6 +36,9 @@ func (t *Tezos) BlocksInCycle() int64 {
 
 func New(cfg client.TransportConfig, network string, isTestNetwork bool) *Tezos {
 	cli := client.NewHTTPClientWithConfig(nil, &cfg)
+	transport := runtimeClient.New(cfg.Host, cfg.BasePath, []string{"http"})
+	transport.SetDebug(true)
+	cli.SetTransport(transport)
 	return &Tezos{
 		client:        cli,
 		network:       network,
@@ -42,43 +46,22 @@ func New(cfg client.TransportConfig, network string, isTestNetwork bool) *Tezos 
 		isTestNetwork: isTestNetwork,
 	}
 }
-func (t *Tezos) RightsFor(ctx context.Context, blockFrom, blockTo int64) ([]models.BakingRight, error) {
-	params := baking_rights.NewGetBakingRightsParamsWithContext(ctx)
-	params.SetNetwork(t.network)
-	params.SetBlock(strconv.FormatInt(blockFrom, 10))
+func (t *Tezos) RightsFor(ctx context.Context, blockFrom, blockTo, currentHead int64) ([]models.FutureBakingRight, error) {
+	all := true
+	blockToUse := headBlock
+	if currentHead >= blockFrom {
+		blockToUse = strconv.FormatInt(blockFrom, 10)
+	}
+
+	params := baking_rights.NewGetBakingRightsParamsWithContext(ctx).
+		WithNetwork(t.network).
+		WithBlock(blockToUse).
+		WithAll(&all)
 	levels := []string{}
 	for b := blockFrom; b <= blockTo; b++ {
 		levels = append(levels, strconv.FormatInt(b, 10))
 	}
 	params.SetLevel(levels)
-	resp, err := t.client.BakingRights.GetBakingRights(params)
-	if err != nil {
-		return nil, err
-	}
-	rights := make([]models.BakingRight, len(resp.Payload))
-	for i := range resp.Payload {
-		if resp.Payload[i] != nil {
-			rights[i] = models.BakingRight{
-				Level:         resp.Payload[i].Level,
-				Priority:      int(resp.Payload[i].Priority),
-				Delegate:      resp.Payload[i].Delegate,
-				EstimatedTime: time.Time(resp.Payload[i].EstimatedTime),
-			}
-		}
-	}
-	return rights, nil
-}
-
-func (t *Tezos) FutureRightsFor(ctx context.Context, blockFrom, blockTo int64) ([]models.FutureBakingRight, error) {
-	params := baking_rights.NewGetBakingRightsParamsWithContext(ctx)
-	params.SetNetwork(t.network)
-	params.SetBlock(headBlock)
-	levels := []string{}
-	for b := blockFrom; b <= blockTo; b++ {
-		levels = append(levels, strconv.FormatInt(b, 10))
-	}
-	params.SetLevel(levels)
-
 	resp, err := t.client.BakingRights.GetBakingRights(params)
 	if err != nil {
 		return nil, err
