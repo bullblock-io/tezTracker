@@ -36,9 +36,6 @@ func (t *Tezos) BlocksInCycle() int64 {
 
 func New(cfg client.TransportConfig, network string, isTestNetwork bool) *Tezos {
 	cli := client.NewHTTPClientWithConfig(nil, &cfg)
-	transport := runtimeClient.New(cfg.Host, cfg.BasePath, []string{"http"})
-	transport.SetDebug(true)
-	cli.SetTransport(transport)
 	return &Tezos{
 		client:        cli,
 		network:       network,
